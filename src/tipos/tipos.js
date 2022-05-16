@@ -8,9 +8,8 @@ export const tipos = {
     eventoActivo: '[ev] Activo',
     enceraEventoActivo: '[ev] encera Activo',
     actualizaEvento: '[ev] actualiza',
-    borrarEvento: '[ev] borrar',
-    cargarEvento: '[ev] carga eventos desde la BBDD',
-    logoutEvento: '[ev] hace logout',
+    // borrarEvento: '[ev] borrar',
+    // cargarEvento: '[ev] carga eventos desde la BBDD',
     // logoutEvento: '[ev] hace logout',
     
     //Enventos que afectan a la BBDD
