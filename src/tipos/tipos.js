@@ -11,7 +11,8 @@ export const tipos = {
     borrarEvento: '[ev] borrar',
     cargarEvento: '[ev] carga eventos desde la BBDD',
     logoutEvento: '[ev] hace logout',
-
+    // logoutEvento: '[ev] hace logout',
+    
     //Enventos que afectan a la BBDD
     eventoBBDDNuevoEvento: '[ev-db] NuevoEvento',
 
