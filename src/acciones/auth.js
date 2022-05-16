@@ -79,7 +79,9 @@ export const iniciaChequeoToken = () => {
                 nombre: body.nombre
             }))
         } else {
-            Swal.fire('Error', body.msg, 'error') //debe ir al login
+            if(body.uid){
+               Swal.fire('Error', body.msg, 'error') //debe ir al login  
+            }           
             dispatch( finChequeo() )
         }
     }

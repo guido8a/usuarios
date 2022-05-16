@@ -2,7 +2,8 @@ import React from 'react';
 import { useForma } from '../../hooks/usaForma';
 import './login.css';
 import { useDispatch } from 'react-redux';
-import { iniciaLogin, iniciaRegistro } from '../../acciones/auth';
+// import { iniciaLogin, iniciaRegistro } from '../../acciones/auth';
+import { iniciaLogin } from '../../acciones/auth';
 import Swal from 'sweetalert2';
 
 export const LoginScreen = () => {
@@ -17,13 +18,13 @@ export const LoginScreen = () => {
     const { loginMail, loginPass} = loginValores
 
     //usaForma para el registro
-    const [ registroValores, registroManejaCambios ] = useForma({
-        reg_Nombre: "Guido",
-        reg_Mail: "guido@gmail.com",
-        reg_Pass1: '123456',
-        reg_Pass2: '123456'
-    })
-    const { reg_Nombre, reg_Mail, reg_Pass1, reg_Pass2 } = registroValores
+    // const [ registroValores, registroManejaCambios ] = useForma({
+    //     reg_Nombre: "Guido",
+    //     reg_Mail: "guido@gmail.com",
+    //     reg_Pass1: '123456',
+    //     reg_Pass2: '123456'
+    // })
+    // const { reg_Nombre, reg_Mail, reg_Pass1, reg_Pass2 } = registroValores
 
 
     const handleLogin = (e) => {
@@ -32,14 +33,14 @@ export const LoginScreen = () => {
         dispatch( iniciaLogin(loginMail, loginPass) )
     }
 
-    const handleRegistro = (e) => {
-        e.preventDefault()
-        if(reg_Pass1 !== reg_Pass2) {
-            return Swal.fire('Error', 'Las contraseñas deben ser iguales', 'error') 
-        }
-        // console.log(registroValores)
-        dispatch( iniciaRegistro(reg_Nombre, reg_Mail, reg_Pass1) )
-    }
+    // const handleRegistro = (e) => {
+    //     e.preventDefault()
+    //     if(reg_Pass1 !== reg_Pass2) {
+    //         return Swal.fire('Error', 'Las contraseñas deben ser iguales', 'error') 
+    //     }
+    //     // console.log(registroValores)
+    //     dispatch( iniciaRegistro(reg_Nombre, reg_Mail, reg_Pass1) )
+    // }
 
     return (
         <div className="container login-container">
@@ -77,7 +78,7 @@ export const LoginScreen = () => {
                     </form>
                 </div>
 
-                <div className="col-md-6 login-form-2">
+                {/* <div className="col-md-6 login-form-2">
                     <h3>Registro</h3>
                     <form onSubmit={ handleRegistro }>
                         <div className="form-group">
@@ -129,7 +130,7 @@ export const LoginScreen = () => {
                                 value="Crear cuenta" />
                         </div>
                     </form>
-                </div>
+                </div> */}
             </div>
         </div>
     )
