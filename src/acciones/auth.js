@@ -61,8 +61,8 @@ export const iniciaChequeoToken = () => {
     
     return async( dispatch) => {  //dispatch viene de thunk
         console.log('iniciaChequeoToken:') 
-        // const resp = await fetchConToken( 'auth/token', {}, 'POST' );
-        const resp = await fetchSinToken( 'user', {}, 'GET' );
+        const resp = await fetchConToken( 'auth/token', {}, 'POST' );
+        // const resp = await fetchSinToken( 'user', {}, 'GET' );
         console.log('...1', resp)
 
         //se lee el body:
