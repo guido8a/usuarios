@@ -30,7 +30,7 @@ export const fetchConToken = (endPoint, data, method = 'GET') => {
         return fetch(url, {
             method,
             headers: {
-                'j-token': token
+                'token': token
             }
         })
     } else {
