@@ -1,137 +1,144 @@
 import React from 'react';
 import { useForma } from '../../hooks/usaForma';
-import './login.css';
+// import '../ui/ingreso.css';
 import { useDispatch } from 'react-redux';
-// import { iniciaLogin, iniciaRegistro } from '../../acciones/auth';
 import { iniciaLogin } from '../../acciones/auth';
 import Swal from 'sweetalert2';
 
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 export const LoginScreen = () => {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    //usaForma para login con un usuario existente
-    const [ loginValores, loginManejaCambios ] = useForma({
-        loginMail: "guido@gmail.com",
-        loginPass: '123456'
-    })
-    const { loginMail, loginPass} = loginValores
+  const theme = createTheme();
 
-    //usaForma para el registro
-    // const [ registroValores, registroManejaCambios ] = useForma({
-    //     reg_Nombre: "Guido",
-    //     reg_Mail: "guido@gmail.com",
-    //     reg_Pass1: '123456',
-    //     reg_Pass2: '123456'
-    // })
-    // const { reg_Nombre, reg_Mail, reg_Pass1, reg_Pass2 } = registroValores
+  //usaForma para login con un usuario existente
+  const [loginValores, loginManejaCambios] = useForma({
+    login: "admin",
+    pass: '123'
+  })
+  const { login, pass } = loginValores
 
+  const handleLogin = (e) => {
+    e.preventDefault()
+    dispatch(iniciaLogin(login, pass))
+  }
 
-    const handleLogin = (e) => {
-        e.preventDefault()
-        // console.log(loginValores)
-        dispatch( iniciaLogin(loginMail, loginPass) )
-    }
-
-    // const handleRegistro = (e) => {
-    //     e.preventDefault()
-    //     if(reg_Pass1 !== reg_Pass2) {
-    //         return Swal.fire('Error', 'Las contraseñas deben ser iguales', 'error') 
-    //     }
-    //     // console.log(registroValores)
-    //     dispatch( iniciaRegistro(reg_Nombre, reg_Mail, reg_Pass1) )
-    // }
-
+  function Copyright(props) {
     return (
-        <div className="container login-container">
-            <div className="row">
-                <div className="col-md-6 login-form-1">
-                    <h3>Ingreso</h3>
-                    <form onSubmit={ handleLogin }>
-                        <div className="form-group">
-                            <input 
-                                type="text"
-                                className="form-control"
-                                placeholder="Correo"
-                                name="loginMail"
-                                value={ loginMail }
-                                onChange={ loginManejaCambios }
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Contraseña"
-                                name="loginPass"
-                                value={ loginPass }                       
-                                onChange={ loginManejaCambios }
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input 
-                                type="submit"
-                                className="btnSubmit"
-                                value="Login" 
-                            />
-                        </div>
-                    </form>
-                </div>
+      <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="http://www.tedein.com.ec/">
+          Tedein
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
 
-                {/* <div className="col-md-6 login-form-2">
-                    <h3>Registro</h3>
-                    <form onSubmit={ handleRegistro }>
-                        <div className="form-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Nombre"
-                                name="reg_Nombre"
-                                value={reg_Nombre}
-                                onChange={ registroManejaCambios }
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="email"
-                                className="form-control"
-                                placeholder="Correo"
-                                name="reg_Mail"
-                                value={reg_Mail}
-                                onChange={ registroManejaCambios }
-                            />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Contraseña" 
-                                name="reg_Pass1"
-                                value={reg_Pass1}
-                                onChange={ registroManejaCambios }
-                            />
-                        </div>
+  return (
 
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Repita la contraseña" 
-                                name="reg_Pass2"
-                                value={reg_Pass2}
-                                onChange={ registroManejaCambios }
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <input 
-                                type="submit" 
-                                className="btnSubmit" 
-                                value="Crear cuenta" />
-                        </div>
-                    </form>
-                </div> */}
-            </div>
-        </div>
-    )
+    <ThemeProvider theme={theme}>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              {/* <LockOutlinedIcon /> */}
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Ingreso
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Usuario"
+                name="login"
+                autoComplete='off'
+                autoFocus
+                value={ login }
+                onChange={ loginManejaCambios }
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="pass"
+                label="Contraseña"
+                type="password"
+                id="password"
+                autoComplete="off"
+                value={ pass } 
+                onChange={ loginManejaCambios }
+              />
+              {/* <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              /> */}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Ingresar
+              </Button>
+              {/* <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid> */}
+              <Copyright sx={{ mt: 5 }} />
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
+  )
 }

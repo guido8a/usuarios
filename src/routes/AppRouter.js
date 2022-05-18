@@ -11,7 +11,6 @@ import { iniciaChequeoToken } from '../acciones/auth';
 import { RutaPrivada } from "./RutaPrivada";
 import { RutasPublicas } from "./RutasPublicas";
 import { RegistroScreen } from '../components/auth/RegistroScreen';
-import { IngresoScreen } from '../components/ui/Ingreso';
 
 
 export const AppRouter = () => {
@@ -48,17 +47,17 @@ export const AppRouter = () => {
         } />
 
 
-        <Route path="/*" element={
-          <RutasPublicas>
-            <IngresoScreen />
-          </RutasPublicas>
-        } />
-
         {/* <Route path="/*" element={
+          <RutasPublicas>
+            <LoginScreen />
+          </RutasPublicas>
+        } /> */}
+
+        <Route path="/*" element={
           <RutaPrivada>
             <CalendarioScreen />
           </RutaPrivada>
-        } /> */}
+        } />
 
         <Route path="/registro" element={
           <RutasPublicas>
