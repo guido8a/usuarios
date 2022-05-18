@@ -60,9 +60,9 @@ export const AppRouter = () => {
         } />
 
         <Route path="/registro" element={
-          <RutasPublicas>
+          <RutaPrivada>
             <RegistroScreen />
-          </RutasPublicas>
+          </RutaPrivada>
         } />
 
       </Routes>
