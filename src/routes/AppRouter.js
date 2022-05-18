@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { iniciaChequeoToken } from '../acciones/auth';
 import { RutaPrivada } from "./RutaPrivada";
 import { RutasPublicas } from "./RutasPublicas";
+import { RegistroScreen } from '../components/auth/RegistroScreen';
 
 
 export const AppRouter = () => {
@@ -46,11 +47,24 @@ export const AppRouter = () => {
         } />
 
 
+        {/* <Route path="/*" element={
+          <RutasPublicas>
+            <LoginScreen />
+          </RutasPublicas>
+        } /> */}
+
         <Route path="/*" element={
           <RutaPrivada>
             <CalendarioScreen />
           </RutaPrivada>
         } />
+
+        <Route path="/registro" element={
+          <RutasPublicas>
+            <RegistroScreen />
+          </RutasPublicas>
+        } />
+
       </Routes>
     </BrowserRouter>
   )
