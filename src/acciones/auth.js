@@ -71,9 +71,9 @@ export const iniciaChequeoToken = () => {
 
         //se almacena el token en el localStore --nop es sensible
         if( body.ok ) {
-            // console.log('ok...')
-            localStorage.setItem('token', body.token)
-            localStorage.setItem('token-init-date', new Date().getTime())
+            console.log('body', body)
+            // localStorage.setItem('token', body.token)
+            // localStorage.setItem('token-init-date', new Date().getTime())
             dispatch( loginUsuario({
                 uid: body.uid, 
                 nombre: body.nombre
