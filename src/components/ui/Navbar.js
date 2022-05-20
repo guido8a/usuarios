@@ -58,6 +58,7 @@ export const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
+       {/* armar opciones de menú por módulos */}
         <div>
           <Button
             id="demo-customized-button"
