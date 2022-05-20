@@ -24,7 +24,7 @@ export const fetchSinToken = (endPoint, data, method = 'GET') => {
 export const fetchConToken = (endPoint, data, method = 'GET') => {
     const url = `${baseUrl}/${endPoint}`  //localhost:4000/api/
     const token = localStorage.getItem('token') || ''  //para no tener null
-    console.log('url:', url, 'token', token, method)
+    console.log('url:', url, 'token', token, method, "data", data)
 
     if (method === 'GET') {
         return fetch(url, {

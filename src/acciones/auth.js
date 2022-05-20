@@ -31,12 +31,15 @@ export const iniciaLogin = (login, pass) => {
 }
 
 //registro
-export const iniciaRegistro = (nombre, mail, password) => {
+export const iniciaRegistro = (registroValores) => {
+
+   console.log("valores inicia registro", registroValores)
     
     return async( dispatch) => {  //dispatch viene de thunk
         // console.log('iniciaRegistro:', mail, password) 
         // const resp = await fetchSinToken('auth/registro', {nombre, mail, password}, 'POST' );
-        const resp = await fetchSinToken('registro', {nombre, mail, password}, 'POST' );
+        // const resp = await fetchSinToken('user', {registroValores}, 'POST' );
+        const resp = await fetchConToken('user', registroValores, 'POST' );
 
         //se lee el body:
         const body = await resp.json();
@@ -86,9 +89,6 @@ export const iniciaChequeoToken = () => {
         }
     }
 }
-
-
-
 
 //llamadas al reducer
 const loginUsuario = (usuario) => ({
