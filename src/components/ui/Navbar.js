@@ -14,7 +14,9 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { StyledMenu } from './StyledMenu';
-
+import { Icon } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAddressBook } from '@fortawesome/free-regular-svg-icons'
 
 export const Navbar = () => {
 
@@ -84,6 +86,11 @@ export const Navbar = () => {
             <MenuItem onClick={handleClose} disableRipple>
               <EditIcon />
               <a className="navbar-brand" href="/registro"> Registro </a>
+            </MenuItem>
+
+            <MenuItem onClick={handleClose} disableRipple>
+              <FontAwesomeIcon icon={faAddressBook} />
+               <a className="navbar-brand" href="/usuarios" style={{marginLeft: "10px"}}> Usuarios </a>
             </MenuItem>
           </StyledMenu>
         </div>

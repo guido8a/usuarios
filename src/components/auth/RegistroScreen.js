@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForma } from '../../hooks/usaForma';
-// import './registro.css';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { iniciaRegistro } from '../../acciones/auth';
+import moment from 'moment';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -23,13 +23,12 @@ import { Navbar } from '../ui/Navbar';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-
+import { SkipNextRounded } from '@mui/icons-material';
 
 export const RegistroScreen = () => {
 
-
+  const ahora = moment().minutes(0).seconds(0);
   const dispatch = useDispatch();
-
   const theme = createTheme();
 
   //usaForma para el registro
@@ -41,8 +40,8 @@ export const RegistroScreen = () => {
     cargo: "",
     mail: "",
     login: "",
-    password: '123',
-    activo: '1',
+    password: '12345',
+    activo: 1,
     sexo: 'M',
     direccion: '',
     referencia: ''
@@ -61,32 +60,14 @@ export const RegistroScreen = () => {
 
   const tiposActivo = [
     {
-      value: '1',
+      value: 1,
       label: "Activo"
     },
     {
-      value: '0',
+      value: 0,
       label: 'No activo'
     },
   ]
-
-  const tamanoNombreMinimo = 5
-
-  const [errorMessage, setErrorMessage] = useState("");
-
-  useEffect(() => {
-
-    if (registroValores.nombre < tamanoNombreMinimo) {
-      setErrorMessage("El nombre no debe tener menos de 5 caracteres");
-    }
-
-  }, [registroValores.nombre])
-
-  useEffect(() => {
-    if (registroValores.nombre.length >= tamanoNombreMinimo && errorMessage) {
-      setErrorMessage("");
-    }
-  }, [registroValores.nombre, errorMessage]);
 
   const validationSchema = yup.object({
     nombre: yup
@@ -95,14 +76,57 @@ export const RegistroScreen = () => {
       .required('Nombre es requerido'),
     mail: yup
       .string('Ingrese un correo')
-      .email('Ingrese un correo válido')
+      .email('Ingrese un correo válido'),
+    apellido: yup
+      .string('Ingrese el apellido')
+      .min(3, 'El apellido debe tener al menos 3 caracteres')
+      .required('Apellido es requerido'),
+    cedula: yup
+      .string('Ingrese la cédula')
+      .matches('^[0-9]*$', "Ingrese solo números")
+      .min(10, 'La cédula debe tener al menos 10 caracteres')
+      .required('Cédula es requerida'),
+    titulo: yup
+      .string('Ingrese un título')
+      .min(3, 'El título debe tener al menos 3 caracteres'),
+    cargo: yup
+      .string('Ingrese un cargo')
+      .min(5, 'El cargo debe tener al menos 5 caracteres'),
+    login: yup
+      .string('Ingrese un nombre de usuario')
+      .min(5, 'El nombre de usuario debe tener al menos 5 caracteres')
+      .required('El nombre de usuario es requerido'),
+    password: yup
+      .string('Ingrese la  constraseña de usuario')
+      .min(5, 'La contraseña debe tener al menos 5 caracteres')
+      .required('El constraseña de usuario es requerida'),
+    direccion: yup
+      .string('Ingrese dirección del usuario')
+      .min(5, 'La dirección debe tener al menos 5 caracteres'),
+    refrencia: yup
+      .string('Ingrese la referencia del usuario')
+      .min(5, 'La refencia debe tener al menos 5 caracteres')
   });
-  
+
   const formik = useFormik({
     initialValues: {
       mail: registroValores.mail,
-      nombre: registroValores.nombre
+      nombre: registroValores.nombre,
+      apellido: registroValores.apellido,
+      cedula: registroValores.cedula,
+      titulo: registroValores.titulo,
+      cargo: registroValores.cargo,
+      login: registroValores.login,
+      fechaInicio: ahora.toDate(),
+      fechaPass: ahora.toDate(),
+      fechaFin: ahora.toDate(),
+      password: registroValores.password,
+      activo: registroValores.activo,
+      sexo: registroValores.sexo,
+      direccion: registroValores.direccion,
+      referencia: registroValores.referencia
     },
+
     validationSchema: validationSchema,
     onSubmit: values => {
       // handleRegistro();
@@ -117,28 +141,27 @@ export const RegistroScreen = () => {
 
   const handleFormSubmit = () => {
     var data = {
-      cedula: "0601983865",
-      nombre: formik.values.nombre,                    
-      apellido: "G",
-      fechaInicio: "2022-05-14T00:00:00Z",
-      fechaFin: "0001-01-01T00:00:00Z",
-      titulo: "Ing",
-      cargo: "Aministrador",
+      cedula: formik.values.cedula,
+      nombre: formik.values.nombre,
       mail: formik.values.mail,
-      login: "admin",
-      password: "202cb962ac59075b964b07152d234b70",
-      activo: 1,
-      fechaPass: "00:00:00",
-      sexo: "M",
-      direccion: "",
-      referencia: ""            
+      apellido: formik.values.apellido,
+      fechaInicio: formik.values.fechaInicio,
+      fechaFin: formik.values.fechaFin,
+      titulo: formik.values.titulo,
+      cargo: formik.values.cargo,
+      login: formik.values.login,
+      password: formik.values.password,
+      activo: formik.values.activo,
+      fechaPass: formik.values.fechaPass,
+      sexo: formik.values.sexo,
+      direccion: formik.values.direccion,
+      referencia: formik.values.referencia
     }
-    
+
     // dispatch(iniciaRegistro(JSON.stringify(data, null, 2)))
     dispatch(iniciaRegistro(data))
     // alert(JSON.stringify(data, null, 2));
   }
-
 
   return (
     <div>
@@ -176,14 +199,14 @@ export const RegistroScreen = () => {
                     variant="outlined"
                     // value={registroValores.nombre}
                     // onChange={registroManejaCambios}
-                    inputProps={{style: {textTransform: 'capitalize'}}}                                          
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.nombre}
                     error={formik.touched.nombre && Boolean(formik.errors.nombre)}
-                    helperText={formik.touched.nombre && formik.errors.nombre}         
+                    helperText={formik.touched.nombre && formik.errors.nombre}
                     InputLabelProps={{
-                        shrink: true,
+                      shrink: true,
                     }}
                   />
                 </Grid>
@@ -195,8 +218,17 @@ export const RegistroScreen = () => {
                     label="Apellido"
                     name="apellido"
                     autoComplete="off"
-                    value={registroValores.apellido}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.apellido}
+                    // onChange={registroManejaCambios}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.apellido}
+                    error={formik.touched.apellido && Boolean(formik.errors.apellido)}
+                    helperText={formik.touched.apellido && formik.errors.apellido}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -207,8 +239,16 @@ export const RegistroScreen = () => {
                     label="Cédula"
                     name="cedula"
                     autoComplete="off"
-                    value={registroValores.cedula}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.cedula}
+                    // onChange={registroManejaCambios}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.cedula}
+                    error={formik.touched.cedula && Boolean(formik.errors.cedula)}
+                    helperText={formik.touched.cedula && formik.errors.cedula}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
 
@@ -239,8 +279,17 @@ export const RegistroScreen = () => {
                     label="Título"
                     id="titulo"
                     autoComplete="off"
-                    value={registroValores.titulo}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.titulo}
+                    // onChange={registroManejaCambios}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.titulo}
+                    error={formik.touched.titulo && Boolean(formik.errors.titulo)}
+                    helperText={formik.touched.titulo && formik.errors.titulo}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={8}>
@@ -250,8 +299,17 @@ export const RegistroScreen = () => {
                     label="Cargo"
                     id="cargo"
                     autoComplete="off"
-                    value={registroValores.cargo}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.cargo}
+                    // onChange={registroManejaCambios}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.cargo}
+                    error={formik.touched.cargo && Boolean(formik.errors.cargo)}
+                    helperText={formik.touched.cargo && formik.errors.cargo}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -262,8 +320,16 @@ export const RegistroScreen = () => {
                     label="Usuario"
                     id="login"
                     autoComplete="off"
-                    value={registroValores.login}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.login}
+                    // onChange={registroManejaCambios}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.login}
+                    error={formik.touched.login && Boolean(formik.errors.login)}
+                    helperText={formik.touched.login && formik.errors.login}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
 
@@ -277,32 +343,60 @@ export const RegistroScreen = () => {
                     type="password"
                     id="password"
                     autoComplete="off"
-                    value={registroValores.password}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.password}
+                    // onChange={registroManejaCambios}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={7}>
                   <TextField
-                    id="outlined-multiline-static"
+                    id="direccion"
                     label="Dirección"
+                    name='direccion'
                     multiline
                     minRows={2}
                     maxRows={3}
-                    value={registroValores.direccion}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.direccion}
+                    // onChange={registroManejaCambios}
+                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.direccion}
+                    error={formik.touched.direccion && Boolean(formik.errors.direccion)}
+                    helperText={formik.touched.direccion && formik.errors.direccion}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={5}>
                   <TextField
-                    id="outlined-multiline-static"
+                    id="referencia"
                     label="Referencia"
+                    name='referencia'
                     multiline
                     minRows={2}
                     maxRows={3}
-                    value={registroValores.referencia}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.referencia}
+                    // onChange={registroManejaCambios}
+                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.referencia}
+                    error={formik.touched.referencia && Boolean(formik.errors.referencia)}
+                    helperText={formik.touched.referencia && formik.errors.referencia}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
 
@@ -312,8 +406,10 @@ export const RegistroScreen = () => {
                     select
                     name='activo'
                     label="Estado"
-                    value={registroValores.activo}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.activo}
+                    value={formik.values.activo}
+                    onChange={formik.handleChange}
+                    // onChange={registroManejaCambios}
                     helperText="Seleccione el estado del usuario"
                   >
                     {tiposActivo.map((option) => (
@@ -330,8 +426,10 @@ export const RegistroScreen = () => {
                     name='sexo'
                     select
                     label="Sexo"
-                    value={registroValores.sexo}
-                    onChange={registroManejaCambios}
+                    // value={registroValores.sexo}
+                    // onChange={registroManejaCambios}
+                    value={formik.values.sexo}
+                    onChange={formik.handleChange}
                   >
                     {tiposSexo.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -356,59 +454,5 @@ export const RegistroScreen = () => {
         </Container>
       </ThemeProvider>
     </div>
-    //     <div className="col-md-6 login-form-2">
-    //     <h3>Registro</h3>
-    //     <form onSubmit={handleRegistro}>
-    //         <div className="form-group">
-    //             <input
-    //                 type="text"
-    //                 className="form-control"
-    //                 placeholder="Nombre"
-    //                 name="reg_Nombre"
-    //                 value={reg_Nombre}
-    //                 onChange={registroManejaCambios}
-    //             />
-    //         </div>
-    //         <div className="form-group">
-    //             <input
-    //                 type="mail"
-    //                 className="form-control"
-    //                 placeholder="Correo"
-    //                 name="reg_Mail"
-    //                 value={reg_Mail}
-    //                 onChange={registroManejaCambios}
-    //             />
-    //         </div>
-    //         <div className="form-group">
-    //             <input
-    //                 type="password"
-    //                 className="form-control"
-    //                 placeholder="Contraseña"
-    //                 name="reg_Pass1"
-    //                 value={reg_Pass1}
-    //                 onChange={registroManejaCambios}
-    //             />
-    //         </div>
-
-    //         <div className="form-group">
-    //             <input
-    //                 type="password"
-    //                 className="form-control"
-    //                 placeholder="Repita la contraseña"
-    //                 name="reg_Pass2"
-    //                 value={reg_Pass2}
-    //                 onChange={registroManejaCambios}
-    //             />
-    //         </div>
-
-    //         <div className="form-group">
-    //             <input
-    //                 type="submit"
-    //                 className="btnSubmit"
-    //                 value="Crear cuenta" />
-    //         </div>
-    //     </form>
-    // </div>
   )
-
 }

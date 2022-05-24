@@ -5,23 +5,23 @@ import { logoutEvento } from "./evento"
 
 
 export const iniciaLogin = (login, pass) => {
-    
-    return async( dispatch) => {  //dispatch viene de thunk
+
+    return async (dispatch) => {  //dispatch viene de thunk
         // console.log('iniciaLogin:', login, pass) 
         // const resp = await fetchSinToken('auth/login', {mail, password}, 'POST' );
-        const resp = await fetchSinToken('login', {login, pass}, 'POST' );
+        const resp = await fetchSinToken('login', { login, pass }, 'POST');
 
         //se lee el body:
         const body = await resp.json();
         // console.log('body', body)
 
         //se almacena el token en el localStore --nop es sensible
-        if( body.ok ) {
+        if (body.ok) {
             // console.log('ok...')
             localStorage.setItem('token', body.token)
             localStorage.setItem('token-init-date', new Date().getTime())
             dispatch(loginUsuario({
-                uid: body.uid, 
+                uid: body.uid,
                 nombre: body.nombre
             }))
         } else {
@@ -33,39 +33,41 @@ export const iniciaLogin = (login, pass) => {
 //registro
 export const iniciaRegistro = (registroValores) => {
 
-   console.log("valores inicia registro", registroValores)
-    
-    return async( dispatch) => {  //dispatch viene de thunk
+    console.log("valores inicia registro", registroValores)
+
+    return async (dispatch) => {  //dispatch viene de thunk
         // console.log('iniciaRegistro:', mail, password) 
         // const resp = await fetchSinToken('auth/registro', {nombre, mail, password}, 'POST' );
         // const resp = await fetchSinToken('user', {registroValores}, 'POST' );
-        const resp = await fetchConToken('user', registroValores, 'POST' );
+        const resp = await fetchConToken('user', registroValores, 'POST');
 
         //se lee el body:
         const body = await resp.json();
         // console.log('body', body)
 
         //se almacena el token en el localStore --nop es sensible
-        if( body.ok ) {
+        if (body.ok) {
             // console.log('ok...')
-            localStorage.setItem('token', body.token)
-            localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch( loginUsuario({
-                uid: body.uid, 
-                nombre: body.nombre
-            }))
+            // localStorage.setItem('token', body.token)
+            // localStorage.setItem('token-init-date', new Date().getTime())
+            // dispatch( loginUsuario({
+            //     uid: body.uid, 
+            //     nombre: body.nombre
+            // }))
+            Swal.fire('Realizado', "Usuario creado exitosamente!", 'success')
         } else {
-            Swal.fire('Error', body.msg, 'error')
+            // Swal.fire('Error', body.msg, 'error')
+            Swal.fire('Error', "Error al crear el usuario", 'error')
         }
     }
 }
 
 //revisa si el token sigue válido
 export const iniciaChequeoToken = () => {
-    
-    return async( dispatch) => {  //dispatch viene de thunk
-        console.log('iniciaChequeoToken:') 
-        const resp = await fetchConToken( 'token', {}, 'POST' );
+
+    return async (dispatch) => {  //dispatch viene de thunk
+        console.log('iniciaChequeoToken:')
+        const resp = await fetchConToken('token', {}, 'POST');
         // const resp = await fetchSinToken( 'user', {}, 'GET' );
         console.log('>>>1', resp)
         //se lee el body:
@@ -73,19 +75,19 @@ export const iniciaChequeoToken = () => {
         // console.log('body -->', body)
 
         //se almacena el token en el localStore --nop es sensible
-        if( body.ok ) {
+        if (body.ok) {
             console.log('body', body)
             // localStorage.setItem('token', body.token)
             // localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch( loginUsuario({
-                uid: body.uid, 
+            dispatch(loginUsuario({
+                uid: body.uid,
                 nombre: body.nombre
             }))
         } else {
-            if(body.uid){
-               Swal.fire('Error', body.msg, 'error') //debe ir al login  
-            }           
-            dispatch( finChequeo() )
+            if (body.uid) {
+                Swal.fire('Error', body.msg, 'error') //debe ir al login  
+            }
+            dispatch(finChequeo())
         }
     }
 }
@@ -103,8 +105,8 @@ const finChequeo = () => ({ type: tipos.authCheckingFin })
 export const iniciaLogout = () => {
     return (dispatch) => {
         localStorage.clear();
-        dispatch( hacerLogout() )
-        dispatch( logoutEvento() )
+        dispatch(hacerLogout())
+        dispatch(logoutEvento())
     }
 }
 
