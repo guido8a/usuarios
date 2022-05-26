@@ -1,8 +1,20 @@
+import { useState } from "react"
 import Swal from "sweetalert2"
 import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import { tipos } from "../tipos/tipos"
 import { logoutEvento } from "./evento"
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
 
 export const iniciaLogin = (login, pass) => {
 
@@ -29,13 +41,13 @@ export const iniciaLogin = (login, pass) => {
         }
     }
 }
-
+ 
 //registro
 export const iniciaRegistro = (registroValores) => {
 
     console.log("valores inicia registro", registroValores)
 
-    return async (dispatch) => {  //dispatch viene de thunk
+      return async (dispatch) => {  //dispatch viene de thunk
         // console.log('iniciaRegistro:', mail, password) 
         // const resp = await fetchSinToken('auth/registro', {nombre, mail, password}, 'POST' );
         // const resp = await fetchSinToken('user', {registroValores}, 'POST' );
@@ -43,7 +55,7 @@ export const iniciaRegistro = (registroValores) => {
 
         //se lee el body:
         const body = await resp.json();
-        // console.log('body', body)
+        console.log('body', body)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
@@ -54,7 +66,19 @@ export const iniciaRegistro = (registroValores) => {
             //     uid: body.uid, 
             //     nombre: body.nombre
             // }))
-            Swal.fire('Realizado', "Usuario creado exitosamente!", 'success')
+            // Swal.fire('Realizado', "Usuario creado exitosamente!", 'success')
+            // Toast.fire({icon: 'success', title: '!'})
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Usuario creado exitosamente',
+                showConfirmButton: false,
+                timer: 2000
+              })    
+
+
+            // dispatch(registroCorrecto());
         } else {
             // Swal.fire('Error', body.msg, 'error')
             Swal.fire('Error', "Error al crear el usuario", 'error')
@@ -69,14 +93,14 @@ export const iniciaChequeoToken = () => {
         console.log('iniciaChequeoToken:')
         const resp = await fetchConToken('token', {}, 'POST');
         // const resp = await fetchSinToken( 'user', {}, 'GET' );
-        console.log('>>>1', resp)
+        // console.log('>>>1', resp)
         //se lee el body:
         const body = await resp.json();
         // console.log('body -->', body)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
-            console.log('body', body)
+            // console.log('body', body)
             // localStorage.setItem('token', body.token)
             // localStorage.setItem('token-init-date', new Date().getTime())
             dispatch(loginUsuario({
@@ -98,6 +122,12 @@ const loginUsuario = (usuario) => ({
     payload: usuario
 })
 
+const registroCorrecto = () => {
+    return {
+        type: tipos.uiRegistroCorrecto,        
+    }
+}
+
 //finaliza el chequeo de token
 const finChequeo = () => ({ type: tipos.authCheckingFin })
 
@@ -111,6 +141,3 @@ export const iniciaLogout = () => {
 }
 
 const hacerLogout = () => ({ type: tipos.authLogout })
-
-
-

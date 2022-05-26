@@ -44,3 +44,29 @@ export const fetchConToken = (endPoint, data, method = 'GET') => {
         })
     }
 }
+
+//retorna usuarios
+
+export const fetchUsuarios = (data, method = 'GET') => {
+    const url = `${baseUrl}/user`
+    const urlEspecifico = `${baseUrl}/user/${data}`
+    const token = localStorage.getItem('token') || ''
+
+    // console.log("fetchUsuarios->", data, method)
+
+    if (data) {
+        return fetch(urlEspecifico, {
+            method,
+            headers: {
+                'token': token
+            }
+        })
+    } else {
+        return fetch(url, {
+            method,
+            headers: {
+                'token': token
+            }
+        })
+    }
+}

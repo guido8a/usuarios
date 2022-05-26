@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useForma } from '../../hooks/usaForma';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { iniciaRegistro } from '../../acciones/auth';
 import moment from 'moment';
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -23,29 +18,30 @@ import { Navbar } from '../ui/Navbar';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { SkipNextRounded } from '@mui/icons-material';
+import { validationSchema } from '../../helpers/validacionRegistro';
 
 export const RegistroScreen = () => {
 
   const ahora = moment().minutes(0).seconds(0);
+  const tresMeses = moment().minutes(0).seconds(0).add(3, 'months')
   const dispatch = useDispatch();
   const theme = createTheme();
 
   //usaForma para el registro
-  const [registroValores, registroManejaCambios] = useForma({
-    nombre: "",
-    apellido: "",
-    cedula: "",
-    titulo: "",
-    cargo: "",
-    mail: "",
-    login: "",
-    password: '12345',
-    activo: 1,
-    sexo: 'M',
-    direccion: '',
-    referencia: ''
-  })
+  // const [registroValores, registroManejaCambios] = useForma({
+  //   nombre: "",
+  //   apellido: "",
+  //   cedula: "",
+  //   titulo: "",
+  //   cargo: "",
+  //   mail: "",
+  //   login: "",
+  //   password: '12345',
+  //   activo: 1,
+  //   sexo: 'M',
+  //   direccion: '',
+  //   referencia: ''
+  // })
 
   const tiposSexo = [
     {
@@ -69,62 +65,62 @@ export const RegistroScreen = () => {
     },
   ]
 
-  const validationSchema = yup.object({
-    nombre: yup
-      .string('Ingrese un nombre')
-      .min(3, 'El nombre debe tener al menos 3 caracteres')
-      .required('Nombre es requerido'),
-    mail: yup
-      .string('Ingrese un correo')
-      .email('Ingrese un correo válido'),
-    apellido: yup
-      .string('Ingrese el apellido')
-      .min(3, 'El apellido debe tener al menos 3 caracteres')
-      .required('Apellido es requerido'),
-    cedula: yup
-      .string('Ingrese la cédula')
-      .matches('^[0-9]*$', "Ingrese solo números")
-      .min(10, 'La cédula debe tener al menos 10 caracteres')
-      .required('Cédula es requerida'),
-    titulo: yup
-      .string('Ingrese un título')
-      .min(3, 'El título debe tener al menos 3 caracteres'),
-    cargo: yup
-      .string('Ingrese un cargo')
-      .min(5, 'El cargo debe tener al menos 5 caracteres'),
-    login: yup
-      .string('Ingrese un nombre de usuario')
-      .min(5, 'El nombre de usuario debe tener al menos 5 caracteres')
-      .required('El nombre de usuario es requerido'),
-    password: yup
-      .string('Ingrese la  constraseña de usuario')
-      .min(5, 'La contraseña debe tener al menos 5 caracteres')
-      .required('El constraseña de usuario es requerida'),
-    direccion: yup
-      .string('Ingrese dirección del usuario')
-      .min(5, 'La dirección debe tener al menos 5 caracteres'),
-    refrencia: yup
-      .string('Ingrese la referencia del usuario')
-      .min(5, 'La refencia debe tener al menos 5 caracteres')
-  });
+  // const validationSchema = yup.object({
+  //   nombre: yup
+  //     .string('Ingrese un nombre')
+  //     .min(3, 'El nombre debe tener al menos 3 caracteres')
+  //     .required('Nombre es requerido'),
+  //   mail: yup
+  //     .string('Ingrese un correo')
+  //     .email('Ingrese un correo válido'),
+  //   apellido: yup
+  //     .string('Ingrese el apellido')
+  //     .min(3, 'El apellido debe tener al menos 3 caracteres')
+  //     .required('Apellido es requerido'),
+  //   cedula: yup
+  //     .string('Ingrese la cédula')
+  //     .matches('^[0-9]*$', "Ingrese solo números")
+  //     .min(10, 'La cédula debe tener al menos 10 caracteres')
+  //     .required('Cédula es requerida'),
+  //   titulo: yup
+  //     .string('Ingrese un título')
+  //     .min(3, 'El título debe tener al menos 3 caracteres'),
+  //   cargo: yup
+  //     .string('Ingrese un cargo')
+  //     .min(5, 'El cargo debe tener al menos 5 caracteres'),
+  //   login: yup
+  //     .string('Ingrese un nombre de usuario')
+  //     .min(5, 'El nombre de usuario debe tener al menos 5 caracteres')
+  //     .required('El nombre de usuario es requerido'),
+  //   password: yup
+  //     .string('Ingrese la  constraseña de usuario')
+  //     .min(5, 'La contraseña debe tener al menos 5 caracteres')
+  //     .required('El constraseña de usuario es requerida'),
+  //   direccion: yup
+  //     .string('Ingrese dirección del usuario')
+  //     .min(5, 'La dirección debe tener al menos 5 caracteres'),
+  //   refrencia: yup
+  //     .string('Ingrese la referencia del usuario')
+  //     .min(5, 'La refencia debe tener al menos 5 caracteres')
+  // });
 
   const formik = useFormik({
     initialValues: {
-      mail: registroValores.mail,
-      nombre: registroValores.nombre,
-      apellido: registroValores.apellido,
-      cedula: registroValores.cedula,
-      titulo: registroValores.titulo,
-      cargo: registroValores.cargo,
-      login: registroValores.login,
+      mail: "",
+      nombre: "",
+      apellido: "",
+      cedula: "",
+      titulo: "",
+      cargo: "",
+      login: "",
       fechaInicio: ahora.toDate(),
-      fechaPass: ahora.toDate(),
+      fechaPass: tresMeses.toDate(),
       fechaFin: ahora.toDate(),
-      password: registroValores.password,
-      activo: registroValores.activo,
-      sexo: registroValores.sexo,
-      direccion: registroValores.direccion,
-      referencia: registroValores.referencia
+      password: "12345",
+      activo: 1,
+      sexo: "M",
+      direccion: "",
+      referencia: ""
     },
 
     validationSchema: validationSchema,
@@ -134,10 +130,10 @@ export const RegistroScreen = () => {
     },
   });
 
-  const handleRegistro = (e) => {
-    e.preventDefault()
-    dispatch(iniciaRegistro(registroValores))
-  }
+  // const handleRegistro = (e) => {
+  //   e.preventDefault()
+  //   dispatch(iniciaRegistro(registroValores))
+  // }
 
   const handleFormSubmit = () => {
     var data = {
@@ -161,6 +157,7 @@ export const RegistroScreen = () => {
     // dispatch(iniciaRegistro(JSON.stringify(data, null, 2)))
     dispatch(iniciaRegistro(data))
     // alert(JSON.stringify(data, null, 2));
+    formik.resetForm();
   }
 
   return (
@@ -177,13 +174,9 @@ export const RegistroScreen = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              {/* <LockOutlinedIcon /> */}
-            </Avatar>
             <Typography component="h1" variant="h5">
               Registro de usuarios
             </Typography>
-            {/* <Box component="form" noValidate onSubmit={handleRegistro} sx={{ mt: 3 }}> */}
             <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
 
               <Grid container spacing={2}>

@@ -1,7 +1,9 @@
 export const tipos = {
-    //manejo del modal
+    //manejos de la UI
     uiAbrirModal: '[ui] Abrir Modal',
     uiCerrarModal: '[ui] Cerrar Modal',
+    uiTablaUsuarios: '[UI] Retorna usuarios',
+    uiRegistroCorrecto: '[UI] Registr de usuario correcto',
 
     //manejo de eventos
     eventoNuevoEvento: '[ev] NuevoEvento',

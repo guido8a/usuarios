@@ -23,7 +23,7 @@ export const AppRouter = () => {
 
   //leer el checking del store
   const { checking } = useSelector(state => state.auth);
-  console.log('checking:', checking)
+  // console.log('checking:', checking)
 
   if (checking) {
     return <h3>Comprobando token...</h3>
