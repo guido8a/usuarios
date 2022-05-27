@@ -8,3 +8,7 @@ export const accion_abrirModal = () => ({
 export const accion_cerrarModal = () => ({
     type: tipos.uiCerrarModal
 })
+
+export const abrirModalRegistro = () => ({
+    type: tipos.uiAbrirModalRegistro
+})

@@ -3,7 +3,11 @@ export const tipos = {
     uiAbrirModal: '[ui] Abrir Modal',
     uiCerrarModal: '[ui] Cerrar Modal',
     uiTablaUsuarios: '[UI] Retorna usuarios',
-    uiRegistroCorrecto: '[UI] Registr de usuario correcto',
+    uiRegistroCorrecto: '[UI] Registro de usuario correcto',
+    uiUsuarioSeleccionado: '[UI] Usuario seleccionado',
+    uiNoUsuarioSeleccionado: '[UI] Ningún usuario seleccionado',
+    uiAbrirModalRegistro: '[UI] Abrir modal registro',
+    uiRetornaUsuario: '[UI] Retorna usuario específico',
 
     //manejo de eventos
     eventoNuevoEvento: '[ev] NuevoEvento',

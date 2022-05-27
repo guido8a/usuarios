@@ -52,7 +52,7 @@ export const fetchUsuarios = (data, method = 'GET') => {
     const urlEspecifico = `${baseUrl}/user/${data}`
     const token = localStorage.getItem('token') || ''
 
-    // console.log("fetchUsuarios->", data, method)
+    console.log("fetchUsuarios->", data, method)
 
     if (data) {
         return fetch(urlEspecifico, {

@@ -20,7 +20,6 @@ import { StyledMenu } from './StyledMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressBook } from '@fortawesome/free-regular-svg-icons'
 import Swal from 'sweetalert2';
-import { red } from '@mui/material/colors';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -45,14 +44,14 @@ export const Navbar = () => {
             confirmButtonText: 'Aceptar',
             // denyButtonText: `Don't save`,
             cancelButtonText: 'Cancelar',
-            confirmButtonColor:'#d33'
-          }).then((result) => {
+            confirmButtonColor: '#d33'
+        }).then((result) => {
             if (result.isConfirmed) {
-             dispatch(iniciaLogout())
-            // } else if (result.isDenied) {
-            // //   Swal.fire('Changes are not saved', '', 'info')
+                dispatch(iniciaLogout())
+                // } else if (result.isDenied) {
+                // //   Swal.fire('Changes are not saved', '', 'info')
             }
-          })        
+        })
     }
 
     const handleOpenNavMenu = (event) => {
@@ -80,7 +79,7 @@ export const Navbar = () => {
 
 
     return (
-        
+
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
@@ -132,6 +131,15 @@ export const Navbar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
+                            <MenuItem onClick={handleClose} disableRipple>
+                                <EditIcon />
+                                <a className="navbar-brand" href="/registro"> Registro </a>
+                            </MenuItem>
+
+                            <MenuItem onClick={handleClose} disableRipple>
+                                <FontAwesomeIcon icon={faAddressBook} />
+                                <a className="navbar-brand" href="/usuarios" style={{ marginLeft: "10px" }}> Usuarios </a>
+                            </MenuItem>
                             {/* {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
@@ -239,6 +247,6 @@ export const Navbar = () => {
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
+        </AppBar >
     );
 };

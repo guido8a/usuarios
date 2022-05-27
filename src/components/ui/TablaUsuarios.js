@@ -21,7 +21,10 @@ import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { retornaUsuarios } from '../../acciones/datos';
+import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario, retornaUsuarioEspecifico } from '../../acciones/datos';
+import Swal from 'sweetalert2';
+import { ModalUsuario } from './ModalUsuario';
+import { abrirModalRegistro, accion_abrirModal } from '../../acciones/ui';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -50,6 +53,7 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
 
 const headCells = [
   {
@@ -85,8 +89,8 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -95,7 +99,7 @@ function EnhancedTableHead(props) {
     <TableHead >
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
+          {/* <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -103,7 +107,7 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'seleccionar todo',
             }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -140,12 +144,36 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const handleBorrar = () => {
-  console.log("borrando....")
-}
-
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, idUsuarioSeleccionado } = props;
+
+  const dispatch = useDispatch();
+
+  const handleBorrar = () => {
+    console.log("borrando....", idUsuarioSeleccionado)
+
+    Swal.fire({
+      title: 'Desea borrar este registro?',
+      // showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Borrar',
+      // denyButtonText: `Don't save`,
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      icon: 'question'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // } else if (result.isDenied) {
+        // //   Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
+  }
+
+  const handleEditar = () => {
+    console.log("editando...", idUsuarioSeleccionado)    
+    dispatch(retornaUsuarioEspecifico(idUsuarioSeleccionado));
+    dispatch(abrirModalRegistro(idUsuarioSeleccionado));
+  }
 
   return (
     <Toolbar
@@ -174,13 +202,13 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Usuarios
+          Lista de Usuarios
         </Typography>
       )}
       {numSelected == 1 ? (
         // <Tooltip title="Editar">
         <Grid item xs={1} sm={2}>
-          <IconButton title='Editar'>
+          <IconButton title='Editar' onClick={handleEditar}>
             <FontAwesomeIcon icon={faEdit} />
           </IconButton>
           <IconButton title='Borrar' onClick={handleBorrar}>
@@ -210,7 +238,8 @@ EnhancedTableToolbar.propTypes = {
 export default function TablaUsuarios() {
 
   const dispatch = useDispatch();
-  const {usuarios} = useSelector(state => state.tabla);
+  const { usuarios } = useSelector(state => state.tabla);
+  const { idUsuario } = useSelector(state => state.ui);
 
   //retorna los usuarios de la BD
   React.useEffect(() => {
@@ -221,6 +250,7 @@ export default function TablaUsuarios() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
+  const [selectedID, setSelectedID] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -232,6 +262,7 @@ export default function TablaUsuarios() {
   };
 
   const handleSelectAllClick = (event) => {
+    dispatch(noUsuarioSeleccionado());
     if (event.target.checked) {
       // const newSelecteds = rows.map((n) => n.name);
       const newSelecteds = usuarios.map((n) => n.nombre);
@@ -239,27 +270,48 @@ export default function TablaUsuarios() {
       return;
     }
     setSelected([]);
+    setSelectedID([]);
   };
 
-  const handleClick = (event, name) => {
+  const handleClick = (event, name, id) => {
+
     const selectedIndex = selected.indexOf(name);
+    const selectedIndexID = selectedID.indexOf(id);
     let newSelected = [];
+    let ids = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
+      ids = ids.concat(selectedID, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
+      ids = ids.concat(selectedID.slice(1));
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
+      ids = ids.concat(selectedID.slice(0, -1));
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1),
       );
+      ids = ids.concat(
+        selectedID.slice(0, selectedIndexID),
+        selectedID.slice(selectedIndexID + 1),
+      );
+    }
+
+    if (newSelected.length === 1) {
+      dispatch(seleccionaUsuario(ids[0]));
+    }
+
+    if (newSelected.length !== 1) {
+      dispatch(noUsuarioSeleccionado());
     }
 
     setSelected(newSelected);
+    setSelectedID(ids)
   };
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -282,96 +334,98 @@ export default function TablaUsuarios() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usuarios.length) : 0;
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              // rowCount={rows.length}
-              rowCount={usuarios.length}
-            />
-            <TableBody>
-              {/* {stableSort(rows, getComparator(order, orderBy)) */}
-              {stableSort(usuarios, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  // const isItemSelected = isSelected(row.name);
-                  const isItemSelected = isSelected(row.nombre);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+    <div>
+      <Box sx={{ width: '100%' }}>
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          <EnhancedTableToolbar numSelected={selected.length} idUsuarioSeleccionado={idUsuario} />
+          <TableContainer>
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+            >
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                // rowCount={rows.length}
+                rowCount={usuarios.length}
+              />
+              <TableBody>
+                {/* {stableSort(rows, getComparator(order, orderBy)) */}
+                {stableSort(usuarios, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    // const isItemSelected = isSelected(row.name);
+                    const isItemSelected = isSelected(row.nombre);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      // onClick={(event) => handleClick(event, row.name)}
-                      onClick={(event) => handleClick(event, row.nombre)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      // key={row.name}
-                      key={row.id}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row.nombre, row.id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        // key={row.name}
+                        key={row.id}
+                        selected={isItemSelected}
                       >
-                        {row.nombre}
-                      </TableCell>
-                      <TableCell align="right">{row.apellido}</TableCell>
-                      <TableCell align="right">{row.cedula}</TableCell>
-                      <TableCell align="right">{row.cargo}</TableCell>
-                      <TableCell align="right">{row.mail}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10]}
-          component="div"
-          // count={rows.length}
-          count={usuarios.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-      {/* <FormControlLabel
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              'aria-labelledby': labelId,
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {row.nombre}
+                        </TableCell>
+                        <TableCell align="right">{row.apellido}</TableCell>
+                        <TableCell align="right">{row.cedula}</TableCell>
+                        <TableCell align="right">{row.cargo}</TableCell>
+                        <TableCell align="right">{row.mail}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: (dense ? 33 : 53) * emptyRows,
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10]}
+            component="div"
+            // count={rows.length}
+            count={usuarios.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+        {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       /> */}
-    </Box>
+      </Box>
+      <ModalUsuario />
+    </div>
   );
 }

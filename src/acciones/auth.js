@@ -4,17 +4,17 @@ import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import { tipos } from "../tipos/tipos"
 import { logoutEvento } from "./evento"
 
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
+// const Toast = Swal.mixin({
+//     toast: true,
+//     position: 'top-end',
+//     showConfirmButton: false,
+//     timer: 3000,
+//     timerProgressBar: true,
+//     didOpen: (toast) => {
+//       toast.addEventListener('mouseenter', Swal.stopTimer)
+//       toast.addEventListener('mouseleave', Swal.resumeTimer)
+//     }
+//   })
 
 export const iniciaLogin = (login, pass) => {
 
