@@ -11,7 +11,7 @@ export const iniciaLogin = (login, pass) => {
 
         //se lee el body:
         const body = await resp.json();
-        // console.log('body', body)
+        console.log('body', body.ok)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
@@ -23,7 +23,8 @@ export const iniciaLogin = (login, pass) => {
                 nombre: body.nombre
             }))
         } else {
-            Swal.fire('Error', "Ha ocurrido un error", 'error')
+            console.log(body.msg)
+            Swal.fire('Error', body.msg, 'error')
         }
     }
 }
