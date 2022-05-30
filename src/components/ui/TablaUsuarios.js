@@ -17,7 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
-import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import { faEdit, faTrashCan, faUser } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +25,9 @@ import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario, retornaUsuar
 import Swal from 'sweetalert2';
 import { ModalUsuario } from './ModalUsuario';
 import { abrirModalRegistro, accion_abrirModal } from '../../acciones/ui';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -87,6 +90,34 @@ const headCells = [
     label: 'Email',
   },
 ];
+
+
+function GrupoDeBotones() {
+
+  const dispatch = useDispatch();
+
+  const handleIniciarRegistro = () => {
+    dispatch(abrirModalRegistro());
+  }
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        '& > *': {
+          m: 1,
+        },
+      }}
+    >
+      <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
+      <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser}/>}>  Registrar usuario</Button>
+      </ButtonGroup>
+    </Box>
+  );
+}
+
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -170,7 +201,7 @@ const EnhancedTableToolbar = (props) => {
   }
 
   const handleEditar = () => {
-    console.log("editando...", idUsuarioSeleccionado)    
+    console.log("editando...", idUsuarioSeleccionado)
     dispatch(retornaUsuarioEspecifico(idUsuarioSeleccionado));
     dispatch(abrirModalRegistro(idUsuarioSeleccionado));
   }
@@ -335,6 +366,7 @@ export default function TablaUsuarios() {
 
   return (
     <div>
+      <GrupoDeBotones />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
           <EnhancedTableToolbar numSelected={selected.length} idUsuarioSeleccionado={idUsuario} />

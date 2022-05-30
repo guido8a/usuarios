@@ -17,6 +17,8 @@ import { Navbar } from '../ui/Navbar';
 
 import { useFormik } from 'formik';
 import { validationSchema } from '../../helpers/validacionRegistro';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
 
 export const RegistroScreen = () => {
 
@@ -102,13 +104,13 @@ export const RegistroScreen = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 1,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -376,9 +378,11 @@ export const RegistroScreen = () => {
               <Button
                 type="submit"
                 className='btnSubmit'
+                color='success'
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                startIcon={<FontAwesomeIcon icon={faSave} />}
               >
                 Guardar
               </Button>
