@@ -14,6 +14,7 @@ import { accion_cerrarModal } from '../../acciones/ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { RegistroScreen } from '../auth/RegistroScreen';
+import { retornaUsuarioEspecifico } from '../../acciones/datos';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -54,19 +55,25 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export const ModalUsuario = () => {
+export const ModalUsuario = (estado) => {
 
     const dispatch = useDispatch()
 
-    const { modalOpen } = useSelector(state => state.ui)
+    const { modalOpen, tipo, usuario, idUsuario } = useSelector(state => state.ui)
 
-    console.log("modal usu->", modalOpen)
+    // const aaaaa = dispatch(retornaUsuarioEspecifico(idUsuario))
 
-    const [open, setOpen] = React.useState(false);
+
+    // console.log("modal usuario -->", modalOpen)
+
+    // const [open, setOpen] = React.useState(false);
 
     // setOpen(modalOpen);
 
-    // setOpen(modalOpen);
+
+
+        // setOpen(estado);
+
 
 
     //   const handleClickOpen = () => {
@@ -83,13 +90,12 @@ export const ModalUsuario = () => {
         Open dialog
       </Button> */}
             <BootstrapDialog
-
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={modalOpen}
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Usuario
+                    {tipo === -1  ? 'Nuevo Usuario' : 'Editar usuario' } 
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     <RegistroScreen />

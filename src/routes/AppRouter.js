@@ -60,11 +60,11 @@ export const AppRouter = () => {
           </RutaPrivada>
         } />
 
-        <Route path="/registro" element={
+        {/* <Route path="/registro" element={
           <RutaPrivada>
             <RegistroScreen />
           </RutaPrivada>
-        } />
+        } /> */}
 
         <Route path="/usuarios" element={
           <RutaPrivada>

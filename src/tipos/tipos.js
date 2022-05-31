@@ -8,6 +8,8 @@ export const tipos = {
     uiNoUsuarioSeleccionado: '[UI] Ningún usuario seleccionado',
     uiAbrirModalRegistro: '[UI] Abrir modal registro',
     uiRetornaUsuario: '[UI] Retorna usuario específico',
+    uiNuevoUsuario: '[UI] Nuevo usuario',
+    uiEditarUsuario: '[UI] Editar usuario',
 
     //manejo de eventos
     eventoNuevoEvento: '[ev] NuevoEvento',

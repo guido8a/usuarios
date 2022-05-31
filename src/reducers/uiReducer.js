@@ -2,9 +2,9 @@ import { tipos } from '../tipos/tipos';
 
 const estadoInicial = {
     modalOpen: false,
-    terminado: false,
     idUsuario: null,
-    usuario: null
+    usuario: null,
+    tipo: -1
 }
 
 export const uiReducer = (estado = estadoInicial, accion) => {
@@ -17,12 +17,8 @@ export const uiReducer = (estado = estadoInicial, accion) => {
         case tipos.uiCerrarModal:
             return {
                 ...estado,
-                modalOpen: false
-            }
-        case tipos.uiRegistroCorrecto:
-            return {
-                ...estado,
-                terminado: true
+                modalOpen: false,
+                usuario: null,
             }
 
         case tipos.uiUsuarioSeleccionado:
@@ -35,7 +31,8 @@ export const uiReducer = (estado = estadoInicial, accion) => {
             return {
                 ...estado,
                 idUsuario: null,
-                usuario: null
+                usuario: null,
+                tipo: -1
             }
 
         case tipos.uiRetornaUsuario:
@@ -47,8 +44,15 @@ export const uiReducer = (estado = estadoInicial, accion) => {
         case tipos.uiAbrirModalRegistro:
             return {
                 ...estado,
-                modalOpen: true
+                modalOpen: true,
+                tipo: accion.payload
             }
+
+            case tipos.uiNuevoUsuario:
+                return{
+                    ...estado,
+                    modalOpen: true                        
+                }
 
         default:
             return estado;

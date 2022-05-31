@@ -71,7 +71,6 @@ export const retornaUsuarioEspecifico = (id) => {
             const body = await resp.json();
             console.log("usuario especifico ", body)
             if (body.ok) {
-                //    console.log("usuarios formateados", usuarios)
                 const usuario = arregloUsuario(body.Registro)
                 //    dispatch(cargaUsuarioEspecifico(body.Registro));
                 dispatch(cargaUsuarioEspecifico(usuario));
