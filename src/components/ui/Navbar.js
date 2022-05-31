@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -14,11 +13,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { iniciaLogout } from '../../acciones/auth';
-import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { StyledMenu } from './StyledMenu';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressBook } from '@fortawesome/free-regular-svg-icons'
 import Swal from 'sweetalert2';
 
 const pages = ['Products', 'Pricing', 'Blog'];
@@ -84,35 +80,17 @@ export const Navbar = () => {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AccountCircle sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
+                    <Typography variant="h6" noWrap component="a" href="/"
+                        sx={{mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace',
+                            fontWeight: 700, color: 'inherit', //letterSpacing: '.3rem', 
+                            textDecoration: 'none',}}
                     >
                         {nombre}
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <i className='fa-solid fa-bars fa-xl' onClick={handleOpenNavMenu}></i>
+                        
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -132,12 +110,12 @@ export const Navbar = () => {
                             }}
                         >
                             <MenuItem onClick={handleClose} disableRipple>
-                                <EditIcon />
+                                <i className='fa-solid fa-pencil mr-2' ></i>
                                 <a className="navbar-brand" href="/registro"> Registro </a>
                             </MenuItem>
 
                             <MenuItem onClick={handleClose} disableRipple>
-                                <FontAwesomeIcon icon={faAddressBook} />
+                                <i className='fa-regular fa-address-book mr-2' ></i>
                                 <a className="navbar-brand" href="/usuarios" style={{ marginLeft: "10px" }}> Usuarios </a>
                             </MenuItem>
                             {/* {pages.map((page) => (
@@ -199,29 +177,22 @@ export const Navbar = () => {
                             onClose={handleClose}
                         >
                             <MenuItem onClick={handleClose} disableRipple>
-                                <EditIcon />
-                                <a className="navbar-brand" href="/registro"> Registro </a>
+                                <i className='fa-solid fa-pencil mr-2' ></i>
+                                <a className="navbar-brand" href="/registro"> Registros </a>
                             </MenuItem>
 
                             <MenuItem onClick={handleClose} disableRipple>
-                                <FontAwesomeIcon icon={faAddressBook} />
+                                <i className='fa-regular fa-address-book mr-1' ></i>
                                 <a className="navbar-brand" href="/usuarios" style={{ marginLeft: "10px" }}> Usuarios </a>
                             </MenuItem>
                         </StyledMenu>
                     </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Salir del sistema">
-                            <button className="btn btn-danger"
-                                onClick={handleLogout} style={{ float: 'right' }}
-                                type="button"> <i className='fas fa-sign-out-alt'></i> <span> Salir</span>
-                            </button>
-                        </Tooltip>
-                        {/* <Tooltip title="Open settings">
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <img alt="Remy Sharp" src="/assets/images/avatar.png" width="32px" />
                             </IconButton>
-                        </Tooltip> */}
+                        </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
@@ -238,12 +209,22 @@ export const Navbar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {/* {settings.map((setting) => (
+                            {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
-                            ))} */}
+                            ))}
                         </Menu>
+
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Salir del sistema">
+                            <button className="btn btn-danger"
+                                onClick={handleLogout} style={{ float: 'right' }}
+                                // type="button"> <i className='fa-solid fa-user-large'></i> <span>Salir</span>
+                                type="button"> <i className='fa-solid fa-user-xmark mr-1' ></i> <span>Salir</span>
+                            </button>
+                        </Tooltip>
                     </Box>
                 </Toolbar>
             </Container>

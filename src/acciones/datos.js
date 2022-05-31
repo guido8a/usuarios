@@ -1,5 +1,5 @@
 
-import { fetchUsuarios } from "../helpers/fetch"
+import { fetchConToken } from "../helpers/fetch"
 import moment from 'moment'
 import { tipos } from "../tipos/tipos";
 
@@ -7,7 +7,8 @@ import { tipos } from "../tipos/tipos";
 export const retornaUsuarios = () => {
     return async (dispatch) => {
         try {
-            const resp = await fetchUsuarios();
+            // const resp = await fetchUsuarios();
+            const resp = await fetchConToken('user');
             const body = await resp.json();
             // console.log("usuarios", body)
             if (body.ok) {
@@ -67,7 +68,8 @@ export const noUsuarioSeleccionado = () => {
 export const retornaUsuarioEspecifico = (id) => {
     return async (dispatch) => {
         try {
-            const resp = await fetchUsuarios(id);
+            // const resp = await fetchUsuarios(id);
+            const resp = await fetchConToken(`user/${id}`);
             const body = await resp.json();
             console.log("usuario especifico ", body)
             if (body.ok) {

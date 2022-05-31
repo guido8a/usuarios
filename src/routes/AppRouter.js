@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import {BrowserRouter, Routes, Route,} from "react-router-dom";
 import { LoginScreen } from '../components/auth/LoginScreen';
 import { CalendarioScreen } from '../components/calendario/CalendarioScreen';
 import { useDispatch, useSelector } from 'react-redux';
