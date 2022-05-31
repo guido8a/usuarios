@@ -9,6 +9,13 @@ export const accion_cerrarModal = () => ({
     type: tipos.uiCerrarModal
 })
 
-export const abrirModalRegistro = () => ({
-    type: tipos.uiAbrirModalRegistro
+export const abrirModalRegistro = (tipo) => ({
+    type: tipos.uiAbrirModalRegistro,
+    payload: tipo 
 })
+
+export const accion_nuevoUsuario = () => {
+    return{
+        type: tipos.uiNuevoUsuario
+    }
+}

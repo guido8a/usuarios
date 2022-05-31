@@ -1,8 +1,8 @@
 import React from 'react'
-import TablaUsuarios from '../ui/TablaUsuarios'
 import { Navbar } from './Navbar'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { esES } from '@mui/material/locale';
+import { TablaUsuarios } from '../ui/TablaUsuarios';
 
 
 const theme = createTheme(

@@ -24,9 +24,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario, retornaUsuarioEspecifico } from '../../acciones/datos';
 import Swal from 'sweetalert2';
 import { ModalUsuario } from './ModalUsuario';
-import { abrirModalRegistro, accion_abrirModal } from '../../acciones/ui';
+import { abrirModalRegistro, accion_abrirModal, accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { SyncProblemSharp } from '@mui/icons-material';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -91,13 +92,12 @@ const headCells = [
   },
 ];
 
-
 function GrupoDeBotones() {
 
   const dispatch = useDispatch();
 
   const handleIniciarRegistro = () => {
-    dispatch(abrirModalRegistro());
+    dispatch(abrirModalRegistro(-1));
   }
 
   return (
@@ -112,12 +112,11 @@ function GrupoDeBotones() {
       }}
     >
       <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
-      <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser}/>}>  Registrar usuario</Button>
+        <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser} />}>  Registrar usuario</Button>
       </ButtonGroup>
     </Box>
   );
 }
-
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -169,13 +168,14 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
+  // onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
 
 const EnhancedTableToolbar = (props) => {
+ 
   const { numSelected, idUsuarioSeleccionado } = props;
 
   const dispatch = useDispatch();
@@ -203,7 +203,7 @@ const EnhancedTableToolbar = (props) => {
   const handleEditar = () => {
     console.log("editando...", idUsuarioSeleccionado)
     dispatch(retornaUsuarioEspecifico(idUsuarioSeleccionado));
-    dispatch(abrirModalRegistro(idUsuarioSeleccionado));
+    dispatch(abrirModalRegistro(idUsuarioSeleccionado));    
   }
 
   return (
@@ -266,17 +266,18 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function TablaUsuarios() {
+export const TablaUsuarios = () => {
 
   const dispatch = useDispatch();
-  const { usuarios } = useSelector(state => state.tabla);
-  const { idUsuario } = useSelector(state => state.ui);
 
   //retorna los usuarios de la BD
   React.useEffect(() => {
     dispatch(retornaUsuarios())
   }, [dispatch])
 
+
+  const { usuarios } = useSelector(state => state.tabla);
+  const { idUsuario } = useSelector(state => state.ui);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -286,23 +287,24 @@ export default function TablaUsuarios() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const [estado, setEstado] = React.useState(false);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    dispatch(noUsuarioSeleccionado());
-    if (event.target.checked) {
-      // const newSelecteds = rows.map((n) => n.name);
-      const newSelecteds = usuarios.map((n) => n.nombre);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-    setSelectedID([]);
-  };
+  // const handleSelectAllClick = (event) => {
+  //   dispatch(noUsuarioSeleccionado());
+  //   if (event.target.checked) {
+  //     const newSelecteds = usuarios.map((n) => n.nombre);
+  //     setSelected(newSelecteds);
+  //     return;
+  //   }
+  //   setSelected([]);
+  //   setSelectedID([]);
+  // };
 
   const handleClick = (event, name, id) => {
 
@@ -343,7 +345,6 @@ export default function TablaUsuarios() {
     setSelectedID(ids)
   };
 
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -353,19 +354,17 @@ export default function TablaUsuarios() {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
+  // const handleChangeDense = (event) => {
+  //   setDense(event.target.checked);
+  // };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    // page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usuarios.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usuarios.length) : 0;
 
   return (
-    <div>
+    <>
       <GrupoDeBotones />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
@@ -380,7 +379,7 @@ export default function TablaUsuarios() {
                 numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
+                // onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
                 // rowCount={rows.length}
                 rowCount={usuarios.length}
@@ -457,7 +456,9 @@ export default function TablaUsuarios() {
         label="Dense padding"
       /> */}
       </Box>
+
       <ModalUsuario />
-    </div>
+    </>
+
   );
 }
