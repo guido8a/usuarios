@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useForma } from '../../hooks/usaForma';
-import { useDispatch, useSelector } from 'react-redux';
-// import Swal from 'sweetalert2';
+// import {
+//   Card,
+//   CardContent,
+//   // TextField,
+// } from "@mui/material";
+
+import { withFormik } from "formik";
+import { validationSchema } from "../../helpers/validacionRegistro";
+
+import React from 'react';
+// import { useForma } from '../../hooks/usaForma';
+// import { useDispatch, useSelector } from 'react-redux';
 import { iniciaRegistro } from '../../acciones/auth';
 import moment from 'moment';
 import Button from '@mui/material/Button';
@@ -10,399 +18,352 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { Navbar } from '../ui/Navbar';
-
-import { useFormik } from 'formik';
-import { validationSchema } from '../../helpers/validacionRegistro';
+// import { useFormik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
+import { connect } from 'react-redux'
 
-export const RegistroScreen = () => {
+const tiposSexo = [{ value: 'M', label: "Masculino" }, { value: 'F', label: 'Femenino' },]
+const tiposActivo = [{ value: 1, label: "Activo" }, { value: 0, label: 'No activo' },]
 
-  const { usuario, tipo } = useSelector(state => state.ui);
 
-  console.log("-------<<<<<>>>", tipo, usuario)
-  // console.log("entro registro screen")
+const form = props => {
 
-  const ahora = moment().minutes(0).seconds(0);
-  const tresMeses = moment().minutes(0).seconds(0).add(3, 'months');
-  const dispatch = useDispatch();
   const theme = createTheme();
 
-  //usaForma para el registro
-  const [registroValores, registroManejaCambios] = useForma({
-    // mail: `${tipo === -1 ? '' : usuario?.mail}`,
-    mail: `${''}`,
-    nombre: "",
-    apellido: "",
-    cedula: "",
-    titulo: "",
-    cargo: "",
-    login: "",
-    fechaInicio: ahora.toDate(),
-    fechaPass: tresMeses.toDate(),
-    fechaFin: ahora.toDate(),
-    password: "12345",
-    activo: 1,
-    sexo: "M",
-    direccion: "",
-    referencia: ""
-  })
-
-  const tiposSexo = [{ value: 'M', label: "Masculino" }, { value: 'F', label: 'Femenino' },]
-  const tiposActivo = [{ value: 1, label: "Activo" }, { value: 0, label: 'No activo' },]
-
-  const formik = useFormik({
-
-    initialValues: registroValores,
-
-    // initialValues: {
-    //   mail: "",
-    //   nombre: "",
-    //   apellido: "",
-    //   cedula: "",
-    //   titulo: "",
-    //   cargo: "",
-    //   login: "",
-    //   fechaInicio: ahora.toDate(),
-    //   fechaPass: tresMeses.toDate(),
-    //   fechaFin: ahora.toDate(),
-    //   password: "12345",
-    //   activo: 1,
-    //   sexo: "M",
-    //   direccion: "",
-    //   referencia: ""
-    // },
-
-    validationSchema: validationSchema,
-    onSubmit: values => {
-      // handleRegistro();
-      handleFormSubmit();
-    },
-  });
-
-  // const handleRegistro = (e) => {
-  //   e.preventDefault()
-  //   dispatch(iniciaRegistro(registroValores))
-  // }
-
-  const handleFormSubmit = () => {
-    var data = {
-      cedula: formik.values.cedula,
-      nombre: formik.values.nombre,
-      mail: formik.values.mail,
-      apellido: formik.values.apellido,
-      fechaInicio: formik.values.fechaInicio,
-      fechaFin: formik.values.fechaFin,
-      titulo: formik.values.titulo,
-      cargo: formik.values.cargo,
-      login: formik.values.login,
-      password: formik.values.password,
-      activo: formik.values.activo,
-      fechaPass: formik.values.fechaPass,
-      sexo: formik.values.sexo,
-      direccion: formik.values.direccion,
-      referencia: formik.values.referencia
-    }
-
-    // dispatch(iniciaRegistro(JSON.stringify(data, null, 2)))
-    dispatch(iniciaRegistro(data));
-    // alert(JSON.stringify(data, null, 2));
-    formik.resetForm();
-  }
+  const {
+    classes,
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleReset,
+    tipo
+  } = props;
 
   return (
-    // <div>
-    //   {/* <Navbar /> */}
-    //   <ThemeProvider theme={theme}>
-    //     <Container component="main" maxWidth="xs">
-    //       <CssBaseline />
-    //       <Box
-    //         sx={{
-    //           marginTop: 1,
-    //           display: 'flex',
-    //           flexDirection: 'column',
-    //           alignItems: 'center',
-    //         }}
-    //       >
-    //         {/* <Typography component="h1" variant="h5">
-    //           Registro de usuarios
-    //         </Typography> */}
-    //         <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
+    <div >
+      {/* <form onSubmit={handleSubmit}> */}
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
+              {/* <Card >
+          <CardContent> */}
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="nombre"
+                    label="Nombre"
+                    value={values.nombre}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.nombre ? errors.nombre : ""}
+                    error={touched.nombre && Boolean(errors.nombre)}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="apellido"
+                    label="Apellido"
+                    value={values.apellido}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.apellido ? errors.apellido : ""}
+                    error={touched.apellido && Boolean(errors.apellido)}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    id="cedula"
+                    label="Cédula"
+                    value={values.cedula}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.cedula ? errors.cedula : ""}
+                    error={touched.cedula && Boolean(errors.cedula)}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    id="mail"
+                    label="Email"
+                    value={values.mail}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.mail ? errors.mail : ""}
+                    error={touched.mail && Boolean(errors.mail)}
+                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    id="titulo"
+                    label="Título"
+                    value={values.titulo}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.titulo ? errors.titulo : ""}
+                    error={touched.titulo && Boolean(errors.titulo)}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={8}>
+                  <TextField
+                    id="cargo"
+                    label="Cargo"
+                    value={values.cargo}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.cargo ? errors.cargo : ""}
+                    error={touched.cargo && Boolean(errors.cargo)}
+                    inputProps={{ style: { textTransform: 'capitalize' } }}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="login"
+                    label="Usuario"
+                    value={values.login}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.login ? errors.login : ""}
+                    error={touched.login && Boolean(errors.login)}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="password"
+                    label="Password"
+                    type='password'
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.password ? errors.password : ""}
+                    error={touched.password && Boolean(errors.password)}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={7}>
+                  <TextField
+                    id="direccion"
+                    label="Dirección"
+                    name='direccion'
+                    multiline
+                    minRows={2}
+                    maxRows={3}
+                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.direccion}
+                    error={touched.direccion && Boolean(errors.direccion)}
+                    helperText={touched.direccion ? errors.direccion : ''}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                  <TextField
+                    id="referencia"
+                    label="Referencia"
+                    name='referencia'
+                    multiline
+                    minRows={2}
+                    maxRows={3}
+                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.referencia}
+                    error={touched.referencia && Boolean(errors.referencia)}
+                    helperText={touched.referencia ? errors.referencia : ''}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={7}>
+                  <TextField
+                    id="activo"
+                    select
+                    name='activo'
+                    label="Estado"
+                    value={values.activo}
+                    onChange={handleChange}
+                    helperText="Seleccione el estado del usuario"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  >
+                    {tiposActivo.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
 
-    //           <Grid container spacing={2}>
-    //             <Grid item xs={12} sm={6}>
-    //               <TextField
-    //                 autoComplete="off"
-    //                 name="nombre"
-    //                 required
-    //                 fullWidth
-    //                 id="nombre"
-    //                 label="Nombre"
-    //                 autoFocus
-    //                 variant="outlined"
-    //                 // value={registroValores.nombre}
-    //                 // onChange={registroManejaCambios}
-    //                 inputProps={{ style: { textTransform: 'capitalize' } }}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.nombre}
-    //                 error={formik.touched.nombre && Boolean(formik.errors.nombre)}
-    //                 helperText={formik.touched.nombre && formik.errors.nombre}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
-    //             <Grid item xs={12} sm={6}>
-    //               <TextField
-    //                 required
-    //                 fullWidth
-    //                 id="apellido"
-    //                 label="Apellido"
-    //                 name="apellido"
-    //                 autoComplete="off"
-    //                 // value={registroValores.apellido}
-    //                 // onChange={registroManejaCambios}
-    //                 inputProps={{ style: { textTransform: 'capitalize' } }}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.apellido}
-    //                 error={formik.touched.apellido && Boolean(formik.errors.apellido)}
-    //                 helperText={formik.touched.apellido && formik.errors.apellido}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
-    //             <Grid item xs={12}>
-    //               <TextField
-    //                 required
-    //                 fullWidth
-    //                 id="cedula"
-    //                 label="Cédula"
-    //                 name="cedula"
-    //                 autoComplete="off"
-    //                 // value={registroValores.cedula}
-    //                 // onChange={registroManejaCambios}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.cedula}
-    //                 error={formik.touched.cedula && Boolean(formik.errors.cedula)}
-    //                 helperText={formik.touched.cedula && formik.errors.cedula}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
+                <Grid item xs={12} sm={5}>
+                  <TextField
+                    id="sexo"
+                    name='sexo'
+                    select
+                    label="Sexo"
+                    value={values.sexo}
+                    onChange={handleChange}
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  >
+                    {tiposSexo.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                {/* 
+            <TextField
+              select
+              id="course"
+              label="Course Category"
+              value={values.course}
+              onChange={handleChange("course")}
+              helperText={touched.course ? errors.course : ""}
+              error={touched.course && Boolean(errors.course)}
+              margin="dense"
+              variant="outlined"
+              fullWidth
+            >
+              {courseCategory.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            /> */}
 
-    //             <Grid item xs={12}>
-    //               <TextField
-    //                 fullWidth
-    //                 id="mail"
-    //                 label="Email"
-    //                 name="mail"
-    //                 autoComplete="off"
-    //                 // value={registroValores.mail}
-    //                 // onChange={registroManejaCambios}
-    //                 inputProps={{ style: { textTransform: 'lowercase' } }}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.mail}
-    //                 error={formik.touched.mail && Boolean(formik.errors.mail)}
-    //                 helperText={formik.touched.mail && formik.errors.mail}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
-    //             <Grid item xs={12} sm={4}>
-    //               <TextField
-    //                 fullWidth
-    //                 name="titulo"
-    //                 label="Título"
-    //                 id="titulo"
-    //                 autoComplete="off"
-    //                 // value={registroValores.titulo}
-    //                 // onChange={registroManejaCambios}
-    //                 inputProps={{ style: { textTransform: 'capitalize' } }}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.titulo}
-    //                 error={formik.touched.titulo && Boolean(formik.errors.titulo)}
-    //                 helperText={formik.touched.titulo && formik.errors.titulo}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
-    //             <Grid item xs={12} sm={8}>
-    //               <TextField
-    //                 fullWidth
-    //                 name="cargo"
-    //                 label="Cargo"
-    //                 id="cargo"
-    //                 autoComplete="off"
-    //                 // value={registroValores.cargo}
-    //                 // onChange={registroManejaCambios}
-    //                 inputProps={{ style: { textTransform: 'capitalize' } }}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.cargo}
-    //                 error={formik.touched.cargo && Boolean(formik.errors.cargo)}
-    //                 helperText={formik.touched.cargo && formik.errors.cargo}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
-    //             <Grid item xs={12} sm={6}>
-    //               <TextField
-    //                 required
-    //                 fullWidth
-    //                 name="login"
-    //                 label="Usuario"
-    //                 id="login"
-    //                 autoComplete="off"
-    //                 // value={registroValores.login}
-    //                 // onChange={registroManejaCambios}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.login}
-    //                 error={formik.touched.login && Boolean(formik.errors.login)}
-    //                 helperText={formik.touched.login && formik.errors.login}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
+              </Grid>
 
-    //             <Grid item xs={12} sm={6}>
-    //               <TextField
-    //                 // disabled
-    //                 required
-    //                 fullWidth
-    //                 name="password"
-    //                 label="Password"
-    //                 type="password"
-    //                 id="password"
-    //                 autoComplete="off"
-    //                 // value={registroValores.password}
-    //                 // onChange={registroManejaCambios}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.password}
-    //                 error={formik.touched.password && Boolean(formik.errors.password)}
-    //                 helperText={formik.touched.password && formik.errors.password}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
+              <Button type="submit" color='success' fullWidth variant="contained"
+                sx={{ mt: 3, mb: 2 }} startIcon={<FontAwesomeIcon icon={faSave} />}
+              >
+                {tipo === -1 ? 'Guardar' : 'Actualizar'}
+              </Button>
+              {/* </CardContent>
+               </Card> */}
+            </Box>
+          </Box>
+        </Container>
+      </ThemeProvider>
+      {/* </form> */}
+    </div >
+  );
+};
 
-    //             <Grid item xs={12} sm={7}>
-    //               <TextField
-    //                 id="direccion"
-    //                 label="Dirección"
-    //                 name='direccion'
-    //                 multiline
-    //                 minRows={2}
-    //                 maxRows={3}
-    //                 // value={registroValores.direccion}
-    //                 // onChange={registroManejaCambios}
-    //                 inputProps={{ style: { textTransform: 'lowercase' } }}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.direccion}
-    //                 error={formik.touched.direccion && Boolean(formik.errors.direccion)}
-    //                 helperText={formik.touched.direccion && formik.errors.direccion}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
+// const RegistroScreen = withFormik({
+const Registro = withFormik({
 
-    //             <Grid item xs={12} sm={5}>
-    //               <TextField
-    //                 id="referencia"
-    //                 label="Referencia"
-    //                 name='referencia'
-    //                 multiline
-    //                 minRows={2}
-    //                 maxRows={3}
-    //                 // value={registroValores.referencia}
-    //                 // onChange={registroManejaCambios}
-    //                 inputProps={{ style: { textTransform: 'lowercase' } }}
-    //                 onChange={formik.handleChange}
-    //                 onBlur={formik.handleBlur}
-    //                 value={formik.values.referencia}
-    //                 error={formik.touched.referencia && Boolean(formik.errors.referencia)}
-    //                 helperText={formik.touched.referencia && formik.errors.referencia}
-    //                 InputLabelProps={{
-    //                   shrink: true,
-    //                 }}
-    //               />
-    //             </Grid>
+  enableReinitialize: true,
 
-    //             <Grid item xs={12} sm={7}>
-    //               <TextField
-    //                 id="activo"
-    //                 select
-    //                 name='activo'
-    //                 label="Estado"
-    //                 // value={registroValores.activo}
-    //                 value={formik.values.activo}
-    //                 onChange={formik.handleChange}
-    //                 // onChange={registroManejaCambios}
-    //                 helperText="Seleccione el estado del usuario"
-    //               >
-    //                 {tiposActivo.map((option) => (
-    //                   <MenuItem key={option.value} value={option.value}>
-    //                     {option.label}
-    //                   </MenuItem>
-    //                 ))}
-    //               </TextField>
-    //             </Grid>
+  mapPropsToValues: (props) => ({
+    id: props.initialValues ? props.initialValues[0]?.id : null,
+    mail: props.initialValues ? props.initialValues[0]?.mail : "",
+    nombre: props.initialValues ? props.initialValues[0]?.nombre : "",
+    apellido: props.initialValues ? props.initialValues[0]?.apellido : "",
+    cedula: props.initialValues ? props.initialValues[0]?.cedula : "",
+    titulo: props.initialValues ? props.initialValues[0]?.titulo : "",
+    cargo: props.initialValues ? props.initialValues[0]?.cargo : "",
+    login: props.initialValues ? props.initialValues[0]?.login : "",
+    fechaInicio: props.initialValues ? props.initialValues[0]?.fechaInicio : moment().minutes(0).seconds(0).toDate(),
+    fechaPass: props.initialValues ? props.initialValues[0]?.fechaPass : moment().minutes(0).seconds(0).add(3, 'months').toDate(),
+    fechaFin: props.initialValues ? props.initialValues[0]?.fechaFin : moment().minutes(0).seconds(0).toDate(),
+    password: props.initialValues ? props.initialValues[0]?.password : "",
+    activo: props.initialValues ? props.initialValues[0]?.activo : 1,
+    sexo: props.initialValues ? props.initialValues[0]?.sexo : "M",
+    direccion: props.initialValues ? props.initialValues[0]?.direccion : "",
+    referencia: props.initialValues ? props.initialValues[0]?.referencia : ""
+  }),
 
-    //             <Grid item xs={12} sm={5}>
-    //               <TextField
-    //                 id="sexo"
-    //                 name='sexo'
-    //                 select
-    //                 label="Sexo"
-    //                 // value={registroValores.sexo}
-    //                 // onChange={registroManejaCambios}
-    //                 value={formik.values.sexo}
-    //                 onChange={formik.handleChange}
-    //               >
-    //                 {tiposSexo.map((option) => (
-    //                   <MenuItem key={option.value} value={option.value}>
-    //                     {option.label}
-    //                   </MenuItem>
-    //                 ))}
-    //               </TextField>
-    //             </Grid>
-    //           </Grid>
+  // mapPropsToValues: ({
+  //   mail,
+  // }) => {
+  //   return {
+  //     mail: mail || "",
+  //   };
+  // },
 
-    //           <Button
-    //             type="submit"
-    //             className='btnSubmit'
-    //             color='success'
-    //             fullWidth
-    //             variant="contained"
-    //             sx={{ mt: 3, mb: 2 }}
-    //             startIcon={<FontAwesomeIcon icon={faSave} />}
-    //           >
-    //             Guardar
-    //           </Button>
-    //         </Box>
-    //       </Box>
-    //     </Container>
-    //   </ThemeProvider>
-    // </div>
-    <></>
-  )
-}
+  validationSchema: validationSchema,
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    // props.dispatch(iniciaRegistro(values));
+
+    props.registroDeUsuario(values, props.tipo);
+    setSubmitting(false);
+  }
+})(form);
+
+//función para enviar un state del selector a las props
+const mapStateToProps = (
+  state
+) => ({
+  initialValues: state.ui.usuario,
+  tipo: state.ui.tipo
+})
+
+//función para usar un dispatch mediante props
+const mapDispatchToProps = (dispatch) => ({
+  registroDeUsuario: (values, tipo) => {
+    dispatch(iniciaRegistro(values, tipo))
+  }
+})
+
+export const RegistroScreen = connect(mapStateToProps, mapDispatchToProps)(Registro)
+
+

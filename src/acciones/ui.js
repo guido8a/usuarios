@@ -19,3 +19,10 @@ export const accion_nuevoUsuario = () => {
         type: tipos.uiNuevoUsuario
     }
 }
+
+export const accion_editarUsuario = (id) => {
+    return{
+        type: tipos.uiEditarUsuario,
+        payload: id
+    }
+}

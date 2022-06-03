@@ -4,7 +4,8 @@ const estadoInicial = {
     modalOpen: false,
     idUsuario: null,
     usuario: null,
-    tipo: -1
+    tipo: -1,
+    usuarios: [],
 }
 
 export const uiReducer = (estado = estadoInicial, accion) => {
@@ -19,6 +20,7 @@ export const uiReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 modalOpen: false,
                 usuario: null,
+                tipo: -1
             }
 
         case tipos.uiUsuarioSeleccionado:
@@ -48,11 +50,35 @@ export const uiReducer = (estado = estadoInicial, accion) => {
                 tipo: accion.payload
             }
 
-            case tipos.uiNuevoUsuario:
-                return{
-                    ...estado,
-                    modalOpen: true                        
-                }
+        case tipos.uiNuevoUsuario:
+            return {
+                ...estado,
+                modalOpen: true
+            }
+
+        case tipos.uiEditarUsuario:
+            return {
+                ...estado,
+                modalOpen: true,
+                tipo: 1,
+                usuario: estado.usuarios.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+
+        case tipos.uiTablaUsuarios:
+            return {
+                ...estado,
+                usuarios: [...accion.payload]
+            }
+
+        case tipos.uiBorrarUsuario:
+            return {
+                ...estado,
+                idUsuario: null,
+                usuario: null,
+                tipo: -1,
+            }
 
         default:
             return estado;

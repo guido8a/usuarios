@@ -21,13 +21,12 @@ import { faEdit, faTrashCan, faUser } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario, retornaUsuarioEspecifico } from '../../acciones/datos';
+import { borrarUsuario, noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario } from '../../acciones/datos';
 import Swal from 'sweetalert2';
 import { ModalUsuario } from './ModalUsuario';
-import { abrirModalRegistro, accion_abrirModal, accion_nuevoUsuario } from '../../acciones/ui';
+import { accion_editarUsuario, accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { SyncProblemSharp } from '@mui/icons-material';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -58,7 +57,6 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-
 const headCells = [
   {
     id: 'nombre',
@@ -67,7 +65,7 @@ const headCells = [
     label: 'Nombre',
   },
   {
-    id: 'calories',
+    id: 'apellido',
     numeric: true,
     disablePadding: false,
     label: 'Apellido',
@@ -97,7 +95,7 @@ function GrupoDeBotones() {
   const dispatch = useDispatch();
 
   const handleIniciarRegistro = () => {
-    dispatch(abrirModalRegistro(-1));
+    dispatch(accion_nuevoUsuario());
   }
 
   return (
@@ -119,7 +117,8 @@ function GrupoDeBotones() {
 }
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  // const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { order, orderBy, onRequestSort } = props;
 
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -175,16 +174,19 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
- 
-  const { numSelected, idUsuarioSeleccionado } = props;
+
+  const { numSelected, idUsuarioSeleccionado, variosUsuarios, nombres } = props;
 
   const dispatch = useDispatch();
+  const {uid} = useSelector(state => state.auth)
+  const {idUsuario} = useSelector(state => state.ui)
+
+  let titulo = numSelected > 1 ? `Desea borrar los usuarios:  ${nombres} ?` : `Desea borrar el usuario: ${nombres[0]}?`
 
   const handleBorrar = () => {
     console.log("borrando....", idUsuarioSeleccionado)
-
     Swal.fire({
-      title: 'Desea borrar este registro?',
+      title: titulo,
       // showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: 'Borrar',
@@ -194,18 +196,20 @@ const EnhancedTableToolbar = (props) => {
       icon: 'question'
     }).then((result) => {
       if (result.isConfirmed) {
-        // } else if (result.isDenied) {
-        // //   Swal.fire('Changes are not saved', '', 'info')
+        (idUsuarioSeleccionado === parseInt(uid)) ?
+        Swal.fire("Error", "No se puede eliminar este usuario", "error") : 
+        dispatch(borrarUsuario(idUsuarioSeleccionado));
+        dispatch(noUsuarioSeleccionado());
       }
     })
   }
 
   const handleEditar = () => {
     console.log("editando...", idUsuarioSeleccionado)
-    dispatch(retornaUsuarioEspecifico(idUsuarioSeleccionado));
-    dispatch(abrirModalRegistro(idUsuarioSeleccionado));    
+    dispatch(accion_editarUsuario(idUsuarioSeleccionado));
   }
 
+ 
   return (
     <Toolbar
       sx={{
@@ -217,6 +221,8 @@ const EnhancedTableToolbar = (props) => {
         }),
       }}
     >
+      
+
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 80%' }}
@@ -229,35 +235,33 @@ const EnhancedTableToolbar = (props) => {
       ) : (
         <Typography
           sx={{ flex: '1 1 100%' }}
-          variant="h6"
+          variant="h5"
           id="tableTitle"
           component="div"
+          align='center'
         >
           Lista de Usuarios
         </Typography>
       )}
-      {numSelected == 1 ? (
+      {numSelected === 1 ? (
         // <Tooltip title="Editar">
         <Grid item xs={1} sm={2}>
-          <IconButton title='Editar' onClick={handleEditar}>
+          <IconButton title='Editar' color='success' onClick={handleEditar}>
             <FontAwesomeIcon icon={faEdit} />
           </IconButton>
-          <IconButton title='Borrar' onClick={handleBorrar}>
+          <IconButton title='Borrar' color='error' onClick={handleBorrar}>
             <FontAwesomeIcon icon={faTrashCan} />
           </IconButton>
         </Grid>
-      ) : (numSelected > 1 ?
-        (<Tooltip title="Borrar">
-          <IconButton>
-            <FontAwesomeIcon icon={faTrashCan} />
-          </IconButton>
-        </Tooltip>) : ''
-        // <Tooltip title="Filter list">
-        //   <IconButton>
-        //     <FilterListIcon />
-        //   </IconButton>
-        // </Tooltip>
-      )}
+      ) : ''
+      // (numSelected > 1 ?
+      //   (<Tooltip title="Borrar">
+      //     <IconButton color='error' onClick={handleBorrar}>
+      //       <FontAwesomeIcon icon={faTrashCan} />
+      //     </IconButton>
+      //   </Tooltip>) : ''
+      // )
+      }
     </Toolbar>
   );
 };
@@ -276,18 +280,18 @@ export const TablaUsuarios = () => {
   }, [dispatch])
 
 
-  const { usuarios } = useSelector(state => state.tabla);
-  const { idUsuario } = useSelector(state => state.ui);
+  // const { usuarios } = useSelector(state => state.tabla);
+  const { idUsuario, usuarios } = useSelector(state => state.ui);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [selectedID, setSelectedID] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const [estado, setEstado] = React.useState(false);
+  // const [estado, setEstado] = React.useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -341,6 +345,7 @@ export const TablaUsuarios = () => {
       dispatch(noUsuarioSeleccionado());
     }
 
+    
     setSelected(newSelected);
     setSelectedID(ids)
   };
@@ -368,12 +373,13 @@ export const TablaUsuarios = () => {
       <GrupoDeBotones />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} idUsuarioSeleccionado={idUsuario} />
+          <EnhancedTableToolbar numSelected={selected.length} idUsuarioSeleccionado={idUsuario} variosUsuarios={selectedID} nombres={selected}/>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
+              // size={dense ? 'small' : 'medium'}
+              size={'medium'}
             >
               <EnhancedTableHead
                 numSelected={selected.length}
@@ -431,7 +437,8 @@ export const TablaUsuarios = () => {
                 {emptyRows > 0 && (
                   <TableRow
                     style={{
-                      height: (dense ? 33 : 53) * emptyRows,
+                      // height: (dense ? 33 : 53) * emptyRows,
+                      height: 53 * emptyRows,
                     }}
                   >
                     <TableCell colSpan={6} />
