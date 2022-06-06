@@ -24,7 +24,7 @@ export const tipos = {
     //Enventos que afectan a la BBDD
     eventoBBDDNuevoEvento: '[ev-db] NuevoEvento',
 
-    //usuario
+    // usuario
     authCheckingFin: '[auth] fin de revisar el token',
     authLogin: '[auth] login',
     authStartRegister: '[auth] inicia registro',

@@ -63,3 +63,15 @@
     position: fixed;
     left: 25px; 
 }
+
+body {
+    background : #e5e4e7;
+}
+
+.color1 {
+    background : #e7f5f1;
+}
+
+.color2 {
+    background : #FFF;
+}

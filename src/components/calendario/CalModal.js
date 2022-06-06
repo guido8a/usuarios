@@ -121,7 +121,7 @@ export const CalModal = () => {
       overlayClassName="modal-fondo"
       closeTimeoutMS={500}
     >
-      <h1> { eventoActivo? 'Editando el evento' : 'Nuevo evento' } </h1>
+      <h1> { eventoActivo? 'Editando el registro' : 'Nuevo registro' } </h1>
       <hr />
       <form className="container" onSubmit={handleSubmit}>
 

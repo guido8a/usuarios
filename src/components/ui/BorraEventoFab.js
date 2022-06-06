@@ -13,7 +13,7 @@ export const BorraEventoFab = () => {
         onClick= { handleClic }
     >
         <i className='fas fa-trash'></i>
-        <span>Borrar Evento</span>
+        <span>Borrar Registro</span>
     </button>
   )
 }
