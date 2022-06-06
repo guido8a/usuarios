@@ -4,11 +4,8 @@ import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import { tipos } from "../tipos/tipos"
 import { retornaUsuarios } from "./datos"
 import { logoutEvento } from "./evento"
-<<<<<<< HEAD
 import { accion_cargaMenu, accion_cargaPerfil } from "./menu"
-=======
 import { accion_cerrarModal } from "./ui"
->>>>>>> 516111b5ac1b913bf51788aff259d9b3dc1ee5cb
 
 export const iniciaUsuario = (login, pass) => {
 
