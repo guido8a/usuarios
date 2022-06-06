@@ -27,6 +27,7 @@ import { ModalUsuario } from './ModalUsuario';
 import { accion_editarUsuario, accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { ToolBarRegistro } from './ToolBarRegistro';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -173,102 +174,102 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const EnhancedTableToolbar = (props) => {
+// const EnhancedTableToolbar = (props) => {
 
-  const { numSelected, idUsuarioSeleccionado, variosUsuarios, nombres } = props;
+//   const { numSelected, idUsuarioSeleccionado, variosUsuarios, nombres } = props;
 
-  const dispatch = useDispatch();
-  const {uid} = useSelector(state => state.auth)
-  const {idUsuario} = useSelector(state => state.ui)
+//   const dispatch = useDispatch();
+//   const { uid } = useSelector(state => state.auth)
+//   const { idUsuario } = useSelector(state => state.ui)
 
-  let titulo = numSelected > 1 ? `Desea borrar los usuarios:  ${nombres} ?` : `Desea borrar el usuario: ${nombres[0]}?`
+//   let titulo = numSelected > 1 ? `Desea borrar los usuarios:  ${nombres} ?` : `Desea borrar el usuario: ${nombres[0]}?`
 
-  const handleBorrar = () => {
-    console.log("borrando....", idUsuarioSeleccionado)
-    Swal.fire({
-      title: titulo,
-      // showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Borrar',
-      // denyButtonText: `Don't save`,
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#d33',
-      icon: 'question'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        (idUsuarioSeleccionado === parseInt(uid)) ?
-        Swal.fire("Error", "No se puede eliminar este usuario", "error") : 
-        dispatch(borrarUsuario(idUsuarioSeleccionado));
-        dispatch(noUsuarioSeleccionado());
-      }
-    })
-  }
+//   const handleBorrar = () => {
+//     console.log("borrando....", idUsuarioSeleccionado)
+//     Swal.fire({
+//       title: titulo,
+//       // showDenyButton: true,
+//       showCancelButton: true,
+//       confirmButtonText: 'Borrar',
+//       // denyButtonText: `Don't save`,
+//       cancelButtonText: 'Cancelar',
+//       confirmButtonColor: '#d33',
+//       icon: 'question'
+//     }).then((result) => {
+//       if (result.isConfirmed) {
+//         (idUsuarioSeleccionado === parseInt(uid)) ?
+//           Swal.fire("Error", "No se puede eliminar este usuario", "error") :
+//           dispatch(borrarUsuario(idUsuarioSeleccionado));
+//           console.log(numSelected)
+//       }
+//     })
+//   }
 
-  const handleEditar = () => {
-    console.log("editando...", idUsuarioSeleccionado)
-    dispatch(accion_editarUsuario(idUsuarioSeleccionado));
-  }
+//   const handleEditar = () => {
+//     console.log("editando...", idUsuarioSeleccionado)
+//     dispatch(accion_editarUsuario(idUsuarioSeleccionado));
+//   }
 
- 
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
-      }}
-    >
-      
+//   const [sel, setSel] = React.useState();
 
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 80%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} seleccionado
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h5"
-          id="tableTitle"
-          component="div"
-          align='center'
-        >
-          Lista de Usuarios
-        </Typography>
-      )}
-      {numSelected === 1 ? (
-        // <Tooltip title="Editar">
-        <Grid item xs={1} sm={2}>
-          <IconButton title='Editar' color='success' onClick={handleEditar}>
-            <FontAwesomeIcon icon={faEdit} />
-          </IconButton>
-          <IconButton title='Borrar' color='error' onClick={handleBorrar}>
-            <FontAwesomeIcon icon={faTrashCan} />
-          </IconButton>
-        </Grid>
-      ) : ''
-      // (numSelected > 1 ?
-      //   (<Tooltip title="Borrar">
-      //     <IconButton color='error' onClick={handleBorrar}>
-      //       <FontAwesomeIcon icon={faTrashCan} />
-      //     </IconButton>
-      //   </Tooltip>) : ''
-      // )
-      }
-    </Toolbar>
-  );
-};
+//   React.useEffect(() => {
+//     setSel(idUsuarioSeleccionado)
+//   }, [handleBorrar])
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+//   console.log("sel", sel)
+
+
+//   return (
+//     <Toolbar
+//       sx={{
+//         pl: { sm: 2 },
+//         pr: { xs: 1, sm: 1 },
+//         ...(numSelected > 0 && {
+//           bgcolor: (theme) =>
+//             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+//         }),
+//       }}
+//     >
+
+//       {numSelected > 0 ? (
+//         <Typography
+//           sx={{ flex: '1 1 80%' }}
+//           color="inherit"
+//           variant="subtitle1"
+//           component="div"
+//         >
+//           {numSelected} seleccionado
+//         </Typography>
+//       ) : (
+//         <Typography
+//           sx={{ flex: '1 1 100%' }}
+//           variant="h5"
+//           id="tableTitle"
+//           component="div"
+//           align='center'
+//         >
+//           Lista de Usuarios
+//         </Typography>
+//       )}
+//       {numSelected === 1 ? (
+//         <Grid item xs={1} sm={2}>
+//           <IconButton title='Editar' color='success' onClick={handleEditar}>
+//             <FontAwesomeIcon icon={faEdit} />
+//           </IconButton>
+//           <IconButton title='Borrar' color='error' onClick={handleBorrar}>
+//             <FontAwesomeIcon icon={faTrashCan} />
+//           </IconButton>
+//         </Grid>
+//       ) : ''
+//       }
+
+//     </Toolbar>
+//   );
+// };
+
+// EnhancedTableToolbar.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+// };
 
 export const TablaUsuarios = () => {
 
@@ -310,43 +311,104 @@ export const TablaUsuarios = () => {
   //   setSelectedID([]);
   // };
 
+  // const handleClick = (event, name, id) => {
+
+  //   const selectedIndex = selected.indexOf(name);
+  //   const selectedIndexID = selectedID.indexOf(id);
+  //   let newSelected = [];
+  //   let ids = [];
+
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //     ids = ids.concat(selectedID, id);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //     ids = ids.concat(selectedID.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //     ids = ids.concat(selectedID.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1),
+  //     );
+  //     ids = ids.concat(
+  //       selectedID.slice(0, selectedIndexID),
+  //       selectedID.slice(selectedIndexID + 1),
+  //     );
+  //   }
+
+  //   if (newSelected.length === 1) {
+  //     dispatch(seleccionaUsuario(ids[0]));
+  //   }
+
+  //   if (newSelected.length !== 1) {
+  //     dispatch(noUsuarioSeleccionado());
+  //   }
+
+  //   console.log("new ", newSelected)
+
+  //   setSelected(newSelected)
+  //   setSelectedID(ids)
+  // };
+
   const handleClick = (event, name, id) => {
 
     const selectedIndex = selected.indexOf(name);
-    const selectedIndexID = selectedID.indexOf(id);
-    let newSelected = [];
-    let ids = [];
+    // const selectedIndexID = selectedID.indexOf(id);
+
+
+    console.log("-----", selectedIndex)
+    // console.log("-----", selectedIndexID) 
+
+    let newSelected = '';
+    // let newSelected = [];
+    // let ids = [];
+    let ids = '';
+
+    // if (selectedIndex === -1) {
+    //   newSelected = newSelected.concat(selected, name);
+    //   ids = ids.concat(selectedID, id);
+    // } else if (selectedIndex === 0) {
+    //   newSelected = newSelected.concat(selected.slice(1));
+    //   ids = ids.concat(selectedID.slice(1));
+    // } else if (selectedIndex === selected.length - 1) {
+    //   newSelected = newSelected.concat(selected.slice(0, -1));
+    //   ids = ids.concat(selectedID.slice(0, -1));
+    // } else if (selectedIndex > 0) {
+    //   newSelected = newSelected.concat(
+    //     selected.slice(0, selectedIndex),
+    //     selected.slice(selectedIndex + 1),
+    //   );
+    //   ids = ids.concat(
+    //     selectedID.slice(0, selectedIndexID),
+    //     selectedID.slice(selectedIndexID + 1),
+    //   );
+    // }
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-      ids = ids.concat(selectedID, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-      ids = ids.concat(selectedID.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-      ids = ids.concat(selectedID.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-      ids = ids.concat(
-        selectedID.slice(0, selectedIndexID),
-        selectedID.slice(selectedIndexID + 1),
-      );
+      newSelected = name;
+      ids = id;
+    } else {
+      newSelected = '';
+      ids = '';
     }
 
-    if (newSelected.length === 1) {
-      dispatch(seleccionaUsuario(ids[0]));
+    // if (newSelected.length === 1) {
+    if (selectedIndex === -1) {
+      // dispatch(seleccionaUsuario(ids[0]));
+      dispatch(seleccionaUsuario(ids));
     }
 
-    if (newSelected.length !== 1) {
+    // if (newSelected.length !== 1) {
+    if (selectedIndex === 0) {
       dispatch(noUsuarioSeleccionado());
     }
 
-    
-    setSelected(newSelected);
+    // console.log("new ", newSelected)
+    // console.log("new ", ids)
+
+    setSelected(newSelected)
     setSelectedID(ids)
   };
 
@@ -373,7 +435,12 @@ export const TablaUsuarios = () => {
       <GrupoDeBotones />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} idUsuarioSeleccionado={idUsuario} variosUsuarios={selectedID} nombres={selected}/>
+
+          {/* <ToolBarRegistro numSelected={selected.length} idUsuarioSeleccionado={idUsuario} nombres={selected} /> */}
+          <ToolBarRegistro numSelected={0} idUsuarioSeleccionado={idUsuario} nombres={selected} />
+
+          {/* <EnhancedTableToolbar numSelected={selected.length} idUsuarioSeleccionado={idUsuario} variosUsuarios={selectedID} nombres={selected} /> */}
+
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}

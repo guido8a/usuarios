@@ -110,9 +110,11 @@ export const borrarUsuario = (usuario) => {
                     showConfirmButton: false,
                     timer: 2000
                 })
-                dispatch(usuarioBorrado());
-                // dispatch(noUsuarioSeleccionado());
+                dispatch(usuarioBorrado());                
                 dispatch(retornaUsuarios());
+                setTimeout(() => {
+                  dispatch(noUsuarioSeleccionado());  
+                }, 500);                
                 
             } else {
                 Swal.fire('Error', 'Error al borrar el usuario', 'error')

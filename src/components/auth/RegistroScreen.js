@@ -78,6 +78,7 @@ const form = props => {
                     margin="dense"
                     variant="outlined"
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -94,6 +95,7 @@ const form = props => {
                     margin="dense"
                     variant="outlined"
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -109,6 +111,7 @@ const form = props => {
                     margin="dense"
                     variant="outlined"
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -172,6 +175,7 @@ const form = props => {
                     margin="dense"
                     variant="outlined"
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -188,6 +192,7 @@ const form = props => {
                     margin="dense"
                     variant="outlined"
                     fullWidth
+                    required
                   />
                 </Grid>
                 <Grid item xs={12} sm={7}>
