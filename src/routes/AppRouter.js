@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import {BrowserRouter, Routes, Route,} from "react-router-dom";
 import { LoginScreen } from '../components/auth/LoginScreen';
-import { CalendarioScreen } from '../components/calendario/CalendarioScreen';
+import { PortadaScreen } from '../components/principal/PortadaScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { iniciaChequeoToken } from '../acciones/auth';
 import { RutaPrivada } from "./RutaPrivada";
@@ -31,12 +31,6 @@ export const AppRouter = () => {
 
 
   return (
-    //   <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/" element={<CalendarioScreen />} />
-    //     <Route path="login" element={<LoginScreen />} />
-    //   </Routes>
-    // </BrowserRouter>
     <BrowserRouter>
       <Routes>
         {/* <Route path="/login" element={<LoginScreen />} /> */}
@@ -56,7 +50,7 @@ export const AppRouter = () => {
 
         <Route path="/*" element={
           <RutaPrivada>
-            <CalendarioScreen />
+            <PortadaScreen />
           </RutaPrivada>
         } />
 

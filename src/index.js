@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CalendarioApp } from './CalendarioApp';
+import { UsuariosApp } from './UsuariosApp';
 import './estilos.css'
 
 // console.log('env;', process.env)
 
 ReactDOM.render(
   // <React.StrictMode>
-    <CalendarioApp />,
+    <UsuariosApp />,
     document.getElementById('root')
   // </React.StrictMode>
 );

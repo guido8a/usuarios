@@ -5,12 +5,12 @@ import moment from 'moment'
 import 'moment/locale/es'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 // import { CalendarioEvento } from './CalendarioEvento'
-import { CalModal } from './CalModal'
+import { RutaModal } from './RutaModal'
 import '../../estilos.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { accion_abrirModal } from '../../acciones/ui'
 import { accion_eventoActivo, accion_lipiarActiva, iniciaCargaEventos } from '../../acciones/evento'
-import { AddNewFab } from '../../components/ui/AddNewFab'
+import { AddNewFab } from '../ui/AddNewFab'
 import { BorraEventoFab } from '../ui/BorraEventoFab'
 import '../../estilos.css'
 // import { Topic } from '@mui/icons-material'
@@ -19,7 +19,7 @@ moment.locale('es')
 
 const localizer = momentLocalizer(moment)
 
-export const CalendarioScreen = () => {
+export const PortadaScreen = () => {
 
   const dispatch = useDispatch();
 
@@ -87,7 +87,7 @@ export const CalendarioScreen = () => {
       {/*{ eventoActivo && < BorraEventoFab /> }*/}
       {< BorraEventoFab />}
 
-      <CalModal />
+      <RutaModal />
     </div>
   )
 }

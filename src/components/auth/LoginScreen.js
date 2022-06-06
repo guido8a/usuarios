@@ -22,6 +22,7 @@ import { AddNewFab } from '../ui/AddNewFab';
 import { PerfilModal } from './PerfilModal';
 import { accion_abrirModal } from '../../acciones/ui';
 import { accion_cargaPerfil } from '../../acciones/menu';
+import background from "../../imagenes/portada.jpeg";
 
 export const LoginScreen = () => {
 
@@ -75,7 +76,8 @@ export const LoginScreen = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            // backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${background})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
