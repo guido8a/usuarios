@@ -8,13 +8,10 @@ import Swal from "sweetalert2";
 export const retornaUsuarios = () => {
     return async (dispatch) => {
         try {
-            // const resp = await fetchUsuarios();
             const resp = await fetchConToken('user');
             const body = await resp.json();
-            // console.log("usuarios", body)
             if (body.ok) {
                 const usuarios = arregloDatosUsuarios(body.Registro);
-                //    console.log("usuarios formateados", usuarios)
                 dispatch(cargaUsuarios(usuarios));
             }
         } catch (error) {
@@ -72,10 +69,8 @@ export const retornaUsuarioEspecifico = (id) => {
             // const resp = await fetchUsuarios(id);
             const resp = await fetchConToken(`user/${id}`);
             const body = await resp.json();
-            console.log("usuario especifico ", body)
             if (body.ok) {
                 const usuario = arregloUsuario(body.Registro)
-                //    dispatch(cargaUsuarioEspecifico(body.Registro));
                 dispatch(cargaUsuarioEspecifico(usuario));
             }
         } catch (error) {

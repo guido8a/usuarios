@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
+// import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,21 +10,21 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+// import Toolbar from '@mui/material/Toolbar';
+// import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+// import IconButton from '@mui/material/IconButton';
+// import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
-import { faEdit, faTrashCan, faUser } from '@fortawesome/free-regular-svg-icons'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Grid } from '@mui/material';
+// import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { borrarUsuario, noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario } from '../../acciones/datos';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 import { ModalUsuario } from './ModalUsuario';
-import { accion_editarUsuario, accion_nuevoUsuario } from '../../acciones/ui';
+import { accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { ToolBarRegistro } from './ToolBarRegistro';
@@ -174,99 +174,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-// const EnhancedTableToolbar = (props) => {
-
-//   const { numSelected, idUsuarioSeleccionado, variosUsuarios, nombres } = props;
-
-//   const dispatch = useDispatch();
-//   const { uid } = useSelector(state => state.auth)
-//   const { idUsuario } = useSelector(state => state.ui)
-
-//   let titulo = numSelected > 1 ? `Desea borrar los usuarios:  ${nombres} ?` : `Desea borrar el usuario: ${nombres[0]}?`
-
-//   const handleBorrar = () => {
-//     console.log("borrando....", idUsuarioSeleccionado)
-//     Swal.fire({
-//       title: titulo,
-//       // showDenyButton: true,
-//       showCancelButton: true,
-//       confirmButtonText: 'Borrar',
-//       // denyButtonText: `Don't save`,
-//       cancelButtonText: 'Cancelar',
-//       confirmButtonColor: '#d33',
-//       icon: 'question'
-//     }).then((result) => {
-//       if (result.isConfirmed) {
-//         (idUsuarioSeleccionado === parseInt(uid)) ?
-//           Swal.fire("Error", "No se puede eliminar este usuario", "error") :
-//           dispatch(borrarUsuario(idUsuarioSeleccionado));
-//           console.log(numSelected)
-//       }
-//     })
-//   }
-
-//   const handleEditar = () => {
-//     console.log("editando...", idUsuarioSeleccionado)
-//     dispatch(accion_editarUsuario(idUsuarioSeleccionado));
-//   }
-
-//   const [sel, setSel] = React.useState();
-
-//   React.useEffect(() => {
-//     setSel(idUsuarioSeleccionado)
-//   }, [handleBorrar])
-
-//   console.log("sel", sel)
-
-
-//   return (
-//     <Toolbar
-//       sx={{
-//         pl: { sm: 2 },
-//         pr: { xs: 1, sm: 1 },
-//         ...(numSelected > 0 && {
-//           bgcolor: (theme) =>
-//             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-//         }),
-//       }}
-//     >
-
-//       {numSelected > 0 ? (
-//         <Typography
-//           sx={{ flex: '1 1 80%' }}
-//           color="inherit"
-//           variant="subtitle1"
-//           component="div"
-//         >
-//           {numSelected} seleccionado
-//         </Typography>
-//       ) : (
-//         <Typography
-//           sx={{ flex: '1 1 100%' }}
-//           variant="h5"
-//           id="tableTitle"
-//           component="div"
-//           align='center'
-//         >
-//           Lista de Usuarios
-//         </Typography>
-//       )}
-//       {numSelected === 1 ? (
-//         <Grid item xs={1} sm={2}>
-//           <IconButton title='Editar' color='success' onClick={handleEditar}>
-//             <FontAwesomeIcon icon={faEdit} />
-//           </IconButton>
-//           <IconButton title='Borrar' color='error' onClick={handleBorrar}>
-//             <FontAwesomeIcon icon={faTrashCan} />
-//           </IconButton>
-//         </Grid>
-//       ) : ''
-//       }
-
-//     </Toolbar>
-//   );
-// };
-
 // EnhancedTableToolbar.propTypes = {
 //   numSelected: PropTypes.number.isRequired,
 // };
@@ -358,7 +265,7 @@ export const TablaUsuarios = () => {
     // const selectedIndexID = selectedID.indexOf(id);
 
 
-    console.log("-----", selectedIndex)
+    // console.log("-----", selectedIndex)
     // console.log("-----", selectedIndexID) 
 
     let newSelected = '';

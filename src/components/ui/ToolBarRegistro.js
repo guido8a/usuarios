@@ -37,7 +37,6 @@ export const ToolBarRegistro = (props) => {
                 (idUsuarioSeleccionado === parseInt(uid)) ?
                     Swal.fire("Error", "No se puede eliminar este usuario", "error") :
                     dispatch(borrarUsuario(idUsuarioSeleccionado));
-                console.log(numSelected)
             }
         })
     }
@@ -52,8 +51,6 @@ export const ToolBarRegistro = (props) => {
     React.useEffect(() => {
         setSel(idUsuarioSeleccionado)
     }, [handleBorrar])
-
-    console.log("sel", sel)
 
     return (
         <Toolbar

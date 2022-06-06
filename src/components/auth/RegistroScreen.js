@@ -273,27 +273,6 @@ const form = props => {
                     ))}
                   </TextField>
                 </Grid>
-                {/* 
-            <TextField
-              select
-              id="course"
-              label="Course Category"
-              value={values.course}
-              onChange={handleChange("course")}
-              helperText={touched.course ? errors.course : ""}
-              error={touched.course && Boolean(errors.course)}
-              margin="dense"
-              variant="outlined"
-              fullWidth
-            >
-              {courseCategory.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            /> */}
-
               </Grid>
 
               <Button type="submit" color='success' fullWidth variant="contained"
@@ -312,7 +291,6 @@ const form = props => {
   );
 };
 
-// const RegistroScreen = withFormik({
 const Registro = withFormik({
 
   enableReinitialize: true,
