@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import { tipos } from "../tipos/tipos"
