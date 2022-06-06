@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForma } from '../../hooks/usaForma';
 // import '../ui/ingreso.css';
-import { useDispatch } from 'react-redux';
-import { iniciaLogin } from '../../acciones/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { iniciaLogin, iniciaUsuario } from '../../acciones/auth';
 import Swal from 'sweetalert2';
 
 import Avatar from '@mui/material/Avatar';
@@ -18,12 +18,17 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { AddNewFab } from '../ui/AddNewFab';
+import { PerfilModal } from './PerfilModal';
+import { accion_abrirModal } from '../../acciones/ui';
+import { accion_cargaPerfil } from '../../acciones/menu';
 
 export const LoginScreen = () => {
 
   const dispatch = useDispatch();
 
   const theme = createTheme();
+ 
 
   //usaForma para login con un usuario existente
   const [loginValores, loginManejaCambios] = useForma({
@@ -34,8 +39,17 @@ export const LoginScreen = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    dispatch(iniciaLogin(login, pass))
+    // const ok = dispatch(iniciaLogin(login, pass))
+    const ok = dispatch(iniciaUsuario(login, pass))
+    ok.then( (val) => {
+      console.log('retorna:', val)
+      if( val ) {
+        dispatch(accion_cargaPerfil(val))
+        dispatch( accion_abrirModal() ) 
+      }  
+    })
   }
+
 
   function Copyright(props) {
     return (
@@ -51,7 +65,7 @@ export const LoginScreen = () => {
   }
 
   return (
-
+    <>
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
@@ -95,8 +109,8 @@ export const LoginScreen = () => {
                 name="login"
                 autoComplete='off'
                 autoFocus
-                value={ login }
-                onChange={ loginManejaCambios }
+                value={login}
+                onChange={loginManejaCambios}
               />
               <TextField
                 margin="normal"
@@ -107,8 +121,8 @@ export const LoginScreen = () => {
                 type="password"
                 id="password"
                 autoComplete="off"
-                value={ pass } 
-                onChange={ loginManejaCambios }
+                value={pass}
+                onChange={loginManejaCambios}
               />
               <Button
                 type="submit"
@@ -118,11 +132,13 @@ export const LoginScreen = () => {
               >
                 Ingresar
               </Button>
-               <Copyright sx={{ mt: 5 }} />
+              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
       </Grid>
     </ThemeProvider>
+    <PerfilModal/>
+    </>
   )
 }

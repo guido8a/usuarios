@@ -17,10 +17,14 @@ export const AppRouter = () => {
     dispatch(iniciaChequeoToken())
   }, [dispatch])
 
+
   //leer el checking del store
   const { checking } = useSelector(state => state.auth);
-  // console.log('checking:', checking)
+  // const { cargandoMenu } = useSelector(state => state.menu);
 
+  // if (checking && cargandoMenu) {
+  //   return <h3>Comprobando token...</h3>
+  // }
   if (checking) {
     return <h3>Comprobando token...</h3>
   }

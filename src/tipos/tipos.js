@@ -29,5 +29,11 @@ export const tipos = {
     authStartRegister: '[auth] inicia registro',
     authStartTokenRenew: '[auth] inicia nenovación de token',
     authLogout: '[auth] logout',
+    authLoginPerfil: '[auth] selecciona perfil',
+    
+    //menú
+    menuCargar: '[menu] carga el menu',
+    perfilCargar: '[menu] carga perfiles',
+    menuLimpiar: '[menu] limpia menu',
 
 }

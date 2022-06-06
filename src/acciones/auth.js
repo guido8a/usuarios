@@ -2,12 +2,13 @@ import Swal from "sweetalert2"
 import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import { tipos } from "../tipos/tipos"
 import { logoutEvento } from "./evento"
+import { accion_cargaMenu, accion_cargaPerfil } from "./menu"
 
-export const iniciaLogin = (login, pass) => {
+export const iniciaUsuario = (login, pass) => {
 
     return async (dispatch) => {  //dispatch viene de thunk
-        // console.log('iniciaLogin:', login, pass) 
-        const resp = await fetchSinToken('login', { login, pass }, 'POST');
+        console.log('iniciaLogin:', login, pass) 
+        const resp = await fetchSinToken('usuario', { login, pass }, 'POST');
 
         //se lee el body:
         const body = await resp.json();
@@ -15,13 +16,33 @@ export const iniciaLogin = (login, pass) => {
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
+            dispatch(loginUsuarioPerfil({id: body.id, usro: body.nombre}))
+            dispatch(accion_cargaPerfil())
+            return body.id
+        } else {
+            console.log(body.msg)
+            Swal.fire('Error', body.msg, 'error')
+            return false
+        }
+    }
+}
+
+export const iniciaLogin = (id, login, perfil) => {
+    return async (dispatch) => {  //dispatch viene de thunk
+        console.log('iniciaLogin:', id, login, perfil) 
+        perfil = parseInt(perfil, 10)
+        const resp = await fetchSinToken('login', { id, login, perfil }, 'POST');
+
+        //se lee el body:
+        const body = await resp.json();
+        console.log('***body Login', body.ok)
+
+        //se almacena el token en el localStore --nop es sensible
+        if (body.ok) {
             // console.log('ok...')
             localStorage.setItem('token', body.token)
-            localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch(loginUsuario({
-                uid: body.uid,
-                nombre: body.nombre
-            }))
+            // localStorage.setItem('token-init-date', new Date().getTime())
+            dispatch(loginUsuario({uid: body.uid, nombre: body.nombre, perfil: body.perfil}))
         } else {
             console.log(body.msg)
             Swal.fire('Error', body.msg, 'error')
@@ -72,7 +93,6 @@ export const iniciaRegistro = (registroValores) => {
 
 //revisa si el token sigue válido
 export const iniciaChequeoToken = () => {
-
     return async (dispatch) => {  //dispatch viene de thunk
         console.log('iniciaChequeoToken:')
         const resp = await fetchConToken('token', {}, 'POST');
@@ -84,13 +104,13 @@ export const iniciaChequeoToken = () => {
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
-            // console.log('body', body)
-            // localStorage.setItem('token', body.token)
+            console.log('chequeo token body', body)
+            localStorage.setItem('token', body.token)
             // localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch(loginUsuario({
-                uid: body.uid,
-                nombre: body.nombre
-            }))
+            // dispatch(loginUsuario({uid: body.uid, nombre: body.nombre }))
+            dispatch(loginUsuario({uid: body.uid, nombre: body.nombre, perfil: body.perfil}))
+            dispatch(accion_cargaMenu(body.perfil ))
+
         } else {
             dispatch(iniciaLogout())
 
@@ -103,8 +123,25 @@ export const iniciaChequeoToken = () => {
 }
 
 //llamadas al reducer
-const loginUsuario = (usuario) => ({
+// export const loginUsuario = (usuario) => {
+//     return async (dispatch) => {
+//         // dispatch(accion_cargaMenu())
+//         return {
+//         type: tipos.authLogin,
+//         payload: usuario
+//         }
+//     } 
+// }
+
+export const loginUsuario = (usuario) => ({
     type: tipos.authLogin,
+    payload: usuario
+})
+
+
+
+const loginUsuarioPerfil = (usuario) => ({
+    type: tipos.authLoginPerfil,
     payload: usuario
 })
 
