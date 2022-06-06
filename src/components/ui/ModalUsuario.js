@@ -8,13 +8,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { accion_cerrarModal } from '../../acciones/ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+
+// import { retornaUsuarioEspecifico } from '../../acciones/datos';
 import { RegistroScreen } from '../auth/RegistroScreen';
-import { retornaUsuarioEspecifico } from '../../acciones/datos';
+// import { RegistroScreen_old2 } from '../auth/RegistroScreen_old2';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

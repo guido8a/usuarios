@@ -2,6 +2,7 @@
 import { fetchConToken } from "../helpers/fetch"
 import moment from 'moment'
 import { tipos } from "../tipos/tipos";
+import Swal from "sweetalert2";
 
 // retorna usuarios de la BBDD
 export const retornaUsuarios = () => {
@@ -87,5 +88,44 @@ const cargaUsuarioEspecifico = (usuario) => {
     return {
         type: tipos.uiRetornaUsuario,
         payload: usuario
+    }
+}
+
+//borrar usuario
+export const borrarUsuario = (usuario) => {
+
+    console.log("borrar: ", usuario)
+
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken(`user/${usuario}`, usuario, "DELETE");
+            const body = await resp.json();
+
+            if (body.ok) {
+            // if (true) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: "Usuario borrado correctamente",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                dispatch(usuarioBorrado());
+                // dispatch(noUsuarioSeleccionado());
+                dispatch(retornaUsuarios());
+                
+            } else {
+                Swal.fire('Error', 'Error al borrar el usuario', 'error')
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const usuarioBorrado = () => {
+    return {
+        type: tipos.uiBorrarUsuario
     }
 }

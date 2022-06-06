@@ -1,8 +1,14 @@
+import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import { tipos } from "../tipos/tipos"
+import { retornaUsuarios } from "./datos"
 import { logoutEvento } from "./evento"
+<<<<<<< HEAD
 import { accion_cargaMenu, accion_cargaPerfil } from "./menu"
+=======
+import { accion_cerrarModal } from "./ui"
+>>>>>>> 516111b5ac1b913bf51788aff259d9b3dc1ee5cb
 
 export const iniciaUsuario = (login, pass) => {
 
@@ -49,43 +55,52 @@ export const iniciaLogin = (id, login, perfil) => {
         }
     }
 }
- 
+
 //registro
-export const iniciaRegistro = (registroValores) => {
+export const iniciaRegistro = (registroValores, tipo) => {
 
-    console.log("valores inicia registro", registroValores)
+    console.log("valores inicia registro ", registroValores, tipo)
 
-      return async (dispatch) => {  //dispatch viene de thunk
-        // const resp = await fetchSinToken('auth/registro', {nombre, mail, password}, 'POST' );
+    return async (dispatch) => {  //dispatch viene de thunk
         // const resp = await fetchSinToken('user', {registroValores}, 'POST' );
-        const resp = await fetchConToken('user', registroValores, 'POST');
 
+        let url
+        let envio
+        let mensaje
+
+        if (tipo === -1) {
+            url = 'user'
+            envio = 'POST'
+            mensaje = 'Usuario creado correctamente'
+        } else {
+            url = `user/${registroValores?.id}`
+            envio = 'PUT'
+            mensaje = 'Usuario actualizado correctamente'
+        }
+
+        // console.log("url ", url)
+        // const resp = await fetchConToken('user', registroValores, 'POST');
+        const resp = await fetchConToken(url, registroValores, envio);
         //se lee el body:
         const body = await resp.json();
-        console.log('body', body)
+        // console.log('body', body)
 
-        //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
-            // console.log('ok...')
-            // localStorage.setItem('token', body.token)
-            // localStorage.setItem('token-init-date', new Date().getTime())
-            // dispatch( loginUsuario({
-            //     uid: body.uid, 
-            //     nombre: body.nombre
-            // }))
+            // if (true) {
             // Swal.fire('Realizado', "Usuario creado exitosamente!", 'success')
             // Toast.fire({icon: 'success', title: '!'})
 
+            dispatch(retornaUsuarios());
+            dispatch(accion_cerrarModal());
+            
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
-                title: 'Usuario creado exitosamente',
+                title: mensaje,
                 showConfirmButton: false,
                 timer: 2000
-              })    
-
+            })
         } else {
-            // Swal.fire('Error', body.msg, 'error')
             Swal.fire('Error', "Error al crear el usuario", 'error')
         }
     }

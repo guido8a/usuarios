@@ -10,6 +10,7 @@ export const tipos = {
     uiRetornaUsuario: '[UI] Retorna usuario específico',
     uiNuevoUsuario: '[UI] Nuevo usuario',
     uiEditarUsuario: '[UI] Editar usuario',
+    uiBorrarUsuario: '[UI] Usuario borrado',
 
     //manejo de eventos
     eventoNuevoEvento: '[ev] NuevoEvento',
