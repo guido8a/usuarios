@@ -7,7 +7,7 @@ export const RutaPrivada = ( { children } ) => {
     // se desestructura pathname y search
     const { pathname, search } = useLocation();
     localStorage.setItem('ultimaRuta', pathname + search)
-    console.log('Ruta:', ruta, pathname, search)
+    // console.log('Ruta:', ruta, pathname, search)
     
   return uid ?
     children

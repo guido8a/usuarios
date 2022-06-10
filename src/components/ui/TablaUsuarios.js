@@ -21,7 +21,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { borrarUsuario, noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario } from '../../acciones/datos';
+import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario } from '../../acciones/datos';
 // import Swal from 'sweetalert2';
 import { ModalUsuario } from './ModalUsuario';
 import { accion_nuevoUsuario } from '../../acciones/ui';

@@ -1,4 +1,3 @@
-import { string } from "yup/lib/locale";
 import { tipos } from "../tipos/tipos";
 
 const estadoInicial = {
@@ -10,10 +9,10 @@ const estadoInicial = {
 }
 
 export const menuReducer = (estado = estadoInicial, accion) => {
-    console.log('menu reducer -> accion-tipo:', accion.type, accion.payload)
+    // console.log('menu reducer -> accion-tipo:', accion.type, accion.payload)
     switch (accion.type) {
         case tipos.menuCargar:
-            console.log('pone menú', [ ...accion.payload ])
+            // console.log('pone menú', [ ...accion.payload ])
             return {
                 ...estado,
                 menus: [ ...accion.payload ],

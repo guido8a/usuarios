@@ -9,7 +9,7 @@ import { accion_cerrarModal } from "./ui"
 export const iniciaUsuario = (login, pass) => {
 
     return async (dispatch) => {  //dispatch viene de thunk
-        console.log('iniciaLogin:', login, pass) 
+        console.log('iniciaLogin:', login, pass)
         const resp = await fetchSinToken('usuario', { login, pass }, 'POST');
 
         //se lee el body:
@@ -18,7 +18,7 @@ export const iniciaUsuario = (login, pass) => {
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
-            dispatch(loginUsuarioPerfil({id: body.id, usro: body.nombre}))
+            dispatch(loginUsuarioPerfil({ id: body.id, usro: body.nombre }))
             dispatch(accion_cargaPerfil())
             return body.id
         } else {
@@ -31,7 +31,7 @@ export const iniciaUsuario = (login, pass) => {
 
 export const iniciaLogin = (id, login, perfil) => {
     return async (dispatch) => {  //dispatch viene de thunk
-        console.log('iniciaLogin:', id, login, perfil) 
+        console.log('iniciaLogin:', id, login, perfil)
         perfil = parseInt(perfil, 10)
         const resp = await fetchSinToken('login', { id, login, perfil }, 'POST');
 
@@ -44,7 +44,7 @@ export const iniciaLogin = (id, login, perfil) => {
             // console.log('ok...')
             localStorage.setItem('token', body.token)
             // localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch(loginUsuario({uid: body.uid, nombre: body.nombre, perfil: body.perfil}))
+            dispatch(loginUsuario({ uid: body.uid, nombre: body.nombre, perfil: body.perfil }))
         } else {
             console.log(body.msg)
             Swal.fire('Error', body.msg, 'error')
@@ -57,8 +57,9 @@ export const iniciaRegistro = (registroValores, tipo) => {
 
     console.log("valores inicia registro ", registroValores, tipo)
 
-    return async (dispatch) => {  //dispatch viene de thunk
-        // const resp = await fetchSinToken('user', {registroValores}, 'POST' );
+    const md5 = require('md5')
+
+    return async (dispatch, getState) => {  //dispatch viene de thunk
 
         let url
         let envio
@@ -68,14 +69,19 @@ export const iniciaRegistro = (registroValores, tipo) => {
             url = 'user'
             envio = 'POST'
             mensaje = 'Usuario creado correctamente'
+            registroValores.password = md5(registroValores.password);
         } else {
             url = `user/${registroValores?.id}`
             envio = 'PUT'
             mensaje = 'Usuario actualizado correctamente'
+            const { password } = getState().ui.usuario[0]
+
+            if (registroValores.password !== password) {
+                registroValores.password = md5(registroValores.password);
+            }
         }
 
         // console.log("url ", url)
-        // const resp = await fetchConToken('user', registroValores, 'POST');
         const resp = await fetchConToken(url, registroValores, envio);
         //se lee el body:
         const body = await resp.json();
@@ -88,7 +94,7 @@ export const iniciaRegistro = (registroValores, tipo) => {
 
             dispatch(retornaUsuarios());
             dispatch(accion_cerrarModal());
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -108,10 +114,9 @@ export const iniciaChequeoToken = () => {
         console.log('iniciaChequeoToken:')
         const resp = await fetchConToken('token', {}, 'POST');
         // const resp = await fetchSinToken( 'user', {}, 'GET' );
-        console.log('>>>1', resp)
         //se lee el body:
         const body = await resp.json();
-        console.log('body -->', body)
+        // console.log('body -->', body)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
@@ -119,8 +124,8 @@ export const iniciaChequeoToken = () => {
             localStorage.setItem('token', body.token)
             // localStorage.setItem('token-init-date', new Date().getTime())
             // dispatch(loginUsuario({uid: body.uid, nombre: body.nombre }))
-            dispatch(loginUsuario({uid: body.uid, nombre: body.nombre, perfil: body.perfil}))
-            dispatch(accion_cargaMenu(body.perfil ))
+            dispatch(loginUsuario({ uid: body.uid, nombre: body.nombre, perfil: body.perfil }))
+            dispatch(accion_cargaMenu(body.perfil))
 
         } else {
             dispatch(iniciaLogout())

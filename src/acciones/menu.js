@@ -1,15 +1,14 @@
-import Swal from "sweetalert2";
 import { fetchConToken, fetchSinToken } from "../helpers/fetch";
 import { tipos } from "../tipos/tipos";
 
 //carga el menú de un perfil 
 export const accion_cargaMenu = ( perfil ) => {
-    console.log('****menu')
+    // console.log('****menu')
     return async(dispatch, getState ) => {  //vienen del thunk
         try {
             const resp = await fetchConToken(`menu/${perfil}`)
             const body = await resp.json()
-            console.log('body_menu: ', body.Registro)
+            // console.log('body_menu: ', body.Registro)
             if(body.ok) {
                 const menu = body.Registro
                 dispatch( poneMenu(menu) )

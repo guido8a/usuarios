@@ -11,15 +11,16 @@ export const tipos = {
     uiNuevoUsuario: '[UI] Nuevo usuario',
     uiEditarUsuario: '[UI] Editar usuario',
     uiBorrarUsuario: '[UI] Usuario borrado',
+    uiRetornaFincas: '[UI] Retorna Fincas',
+    uiRetornaUsuariosFincas: '[UI] Retorna Usuarios x Fincas',
+    uiElementoArbol: '[UI] Elemento arbol seleccionado',
 
     //manejo de eventos
     eventoNuevoEvento: '[ev] NuevoEvento',
     eventoActivo: '[ev] Activo',
     enceraEventoActivo: '[ev] encera Activo',
     actualizaEvento: '[ev] actualiza',
-    // borrarEvento: '[ev] borrar',
-    // cargarEvento: '[ev] carga eventos desde la BBDD',
-    // logoutEvento: '[ev] hace logout',
+
     
     //Enventos que afectan a la BBDD
     eventoBBDDNuevoEvento: '[ev-db] NuevoEvento',

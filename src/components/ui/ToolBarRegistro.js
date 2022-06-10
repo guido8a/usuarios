@@ -3,7 +3,7 @@ import { alpha } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { faEdit, faTrashCan, faUser } from '@fortawesome/free-regular-svg-icons'
+import { faEdit, faTrashCan} from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Chip, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,6 @@ export const ToolBarRegistro = (props) => {
 
     const dispatch = useDispatch();
     const { uid } = useSelector(state => state.auth)
-    const { idUsuario } = useSelector(state => state.ui)
 
     let titulo = `Desea borrar el usuario: ${nombres}?`
 
@@ -50,7 +49,7 @@ export const ToolBarRegistro = (props) => {
 
     React.useEffect(() => {
         setSel(idUsuarioSeleccionado)
-    }, [handleBorrar])
+    }, [handleBorrar, idUsuarioSeleccionado])
 
     return (
         <Toolbar
