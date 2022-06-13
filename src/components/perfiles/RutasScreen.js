@@ -37,7 +37,8 @@ export const RutasScreen = ({ rutas, modulos }) => {
           </tr>
         </thead>
         <tbody>
-          {rutas.map((ruta, i) => (
+          {rutas.length > 0 ? 
+           rutas.map((ruta, i) => (
             <tr style={{ backgroundColor: i % 2 ? '#F0FAFF' : 'white' }} key={ruta.id} >
               <td>{ruta.orden}</td>
               <td>{ruta.descripcion}</td>
@@ -59,7 +60,8 @@ export const RutasScreen = ({ rutas, modulos }) => {
                 </button>
               </td>
             </tr>
-          ))}
+          )) : 
+          <tr style={{ backgroundColor: '#FfF0F0'}} ><td colSpan={7}>No existen rutas para este módulo...</td></tr>}
         </tbody>
       </table>
     </div >

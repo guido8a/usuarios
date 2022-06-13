@@ -67,7 +67,10 @@ export const ModulosScreen = () => {
 
       </div >
       <RutasScreen rutas={rutas} modulos={modulos} />
-      <AddNewFab />
+      <AddNewFab texto="Crear nueva Ruta" />
+      {/* <button className='btn btn-primary fab' onClick= { handleClic } title="Crear nueva Ruta">
+        <i className='fas fa-plus fa-2x'></i>
+    </button> */}
     </>
   )
 }
