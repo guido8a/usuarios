@@ -6,6 +6,8 @@ const estadoInicial = {
     usuario: null,
     tipo: -1,
     usuarios: [],
+    fincas: [],
+    usuariosxfincas: [],
 }
 
 export const uiReducer = (estado = estadoInicial, accion) => {
@@ -78,6 +80,19 @@ export const uiReducer = (estado = estadoInicial, accion) => {
                 idUsuario: null,
                 usuario: null,
                 tipo: -1,
+            }
+
+        case tipos.uiRetornaFincas:
+            return {
+                ...estado,
+                fincas: [...accion.payload]
+            }
+        case tipos.uiRetornaUsuariosFincas:
+            return {
+                ...estado,
+                usuariosxfincas: estado.usuarios.filter(
+                    e => (e.fincaid === accion.payload)
+                )
             }
 
         default:

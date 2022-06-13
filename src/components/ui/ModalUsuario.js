@@ -61,36 +61,14 @@ export const ModalUsuario = (estado) => {
 
     const dispatch = useDispatch()
 
-    const { modalOpen, tipo, usuario, idUsuario } = useSelector(state => state.ui)
-
-    // const aaaaa = dispatch(retornaUsuarioEspecifico(idUsuario))
-
-
-    // console.log("modal usuario -->", modalOpen)
-
-    // const [open, setOpen] = React.useState(false);
-
-    // setOpen(modalOpen);
-
-
-
-        // setOpen(estado);
-
-
-
-    //   const handleClickOpen = () => {
-
-    //   };
+    const { modalOpen, tipo} = useSelector(state => state.ui)
+  
     const handleClose = () => {
-        // setOpen(false);
         dispatch(accion_cerrarModal());
     };
 
     return (
         <div>
-            {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button> */}
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"

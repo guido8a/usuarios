@@ -1,4 +1,3 @@
-import { string } from "yup/lib/locale";
 import { tipos } from "../tipos/tipos";
 
 const estadoInicial = {

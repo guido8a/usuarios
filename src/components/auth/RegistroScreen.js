@@ -1,15 +1,8 @@
-// import {
-//   Card,
-//   CardContent,
-//   // TextField,
-// } from "@mui/material";
 
 import { withFormik } from "formik";
 import { validationSchema } from "../../helpers/validacionRegistro";
 
 import React from 'react';
-// import { useForma } from '../../hooks/usaForma';
-// import { useDispatch, useSelector } from 'react-redux';
 import { iniciaRegistro } from '../../acciones/auth';
 import moment from 'moment';
 import Button from '@mui/material/Button';
@@ -20,7 +13,6 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { useFormik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux'
@@ -34,15 +26,12 @@ const form = props => {
   const theme = createTheme();
 
   const {
-    classes,
     values,
     touched,
     errors,
-    isSubmitting,
     handleChange,
     handleBlur,
     handleSubmit,
-    handleReset,
     tipo
   } = props;
 

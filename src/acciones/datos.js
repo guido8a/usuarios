@@ -20,6 +20,24 @@ export const retornaUsuarios = () => {
     }
 }
 
+//retorna las fincas de la BD
+export const retornaFincas = () => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken('finca');
+            const body = await resp.json();
+
+            if (body.ok) {
+                const fincas = arregloDatosFincas(body.Registro)
+                dispatch(cargaFincas(fincas));
+            }
+
+        } catch (error) {
+            console.log("error al retornar los datos de las fincas de la BD", error)
+        }
+    }
+}
+
 const arregloDatosUsuarios = (usuarios = []) => {
     return usuarios.map(
         (e) => ({
@@ -40,10 +58,34 @@ const arregloUsuario = (usuario) => {
     }
 }
 
+const arregloDatosFincas = (fincas = []) => {
+    return fincas.map(
+        (e) => ({
+            ...e,
+            fechaInicio: moment(e.fechaInicio).toDate(),
+            fechaFin: moment(e.fechaFin).toDate(),
+        })
+    )
+}
+
 const cargaUsuarios = (usuarios) => {
     return {
         type: tipos.uiTablaUsuarios,
         payload: usuarios
+    }
+}
+//retorna las fincas
+const cargaFincas = (fincas) => {
+    return {
+        type: tipos.uiRetornaFincas,
+        payload: fincas
+    }
+}
+
+export const cargarUsuariosxFinca = (finca) => {
+    return{
+        type: tipos.uiRetornaUsuariosFincas,
+        payload: finca
     }
 }
 
@@ -61,6 +103,7 @@ export const noUsuarioSeleccionado = () => {
         type: tipos.uiNoUsuarioSeleccionado,
     }
 }
+
 
 //retorna usuario especifico
 export const retornaUsuarioEspecifico = (id) => {
@@ -97,7 +140,7 @@ export const borrarUsuario = (usuario) => {
             const body = await resp.json();
 
             if (body.ok) {
-            // if (true) {
+                // if (true) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -105,12 +148,12 @@ export const borrarUsuario = (usuario) => {
                     showConfirmButton: false,
                     timer: 2000
                 })
-                dispatch(usuarioBorrado());                
+                dispatch(usuarioBorrado());
                 dispatch(retornaUsuarios());
                 setTimeout(() => {
-                  dispatch(noUsuarioSeleccionado());  
-                }, 500);                
-                
+                    dispatch(noUsuarioSeleccionado());
+                }, 500);
+
             } else {
                 Swal.fire('Error', 'Error al borrar el usuario', 'error')
             }
