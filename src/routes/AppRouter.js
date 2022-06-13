@@ -60,7 +60,7 @@ export const AppRouter = () => {
           </RutaPrivada>
         } />
 
-        <Route path="/perfiles" element={
+        <Route path="/rutas" element={
           <RutaPrivada>
             <PerfilesScreen />
           </RutaPrivada>
