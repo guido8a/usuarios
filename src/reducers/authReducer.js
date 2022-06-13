@@ -10,14 +10,14 @@ export const authReducer = (estado = estadoInicial, accion) => {
     // console.log('accion-tipo:', accion.type)
     switch (accion.type) {
         case tipos.authLogin:
-            console.log('estado:', estado, estadoInicial.checking, accion.payload)
+            // console.log('estado:', estado, estadoInicial.checking, accion.payload)
             return {
                 ...estado,
                 ...accion.payload,
                 checking: false
             }
         case tipos.authLoginPerfil:
-            console.log('auth perfil', estado, accion.payload)
+            // console.log('auth perfil', estado, accion.payload)
             return {
                 ...estado,
                 usuarioId: accion.payload.id,

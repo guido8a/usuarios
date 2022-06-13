@@ -37,4 +37,10 @@ export const tipos = {
     perfilCargar: '[menu] carga perfiles',
     menuLimpiar: '[menu] limpia menu',
 
+    modulosCargar: '[modulo] carga modulos',
+    modulosRutas: '[modulo] carga rutas',
+    modulosRutaActiva: '[modulo] ruta activa',
+    actualizaRuta: '[modulo] actualiza ruta activa',
+    enceraRutaActiva: '[modulo] encera ruta activa',
+
 }

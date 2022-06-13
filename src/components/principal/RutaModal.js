@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import { useSelector, useDispatch } from 'react-redux'
 import { accion_cerrarModal } from '../../acciones/ui';
 import { accion_bd_actualizaEvento, accion_lipiarActiva, accion_bd_nuevoEvento } from '../../acciones/evento';
+import { accion_bd_actualizaRuta, accion_bd_creaRuta, accion_lipiarRuta } from '../../acciones/modulo';
 
 const customStyles = {
   content: {
@@ -21,90 +22,83 @@ const customStyles = {
 // Hay que asociar el elemento donde se visualiza --> root
 Modal.setAppElement('#root');
 
-//se pone redondeado a la siguiente hora
-const ahora = moment().minutes(0).seconds(0).add(1, 'hours')
-const ahoraMas1 = ahora.clone().add(1, 'hours')
-
-const eventoInicial = {
-  title: '',
-  nota: '',
-  start: ahora.toDate(),
-  end: ahoraMas1.toDate()
+const reg_Inicial = {
+  id: 0,
+  orden: 0,
+  descripcion: '',
+  handler: '',
+  icono: '',
+  metodo: '',
+  moduloid: 1,
 }
 
 export const RutaModal = () => {
 
   const dispatch = useDispatch();
-
-  const { modalOpen } = useSelector(state => state.ui);
-  const { eventoActivo } = useSelector(state => state.cal);
-
-  const [fechaInicio, setFechaInicio] = useState(ahora.toDate())
-  const [fechaFin, setFechaFin] = useState(ahoraMas1.toDate())
   const [tituloOk, setTituloOk] = useState(true)
+  const { modulos, rutaActiva } = useSelector(state => state.mdlo);
 
+  console.log('>>rutaActiva:', rutaActiva)
   //useForm para manejo de la forma en modal
-  const [valoresForma, setValoresForma] = useState(eventoInicial)
+  const [valoresForma, setValoresForma] = useState(reg_Inicial)
+  const { modalOpen } = useSelector(state => state.ui);
 
-  const { title, nota, start, end } = valoresForma
+  const { orden, descripcion, handler, icono, metodo, moduloid } = valoresForma
 
   //efecto para cargar evento actual
   useEffect(() => {
-    if (eventoActivo) {
-      setValoresForma(eventoActivo)
+    if (rutaActiva) {
+      console.log('carga ruta activa a modal')
+      setValoresForma(rutaActiva)
     } else {
-      setValoresForma( eventoInicial)
+      setValoresForma(reg_Inicial)
     }
-  }, [eventoActivo, setValoresForma])
+  }, [rutaActiva, setValoresForma])
 
 
   const handleCambios = ({ target }) => {
-    setValoresForma({
-      ...valoresForma,
-      [target.name]: target.value
-    })
+    console.log("valores:", target.name)
+    if(target.name === "orden" || target.name === "moduloid") {
+      setValoresForma({
+        ...valoresForma,
+        [target.name]: parseInt(target.value)
+      })  
+    } else {
+      setValoresForma({
+        ...valoresForma,
+        [target.name]: target.value
+      })  
+    }
   }
 
   const closeModal = () => {
     dispatch(accion_cerrarModal())
-    dispatch(accion_lipiarActiva())
-    setValoresForma(eventoInicial)
-  }
-
-  const onChangeFcin = (e) => {
-    setFechaInicio(e)
-    setValoresForma({
-      ...valoresForma,
-      start: e
-    })
-  }
-  const onChangeFcfn = (e) => {
-    setFechaFin(e)
-    setValoresForma({
-      ...valoresForma,
-      end: e
-    })
+    dispatch(accion_lipiarRuta())
+    setValoresForma(reg_Inicial)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // console.log(valoresForma)
-    //validar fechas
-    if (moment(start).isSameOrAfter(moment(end))) {
-      Swal.fire('Error', 'La fecha de fin debe ser mayor a la fecha de inicio', 'error')
-      return
+    console.log(valoresForma)
+    if (handler.trim() === "") {
+       Swal.fire('Error', 'Debe existir una ruta', 'error')
+       return
     }
 
-    //validar campo título
-    if (title.trim().length < 2) {
+    if (descripcion.trim().length < 2) {
       return setTituloOk(false)
     }
     setTituloOk(true)
 
-    if (eventoActivo) {
-      dispatch(accion_bd_actualizaEvento(valoresForma))
+    const modulo = valoresForma["modulo"]
+    delete valoresForma["modulo"]
+    valoresForma["tiporuta"]=1
+    if (rutaActiva) {
+      console.log('actualiza...')
+      dispatch(accion_bd_actualizaRuta(valoresForma, modulo))
     } else {
-      dispatch(accion_bd_nuevoEvento(valoresForma))
+      console.log('inserta...')
+      dispatch(accion_bd_creaRuta(valoresForma))
     }
     setTituloOk(true)
     closeModal()
@@ -121,57 +115,72 @@ export const RutaModal = () => {
       overlayClassName="modal-fondo"
       closeTimeoutMS={500}
     >
-      <h1> { eventoActivo? 'Editando el registro' : 'Nuevo registro' } </h1>
+      <h1> {rutaActiva ? 'Editando el registro' : 'Nuevo registro'} </h1>
       <hr />
       <form className="container" onSubmit={handleSubmit}>
 
-        <div className="form-group">
-          <label>Fecha y hora inicio</label>
-          <DateTimePicker
-            className="form-control"
-            onChange={onChangeFcin}
-            name='start'
-            value={fechaInicio} />
-        </div>
-
-        <div className="form-group">
-          <label>Fecha y hora fin</label>
-          <DateTimePicker
-            className="form-control"
-            onChange={onChangeFcfn}
-            minDate={fechaInicio}
-            name='end'
-            value={fechaFin} />
-        </div>
-
         <hr />
         <div className="form-group">
-          <label>Titulo y notas</label>
+          <label>Orden</label>
+          <input
+            type="number"
+            // className="form-control"
+            className={`form-control ${!tituloOk && 'is-invalid'}`}
+            placeholder="Orden"
+            name="orden"
+            autoComplete="off"
+            value={orden}
+            onChange={handleCambios}
+          />
+          <label>Acción</label>
           <input
             type="text"
             // className="form-control"
             className={`form-control ${!tituloOk && 'is-invalid'}`}
-            placeholder="Título del evento"
-            name="title"
+            placeholder="Acción"
+            name="descripcion"
             autoComplete="off"
-            value={title}
+            value={descripcion}
             onChange={handleCambios}
           />
           <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
         </div>
-
+        <label>Ruta</label>
         <div className="form-group">
-          <textarea
+          <input
             type="text"
             className="form-control"
-            placeholder="Notas"
-            rows="5"
-            name="nota"
-            value={nota}
+            placeholder="/ruta"
+            autoComplete="off"
+            name="handler"
+            value={handler}
             onChange={handleCambios}
-
-          ></textarea>
+          />
+        </div>
+        <label>Ícono</label>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="fa fa-edit"
+            autoComplete="off"
+            name="icono"
+            value={icono}
+            onChange={handleCambios}
+          />
           <small id="emailHelp" className="form-text text-muted">Información adicional</small>
+        </div>
+        <div>
+          <select name="moduloid" id="moduloid" className="form-control"
+            value={moduloid}
+          // onChange={(event) => handleCambios(event.target)}
+          onChange={handleCambios}
+          >
+            {modulos.map((m) => (
+              <option key={m.id} value={m.id} 
+                defaultValue={m.id === moduloid ? true : false} >{m.nombre}</option>
+            ))}
+          </select>
         </div>
 
         <button

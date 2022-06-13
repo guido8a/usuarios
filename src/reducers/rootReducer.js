@@ -4,6 +4,7 @@ import { authReducer } from "./authReducer";
 import { calReducer } from "./calReducer";
 import { menuReducer } from "./menuReducer";
 import { uiReducer } from "./uiReducer";
+import { moduloReducer } from "./moduloReducer";
 
 
 export const rootReducer = combineReducers ({
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers ({
     cal: calReducer,
     auth: authReducer,
     menu: menuReducer,
+    mdlo: moduloReducer,
 })

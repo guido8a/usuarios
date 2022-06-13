@@ -108,14 +108,14 @@ export const iniciaChequeoToken = () => {
         console.log('iniciaChequeoToken:')
         const resp = await fetchConToken('token', {}, 'POST');
         // const resp = await fetchSinToken( 'user', {}, 'GET' );
-        console.log('>>>1', resp)
+        // console.log('>>>1', resp)
         //se lee el body:
         const body = await resp.json();
-        console.log('body -->', body)
+        // console.log('body -->', body)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
-            console.log('chequeo token body', body)
+            // console.log('chequeo token body', body)
             localStorage.setItem('token', body.token)
             // localStorage.setItem('token-init-date', new Date().getTime())
             // dispatch(loginUsuario({uid: body.uid, nombre: body.nombre }))

@@ -8,7 +8,11 @@ export const RutaPrivada = ( { children } ) => {
     const { pathname, search } = useLocation();
     localStorage.setItem('ultimaRuta', pathname + search)
     console.log('Ruta:', ruta, pathname, search)
-    
+
+    /* ***************************************************************
+    todo: validar pathname contra rutas permitidas para el perfil 
+    **************************************************************** */
+
   return uid ?
     children
     : <Navigate to='/login'/>

@@ -17,24 +17,16 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { StyledMenu } from './StyledMenu';
 import Swal from 'sweetalert2';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 export const Navbar = () => {
 
     const { nombre } = useSelector(state => state.auth);
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
     const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(accion_cargaMenu())
-    // }, [dispatch])
 
     const { menus } = useSelector(state => state.menu);
 
@@ -61,16 +53,9 @@ export const Navbar = () => {
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
     };
 
     const handleClick = (event) => {

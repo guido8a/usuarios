@@ -4,12 +4,12 @@ import { tipos } from "../tipos/tipos";
 
 //carga el menú de un perfil 
 export const accion_cargaMenu = ( perfil ) => {
-    console.log('****menu')
+    // console.log('****menu')
     return async(dispatch, getState ) => {  //vienen del thunk
         try {
             const resp = await fetchConToken(`menu/${perfil}`)
             const body = await resp.json()
-            console.log('body_menu: ', body.Registro)
+            // console.log('body_menu: ', body.Registro)
             if(body.ok) {
                 const menu = body.Registro
                 dispatch( poneMenu(menu) )
@@ -27,19 +27,19 @@ const poneMenu = (menus) => ({
 })
 
 export const accion_cargaPerfil = () => {
-    console.log('****perfil')
+    // console.log('****perfil')
     return async(dispatch, getState ) => {  //vienen del thunk
         const { usuarioId } = getState().auth 
-        console.log('++perfil', usuarioId)
+        // console.log('++perfil', usuarioId)
         try {
             const resp = await fetchSinToken(`perfiles/${usuarioId}`, {}, 'POST')
             const body = await resp.json()
-            console.log('body_perfilmenu: ', body.Registro)
+            // console.log('body_perfilmenu: ', body.Registro)
             if(body.ok) {
                 const perfiles = body.Registro
                 dispatch( cargaPerfil(perfiles) )
             }
-            console.log('perfiles: ', body.Registro)
+            // console.log('perfiles: ', body.Registro)
     
         } catch (error) {
             console.log(error)            
