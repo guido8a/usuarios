@@ -57,7 +57,7 @@ export const ModulosScreen = () => {
             sx={{ width: 500 }}
           >
             {modulos.map((mdlo) => (
-              <BottomNavigationAction label={mdlo.nombre} value={mdlo.id} 
+              <BottomNavigationAction label={mdlo.nombre} value={mdlo.id} key={mdlo.id}
                 sx={{backgroundColor: '#FAFAFA'}} 
                 icon={<MenuIcon/>}
               />
