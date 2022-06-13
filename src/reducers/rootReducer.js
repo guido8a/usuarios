@@ -13,9 +13,6 @@ export const rootReducer = combineReducers ({
     cal: calReducer,
     auth: authReducer,
     menu: menuReducer,
-<<<<<<< HEAD
     mdlo: moduloReducer,
-=======
     arbol: arbolReducer,
->>>>>>> f8ec2a52467d54361dad5b813ba791582ce748fd
 })

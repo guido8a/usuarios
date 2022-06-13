@@ -114,10 +114,7 @@ export const iniciaChequeoToken = () => {
         console.log('iniciaChequeoToken:')
         const resp = await fetchConToken('token', {}, 'POST');
         // const resp = await fetchSinToken( 'user', {}, 'GET' );
-<<<<<<< HEAD
         // console.log('>>>1', resp)
-=======
->>>>>>> f8ec2a52467d54361dad5b813ba791582ce748fd
         //se lee el body:
         const body = await resp.json();
         // console.log('body -->', body)

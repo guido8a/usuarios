@@ -7,11 +7,8 @@ import { iniciaChequeoToken } from '../acciones/auth';
 import { RutaPrivada } from "./RutaPrivada";
 import { RutasPublicas } from "./RutasPublicas";
 import { Usuarios } from '../components/ui/Usuarios';
-<<<<<<< HEAD
 import { PerfilesScreen } from '../components/perfiles/Perfiles';
-=======
 import { Arbol } from '../components/ui/Arbol';
->>>>>>> f8ec2a52467d54361dad5b813ba791582ce748fd
 
 
 export const AppRouter = () => {
@@ -63,14 +60,11 @@ export const AppRouter = () => {
           </RutaPrivada>
         } />
 
-<<<<<<< HEAD
         <Route path="/perfiles" element={
           <RutaPrivada>
             <PerfilesScreen />
           </RutaPrivada>
         } />
-=======
->>>>>>> f8ec2a52467d54361dad5b813ba791582ce748fd
 
       </Routes>
     </BrowserRouter>
