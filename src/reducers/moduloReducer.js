@@ -8,24 +8,24 @@ const estadoInicial = {
 }
 
 export const moduloReducer = (estado = estadoInicial, accion) => {
-    console.log('modulo reducer -> accion-tipo:', accion.type, accion.payload)
+    // console.log('modulo reducer -> accion-tipo:', accion.type, accion.payload)
     switch (accion.type) {
         case tipos.modulosCargar:
-            console.log('pone modulos', [ ...accion.payload ])
+            // console.log('pone modulos', [ ...accion.payload ])
             return {
                 ...estado,
                 modulos: [...accion.payload],
             }
 
         case tipos.modulosRutas:
-            console.log('pone rutas', [ ...accion.payload ])
+            // console.log('pone rutas', [ ...accion.payload ])
             return {
                 ...estado,
                 rutas: [...accion.payload],
             }
 
         case tipos.modulosRutaActiva:
-            console.log('modulosRutaActiva', parseInt(accion.payload) )
+            // console.log('modulosRutaActiva', parseInt(accion.payload) )
             return {
                 ...estado,
                 // rutaActiva: estado.rutas[1]
@@ -34,7 +34,7 @@ export const moduloReducer = (estado = estadoInicial, accion) => {
             }
 
         case tipos.actualizaRuta:
-            console.log('actualizaRuta', parseInt(accion.payload) )
+            // console.log('actualizaRuta', parseInt(accion.payload) )
             return {
                 ...estado,
                 rutas: estado.rutas.map(
@@ -43,7 +43,7 @@ export const moduloReducer = (estado = estadoInicial, accion) => {
             }
 
         case tipos.enceraRutaActiva:
-            console.log('actualizaRuta', parseInt(accion.payload) )
+            // console.log('actualizaRuta', parseInt(accion.payload) )
             return {
                 ...estado,
                 rutaActiva: null

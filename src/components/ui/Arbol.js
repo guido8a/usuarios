@@ -119,9 +119,7 @@ export const Arbol = () => {
                         <TreeView
                             aria-label="gmail"
                             defaultExpanded={['3']}
-                            // defaultCollapseIcon={<ArrowDropDownIcon />}
                             defaultCollapseIcon={< RemoveCircleOutlineIcon/>}
-                            // defaultExpandIcon={<ArrowRightIcon />}
                             defaultExpandIcon={<AddBoxIcon />}
                             defaultEndIcon={<div style={{ width: 24 }} />}
                             sx={{ height: 300, flexGrow: 1, maxWidth: 600, overflowY: 'auto' }}

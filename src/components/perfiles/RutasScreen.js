@@ -12,12 +12,12 @@ export const RutasScreen = ({ rutas, modulos }) => {
 
   const handleEdita = (e) => {
     const val = e.target.parentElement.getAttribute("data-id")
-    console.log('target:', val)
+    // console.log('target:', val)
     dispatch(poneRutaActiva(val))
     dispatch(accion_abrirModal() ) 
   }
 
-  console.log('rutas >> :', rutas)
+  // console.log('rutas >> :', rutas)
 
   // return buildTable(rutas);
   return (

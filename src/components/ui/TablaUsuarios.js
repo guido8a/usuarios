@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-// import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,19 +9,13 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
-// import IconButton from '@mui/material/IconButton';
-// import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario } from '../../acciones/datos';
-// import Swal from 'sweetalert2';
 import { ModalUsuario } from './ModalUsuario';
 import { accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';

@@ -44,3 +44,28 @@ export const fetchConToken = (endPoint, data, method = 'GET') => {
         })
     }
 }
+
+//retorna perfiles desde la BD
+export const fetchPerfiles = (method = 'GET') => {
+    const token = localStorage.getItem('token') || ''
+    const url = `${baseUrl}/prfl`
+    return fetch(url, {
+        method,
+        headers: {
+            'token': token
+        }
+    })
+}
+
+//retorna permisos desde la BD
+export const fetchPermisos = (perfil, modulo, method = 'GET') => {
+    const token = localStorage.getItem('token') || ''
+    const url = `${baseUrl}/permisos/${perfil}/${modulo}`
+    return fetch(url, {
+        method,
+        headers: {
+            'token': token
+        }
+    })
+
+}

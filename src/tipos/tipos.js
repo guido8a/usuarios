@@ -14,6 +14,10 @@ export const tipos = {
     uiRetornaFincas: '[UI] Retorna Fincas',
     uiRetornaUsuariosFincas: '[UI] Retorna Usuarios x Fincas',
     uiElementoArbol: '[UI] Elemento arbol seleccionado',
+    uiRetornaPerfiles: '[UI] Retorna todos los perfiles',
+    uiPerfilSeleccionado: '[UI] Perfil seleccionado',
+    uiModuloSeleccionado: '[UI] Módulo seleccionado',
+    uiRetornaPermisos: '[UI] Retorna Permisos',
 
     //manejo de eventos
     eventoNuevoEvento: '[ev] NuevoEvento',

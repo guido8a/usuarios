@@ -4,12 +4,12 @@ import { tipos } from "../tipos/tipos";
 
 //carga el menú de un perfil 
 export const accion_cargaModulos = ( ) => {
-    console.log('****módulos')
+    // console.log('****módulos')
     return async(dispatch, getState ) => {  //vienen del thunk
         try {
             const resp = await fetchConToken('modulos')
             const body = await resp.json()
-            console.log('body_modulos: ', body.Registro)
+            // console.log('body_modulos: ', body.Registro)
             if(body.ok) {
                 const modulos = body.Registro
                 dispatch( poneModulos(modulos) )
@@ -29,12 +29,12 @@ const poneModulos = (modulos) => ({
 
 //carga el menú de un perfil 
 export const accion_cargaRutas = ( id ) => {
-    console.log('****rutas')
+    // console.log('****rutas')
     return async(dispatch, getState ) => {  //vienen del thunk
         try {
             const resp = await fetchConToken(`rutas/${id}`)
             const body = await resp.json()
-            console.log('body_rutas: ', body.Registro)
+            // console.log('body_rutas: ', body.Registro)
             if(body.ok) {
                 const rutas = body.Registro
                 dispatch( poneRutas(rutas) )

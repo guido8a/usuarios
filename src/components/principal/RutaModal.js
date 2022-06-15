@@ -38,7 +38,7 @@ export const RutaModal = () => {
   const [tituloOk, setTituloOk] = useState(true)
   const { modulos, rutaActiva } = useSelector(state => state.mdlo);
 
-  console.log('>>rutaActiva:', rutaActiva)
+  // console.log('>>rutaActiva:', rutaActiva)
   //useForm para manejo de la forma en modal
   const [valoresForma, setValoresForma] = useState(reg_Inicial)
   const { modalOpen } = useSelector(state => state.ui);
@@ -48,7 +48,7 @@ export const RutaModal = () => {
   //efecto para cargar evento actual
   useEffect(() => {
     if (rutaActiva) {
-      console.log('carga ruta activa a modal')
+      // console.log('carga ruta activa a modal')
       setValoresForma(rutaActiva)
     } else {
       setValoresForma(reg_Inicial)
@@ -57,7 +57,7 @@ export const RutaModal = () => {
 
 
   const handleCambios = ({ target }) => {
-    console.log("valores:", target.name)
+    // console.log("valores:", target.name)
     if(target.name === "orden" || target.name === "moduloid") {
       setValoresForma({
         ...valoresForma,
@@ -79,7 +79,7 @@ export const RutaModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(valoresForma)
+    // console.log(valoresForma)
     if (handler.trim() === "") {
        Swal.fire('Error', 'Debe existir una ruta', 'error')
        return
