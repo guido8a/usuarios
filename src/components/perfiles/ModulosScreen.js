@@ -57,7 +57,7 @@ export const ModulosScreen = () => {
             sx={{ width: 500 }}
           >
             {modulos.map((mdlo) => (
-              <BottomNavigationAction label={mdlo.nombre} value={mdlo.id} 
+              <BottomNavigationAction label={mdlo.nombre} value={mdlo.id} key={mdlo.id}
                 sx={{backgroundColor: '#FAFAFA'}} 
                 icon={<MenuIcon/>}
               />
@@ -67,7 +67,10 @@ export const ModulosScreen = () => {
 
       </div >
       <RutasScreen rutas={rutas} modulos={modulos} />
-      <AddNewFab />
+      <AddNewFab texto="Crear nueva Ruta" />
+      {/* <button className='btn btn-primary fab' onClick= { handleClic } title="Crear nueva Ruta">
+        <i className='fas fa-plus fa-2x'></i>
+    </button> */}
     </>
   )
 }
