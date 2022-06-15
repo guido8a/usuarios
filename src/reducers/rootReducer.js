@@ -6,6 +6,7 @@ import { calReducer } from "./calReducer";
 import { menuReducer } from "./menuReducer";
 import { uiReducer } from "./uiReducer";
 import { moduloReducer } from "./moduloReducer";
+import { perfilesReducer } from "./perfilesReducer";
 
 
 export const rootReducer = combineReducers ({
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers ({
     menu: menuReducer,
     mdlo: moduloReducer,
     arbol: arbolReducer,
+    perfiles: perfilesReducer
 })

@@ -9,6 +9,7 @@ import { RutasPublicas } from "./RutasPublicas";
 import { Usuarios } from '../components/ui/Usuarios';
 import { PerfilesScreen } from '../components/perfiles/Perfiles';
 import { Arbol } from '../components/ui/Arbol';
+import { AsignarRutas } from '../components/ui/AsignarRutas';
 
 
 export const AppRouter = () => {
@@ -65,6 +66,13 @@ export const AppRouter = () => {
             <PerfilesScreen />
           </RutaPrivada>
         } />
+
+        <Route path="/perfiles" element={
+          <RutaPrivada>
+            <AsignarRutas />
+          </RutaPrivada>
+        } />
+
 
       </Routes>
     </BrowserRouter>

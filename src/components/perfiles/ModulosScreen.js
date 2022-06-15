@@ -26,22 +26,22 @@ export const ModulosScreen = () => {
   //   setValue(newValue);
   // };
   const handleClic = (val) => {
-    console.log('valor:', val)
+    // console.log('valor:', val)
     dispatch(accion_cargaRutas(val))
   };
 
 
   const handleRutas = (e) => {
     const mdlo__id = e.target.getAttribute('data-id')
-    console.log('++modulo', mdlo__id)
+    // console.log('++modulo', mdlo__id)
     dispatch(accion_cargaRutas(mdlo__id))
   }
 
   const { modulos } = useSelector(state => state.mdlo);
-  console.log('>>modulos:', modulos)
+  // console.log('>>modulos:', modulos)
 
   const { rutas } = useSelector(state => state.mdlo);
-  console.log('>>rutas:', rutas)
+  // console.log('>>rutas:', rutas)
 
   return (
     <>
