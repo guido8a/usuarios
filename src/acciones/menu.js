@@ -33,12 +33,12 @@ export const accion_cargaPerfil = () => {
         try {
             const resp = await fetchSinToken(`perfiles/${usuarioId}`, {}, 'POST')
             const body = await resp.json()
-            // console.log('body_perfilmenu: ', body.Registro)
+            console.log('body_perfilmenu: ', body.Registro)
             if(body.ok) {
                 const perfiles = body.Registro
-                dispatch( cargaPerfil(perfiles) )
+                dispatch(cargaPerfil(perfiles))
             }
-            // console.log('perfiles: ', body.Registro)
+            console.log('perfiles: ', body.Registro)
     
         } catch (error) {
             console.log(error)            

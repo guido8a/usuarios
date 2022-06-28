@@ -19,10 +19,11 @@ import { Navbar } from './Navbar';
 import { Card, CardContent } from '@mui/material';
 import { Container } from '@mui/system';
 import { useDispatch, useSelector } from 'react-redux';
-import { retornaFincas, retornaUsuarios } from '../../acciones/datos';
+import { retornaUsuarios } from '../../acciones/datos';
 import { Hoja } from './Hoja';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { retornaFincas } from '../../acciones/fincas';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,

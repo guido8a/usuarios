@@ -9,7 +9,9 @@ import { RutasPublicas } from "./RutasPublicas";
 import { Usuarios } from '../components/ui/Usuarios';
 import { PerfilesScreen } from '../components/perfiles/Perfiles';
 import { Arbol } from '../components/ui/Arbol';
-import { AsignarRutas } from '../components/ui/AsignarRutas';
+import { Permisos } from '../components/ui/Permisos';
+import { Perfiles } from '../components/ui/Perfiles';
+import { Fincas } from '../components/fincas/Fincas';
 
 
 export const AppRouter = () => {
@@ -67,11 +69,24 @@ export const AppRouter = () => {
           </RutaPrivada>
         } />
 
-        <Route path="/perfiles" element={
+        <Route path="/permisos" element={
           <RutaPrivada>
-            <AsignarRutas />
+            <Permisos />
           </RutaPrivada>
         } />
+
+        <Route path="/perfiles" element={
+          <RutaPrivada>
+            <Perfiles />
+          </RutaPrivada>
+        } />
+     <Route path="/fincas" element={
+          <RutaPrivada>
+            <Fincas />
+          </RutaPrivada>
+        } />
+
+
 
 
       </Routes>

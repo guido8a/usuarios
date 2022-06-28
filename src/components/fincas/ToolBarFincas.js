@@ -10,9 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { borrarUsuario, iniciaCargaPerfilesxUsuario } from '../../acciones/datos';
 import Swal from 'sweetalert2';
 import { accion_editarUsuario } from '../../acciones/ui';
-// import { iniciaCargaPerfiles } from '../../acciones/perfiles';
 
-export const ToolBarRegistro = (props) => {
+export const ToolBarFincas = (props) => {
 
     const { numSelected, idUsuarioSeleccionado, nombres } = props;
 
@@ -22,13 +21,10 @@ export const ToolBarRegistro = (props) => {
     let titulo = `Desea borrar el usuario: ${nombres}?`
 
     const handleBorrar = () => {
-        // console.log("borrando....", idUsuarioSeleccionado)
         Swal.fire({
             title: titulo,
-            // showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: 'Borrar',
-            // denyButtonText: `Don't save`,
             cancelButtonText: 'Cancelar',
             confirmButtonColor: '#d33',
             icon: 'question'
@@ -42,13 +38,11 @@ export const ToolBarRegistro = (props) => {
     }
 
     const handleEditar = () => {
-        // console.log("editando...", idUsuarioSeleccionado)
-        dispatch(accion_editarUsuario(idUsuarioSeleccionado));
+        // dispatch(accion_editarUsuario(idUsuarioSeleccionado));
     }
 
     const handlePerfiles = () => {
-        // dispatch(iniciaCargaPerfiles());
-        dispatch(iniciaCargaPerfilesxUsuario(idUsuarioSeleccionado));
+        // dispatch(iniciaCargaPerfilesxUsuario(idUsuarioSeleccionado));
     }
 
     const [sel, setSel] = React.useState();
@@ -90,7 +84,7 @@ export const ToolBarRegistro = (props) => {
                     component="div"
                     align='center'
                 >
-                    Lista de Usuarios
+                    Lista de Fincas
                 </Typography>
             )}
             {/* {numSelected === 1 ? ( */}
@@ -108,7 +102,6 @@ export const ToolBarRegistro = (props) => {
                 </Grid>
             ) : ''
             }
-
         </Toolbar>
     );
 };

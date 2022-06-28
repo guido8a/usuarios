@@ -12,7 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { accion_cerrarModal } from '../../acciones/ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-import { RegistroScreen } from '../auth/RegistroScreen';
+import {FormularioPerfil} from './FormularioPerfil'
+import { cerrarModalPerfil } from '../../acciones/perfiles';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -53,14 +54,14 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export const ModalUsuario = (estado) => {
+export const ModalPerfil = (estado) => {
 
     const dispatch = useDispatch()
 
-    const { modalOpen, tipo} = useSelector(state => state.ui)
+    const { modalOpen, tipo} = useSelector(state => state.perfiles)
   
     const handleClose = () => {
-        dispatch(accion_cerrarModal());
+        dispatch(cerrarModalPerfil());
     };
 
     return (
@@ -71,10 +72,10 @@ export const ModalUsuario = (estado) => {
                 open={modalOpen}
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    {tipo === -1  ? 'Nuevo Usuario' : 'Editar usuario' } 
+                    {tipo === -1  ? 'Nuevo Perfil' : 'Editar perfil' } 
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <RegistroScreen />
+                  <FormularioPerfil />
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus

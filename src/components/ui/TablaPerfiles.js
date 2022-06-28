@@ -12,17 +12,14 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
-import { faUser } from '@fortawesome/free-regular-svg-icons'
+import { faAddressBook } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
-import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario } from '../../acciones/datos';
-import { ModalUsuario } from './ModalUsuario';
-import { accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { ToolBarRegistro } from './ToolBarRegistro';
-import { ModalSeleccionPerfil } from './ModalSeleccionPerfil';
-
+import { iniciaCargaPerfiles, nuevoPerfil, perfilNoSeleccionado, perfilSeleccionado } from '../../acciones/perfiles';
+import { ModalPerfil } from './ModalPerfil';
+import { ToolBarPerfiles } from './ToolBarPerfiles';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -60,37 +57,25 @@ const headCells = [
     label: 'Nombre',
   },
   {
-    id: 'apellido',
+    id: 'descripcion',
     numeric: true,
     disablePadding: false,
-    label: 'Apellido',
+    label: 'Descripción',
   },
   {
-    id: 'cedula',
+    id: 'codigo',
     numeric: true,
     disablePadding: false,
-    label: 'Cédula',
-  },
-  {
-    id: 'cargo',
-    numeric: true,
-    disablePadding: false,
-    label: 'Cargo',
-  },
-  {
-    id: 'mail',
-    numeric: true,
-    disablePadding: false,
-    label: 'Email',
-  },
+    label: 'Código',
+  }
 ];
 
 function GrupoDeBotones() {
 
   const dispatch = useDispatch();
 
-  const handleIniciarRegistro = () => {
-    dispatch(accion_nuevoUsuario());
+  const handleNuevoPerfil = () => {
+    dispatch(nuevoPerfil());
   }
 
   return (
@@ -101,18 +86,18 @@ function GrupoDeBotones() {
         alignItems: 'center',
         '& > *': {
           m: 1,
+          mb: 5
         },
       }}
     >
       <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
-        <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser} />}>  Registrar usuario</Button>
+        <Button key="one" onClick={handleNuevoPerfil} startIcon={<FontAwesomeIcon icon={faAddressBook} />}>  Nuevo Perfil</Button>
       </ButtonGroup>
     </Box>
   );
 }
 
 function EnhancedTableHead(props) {
-  // const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const { order, orderBy, onRequestSort } = props;
 
   const createSortHandler = (property) => (event) => {
@@ -123,15 +108,6 @@ function EnhancedTableHead(props) {
     <TableHead >
       <TableRow>
         <TableCell padding="checkbox">
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'seleccionar todo',
-            }}
-          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -162,45 +138,35 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  // onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
 
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
-
-export const TablaUsuarios = () => {
+export const TablaPerfiles = () => {
 
   const dispatch = useDispatch();
 
-  //retorna los usuarios de la BD
+  //retorna los perfiles de la BD
   React.useEffect(() => {
-    dispatch(retornaUsuarios())
+    dispatch(iniciaCargaPerfiles());
   }, [dispatch])
 
-
-  // const { usuarios } = useSelector(state => state.tabla);
-  const { idUsuario, usuarios } = useSelector(state => state.ui);
+  const { todos, perfil} = useSelector(state => state.perfiles);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [selectedID, setSelectedID] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  // const [estado, setEstado] = React.useState(false);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
+  
   const handleClick = (event, name, id) => {
 
     const selectedIndex = selected.indexOf(name);
@@ -219,15 +185,12 @@ export const TablaUsuarios = () => {
       ids = '';
     }
 
-    // if (newSelected.length === 1) {
     if (selectedIndex === -1) {
-      // dispatch(seleccionaUsuario(ids[0]));
-      dispatch(seleccionaUsuario(ids));
+      dispatch(perfilSeleccionado(ids));
     }
 
-    // if (newSelected.length !== 1) {
     if (selectedIndex === 0) {
-      dispatch(noUsuarioSeleccionado());
+      dispatch(perfilNoSeleccionado());
     }
 
     // console.log("new ", newSelected)
@@ -246,14 +209,9 @@ export const TablaUsuarios = () => {
     setPage(0);
   };
 
-  // const handleChangeDense = (event) => {
-  //   setDense(event.target.checked);
-  // };
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usuarios.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - todos.length) : 0;
 
   return (
     <>
@@ -261,30 +219,25 @@ export const TablaUsuarios = () => {
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
 
-          <ToolBarRegistro numSelected={0} idUsuarioSeleccionado={idUsuario} nombres={selected} />
+          <ToolBarPerfiles numSelected={0} perfilSeleccionado={perfil} nombres={selected} />
 
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
-              // size={dense ? 'small' : 'medium'}
-              size={'medium'}
+              size={'small'}
             >
               <EnhancedTableHead
                 numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
-                // onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
-                // rowCount={rows.length}
-                rowCount={usuarios.length}
+                rowCount={todos.length}
               />
               <TableBody>
-                {/* {stableSort(rows, getComparator(order, orderBy)) */}
-                {stableSort(usuarios, getComparator(order, orderBy))
+                {stableSort(todos, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    // const isItemSelected = isSelected(row.name);
                     const isItemSelected = isSelected(row.nombre);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -295,7 +248,6 @@ export const TablaUsuarios = () => {
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        // key={row.name}
                         key={row.id}
                         selected={isItemSelected}
                       >
@@ -316,18 +268,15 @@ export const TablaUsuarios = () => {
                         >
                           {row.nombre}
                         </TableCell>
-                        <TableCell align="right">{row.apellido}</TableCell>
-                        <TableCell align="right">{row.cedula}</TableCell>
-                        <TableCell align="right">{row.cargo}</TableCell>
-                        <TableCell align="right">{row.mail}</TableCell>
+                        <TableCell align="right">{row.descripcion}</TableCell>
+                        <TableCell align="right">{row.codigo}</TableCell>
                       </TableRow>
                     );
                   })}
                 {emptyRows > 0 && (
                   <TableRow
                     style={{
-                      // height: (dense ? 33 : 53) * emptyRows,
-                      height: 53 * emptyRows,
+                      height: 33 * emptyRows,
                     }}
                   >
                     <TableCell colSpan={6} />
@@ -339,22 +288,17 @@ export const TablaUsuarios = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10]}
             component="div"
-            // count={rows.length}
-            count={usuarios.length}
+            count={todos.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
-        {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
+
       </Box>
 
-      <ModalUsuario />
-      <ModalSeleccionPerfil />
+      <ModalPerfil />
     </>
 
   );

@@ -2,12 +2,15 @@ import { tipos } from '../tipos/tipos';
 
 const estadoInicial = {
     modalOpen: false,
+    modalPerfilOpen: false,
     idUsuario: null,
     usuario: null,
     tipo: -1,
     usuarios: [],
     fincas: [],
     usuariosxfincas: [],
+    perfiles: [],
+    perfilesUsuario: []
 }
 
 export const uiReducer = (estado = estadoInicial, accion) => {
@@ -21,8 +24,10 @@ export const uiReducer = (estado = estadoInicial, accion) => {
             return {
                 ...estado,
                 modalOpen: false,
+                modalPerfilOpen: false,
                 usuario: null,
-                tipo: -1
+                tipo: -1,
+                perfilesUsuario: [],
             }
 
         case tipos.uiUsuarioSeleccionado:
@@ -36,7 +41,8 @@ export const uiReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 idUsuario: null,
                 usuario: null,
-                tipo: -1
+                tipo: -1,
+                perfilesUsuario: [],
             }
 
         case tipos.uiRetornaUsuario:
@@ -94,6 +100,18 @@ export const uiReducer = (estado = estadoInicial, accion) => {
                     e => (e.fincaid === accion.payload)
                 )
             }
+        case tipos.uiCargaPerfilesUsuario:
+            return{
+                ...estado,
+                modalPerfilOpen: true,
+                perfilesUsuario : [...accion.payload]
+            }   
+        // case tipos.uiPerfilUsuario:
+        //     return{
+        //         ...estado,
+        //         perfilActual: accion.payload
+        //     }    
+
 
         default:
             return estado;

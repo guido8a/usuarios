@@ -1,10 +1,10 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { poneRutaActiva } from '../../acciones/modulo';
 // import { accion_abrirModal } from '../../acciones/ui';
 import { RutaModal } from '../principal/RutaModal';
 // import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
+// import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,17 +14,19 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+// import Toolbar from '@mui/material/Toolbar';
+// import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
+// import IconButton from '@mui/material/IconButton';
+// import Tooltip from '@mui/material/Tooltip';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Switch from '@mui/material/Switch';
-import SaveIcon from '@mui/icons-material/Save';
+// import SaveIcon from '@mui/icons-material/Save';
 // import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+// import { inicioGuardadoPermisos } from '../../acciones/perfiles'
+import { ToolBarPermisos } from './ToolBarPermisos';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -117,53 +119,104 @@ function EnhancedTableHead(props) {
   );
 }
 
-const EnhancedTableToolbar = (props) => {
-  const { numSelected, permisos } = props;
+// const EnhancedTableToolbar = (props) => {
+//   const { numSelected, permisos, seleccionados, existentes, modulo, perfil } = props;
 
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
-      }}
-    >
-      <Typography
-        sx={{ flex: '1 1 100%' }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        Permisos
-      </Typography>
+//   const dispatch = useDispatch();
 
-      {permisos !== 0 ?
-        (<Tooltip title="Guardar">
-          <IconButton color='success'>
-            <SaveIcon />
-          </IconButton>
-        </Tooltip>)
-        : ''}
+//   // console.log("seleccionados", seleccionados, "existentes", existentes)
 
-    </Toolbar>
-  );
-};
+//   // let arregloFiltrado = []
+//   let arregloStrings = ''
+
+//   const handleGuardar = () => {
+
+//     seleccionados.map((item, index) => {
+//       if (item) {
+//         addItem(index)
+//       }
+//     })
+
+//     const data = ({
+//       ids: arregloStrings
+//     })
+
+//     // console.log("filtrado ", arregloFiltrado, "strings ", arregloStrings, "modulo ", modulo, "perfil ", perfil)
+//     // console.log("data", data)
+//     dispatch(inicioGuardadoPermisos(data, perfil, modulo));
+
+//     arregloStrings = ''
+//   }
+
+//   const addItem = (i) => {
+//     // console.log("index ", i)
+//     existentes.map((item, index) => {
+//       // index === i && (arregloFiltrado = arregloFiltrado.concat(item))
+//       index === i && (arregloStrings = ((arregloStrings !== '' ? (arregloStrings + ",") : '') + `${item}`))
+//     })
+//   }
+
+//   return (
+//     <Toolbar
+//       sx={{
+//         pl: { sm: 2 },
+//         pr: { xs: 1, sm: 1 },
+//         ...(numSelected > 0 && {
+//           bgcolor: (theme) =>
+//             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+//         }),
+//       }}
+//     >
+//       <Typography
+//         sx={{ flex: '1 1 100%' }}
+//         variant="h6"
+//         id="tableTitle"
+//         component="div"
+//       >
+//         Permisos
+//       </Typography>
+
+//       {permisos !== 0 ?
+//         (<Tooltip title="Guardar">
+//           <IconButton color='success' onClick={handleGuardar}>
+//             <SaveIcon />
+//           </IconButton>
+//         </Tooltip>)
+//         : ''}
+
+//     </Toolbar>
+//   );
+// };
 
 //funcion principal
 export const RutasxPerfil = () => {
 
+
   // const dispatch = useDispatch();
 
-  const { permisos } = useSelector(state => state.perfiles)
+  const { permisos, perfil, modulo } = useSelector(state => state.perfiles)
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [estado, setEstado] = React.useState([])
+  const [ids, setIds] = React.useState()
+
+  React.useEffect(() => {
+    let resultado = []
+    let arregloIds = []
+    permisos.forEach((row) => {
+      resultado.push(row.prms === 0 ? false : true);
+      arregloIds.push(row.id);
+    });
+    setEstado(resultado);
+    setIds(arregloIds);
+  }, [permisos, setEstado])
+
+  // console.log("estado", estado)
+  // console.log("estado", ids)
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -171,59 +224,16 @@ export const RutasxPerfil = () => {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
+  // const handleSelectAllClick = (event) => {
     // if (event.target.checked) {
     //   const newSelecteds = permisos.map((n) => n.id);
     //   setSelected(newSelecteds);
     //   return;
     // }
     // setSelected([]);
-  };
+  // };
 
-  const handleClick = (event, name, prms) => {
-
-    let idsPermisos = []
-
-    const permisosFiltrados = permisos.filter(e => e.prms !== 0)
-
-    permisosFiltrados.map((e) => {
-      idsPermisos = idsPermisos.concat(e.prms)
-    })
-
-    const selectedIndex = selected.indexOf(name);
-    // const selectedIndex = prms;
-
-    let newSelected = [];
-    // let newSelected = idsPermisos;
-
-    // setSelected(idsPermisos);
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      console.log("entro en = 0")
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      console.log("entro en length")
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      console.log("entro en > 0")
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    // console.log("selected ", selected)
-    console.log("----- ", selectedIndex)
-    console.log(">>>>> ", newSelected)
-
-    setSelected(newSelected);
-  };
-
-
-
-  const handleChangePage = (event, newPage) => {
+   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -232,22 +242,28 @@ export const RutasxPerfil = () => {
     setPage(0);
   };
 
-  const handleChangeCheck = (event, id, prms)=>{
-    console.log(",mmmmmm", prms)
-   
-  }
 
   const isSelected = (name) => selected.indexOf(name) !== -1
-  // const isSelected = (name) => true
-
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - permisos.length) : 0;
+
+  const handleChange = (position) => {
+    const updatedCheckedState = estado.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setEstado(updatedCheckedState);
+  }
 
   return (
     <>
       <div>
         <Box sx={{ width: '100%' }}>
           <Paper sx={{ width: '100%', mb: 2 }}>
-            <EnhancedTableToolbar numSelected={selected.length} permisos={permisos.length} />
+            {/* <EnhancedTableToolbar numSelected={selected.length}
+              permisos={permisos.length} seleccionados={estado} existentes={ids} modulo={modulo} perfil={perfil} /> */}
+
+              <ToolBarPermisos numSelected={selected.length}
+              permisos={permisos.length} seleccionados={estado} existentes={ids} modulo={modulo} perfil={perfil} /> 
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
@@ -267,26 +283,34 @@ export const RutasxPerfil = () => {
                   {stableSort(permisos, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.id);
+                      // const isItemSelected = isSelected(row.id);
                       const labelId = `enhanced-table-checkbox-${index}`;
+
 
                       return (
                         <TableRow
                           hover
                           // onClick={(event) => handleClick(event, row.id, row.prms)}
                           role="checkbox"
-                          aria-checked={isItemSelected}
+                          // aria-checked={isItemSelected}
                           tabIndex={-1}
                           key={row.id}
-                          selected={isItemSelected}
+                        // selected={isItemSelected}
                         >
                           <TableCell padding="checkbox">
                             <Checkbox
-                              onClick={(event) => handleClick(event, row.id, row.prms)}
-                              onChange={(event) => handleChangeCheck(event, row.id, row.prms)}
+                              id={`${row.id}`}
+                              // name={row.descripcion}
+                              // value={row.descripcion}
+                              // onClick={(event) => handleClick(event, row.id, row.prms)}
+                              // onChange={handleChange}
+                              onChange={() => handleChange(index)}
+                              checked={estado[index] || false}
+                              // onClick={(event) => handleClick(event, row.id, row.prms)}
+                              // onChange={(event) => handleChangeCheck(event, row.id, row.prms)}
                               // defaultChecked={row.prms === 0 ? false : true}
                               color="primary"
-                              checked={row.prms === 0 ? isItemSelected : true}
+                              // checked={row.prms === 0 ? isItemSelected : true}
                               inputProps={{
                                 'aria-labelledby': labelId,
                               }}

@@ -1,8 +1,9 @@
 
-import { fetchConToken } from "../helpers/fetch"
+import { fetchConToken, fetchSinToken } from "../helpers/fetch"
 import moment from 'moment'
 import { tipos } from "../tipos/tipos";
 import Swal from "sweetalert2";
+import { accion_cerrarModal } from "./ui";
 
 // retorna usuarios de la BBDD
 export const retornaUsuarios = () => {
@@ -16,24 +17,6 @@ export const retornaUsuarios = () => {
             }
         } catch (error) {
             console.log("error al sacar los datos de usuario de la BD", error)
-        }
-    }
-}
-
-//retorna las fincas de la BD
-export const retornaFincas = () => {
-    return async (dispatch) => {
-        try {
-            const resp = await fetchConToken('finca');
-            const body = await resp.json();
-
-            if (body.ok) {
-                const fincas = arregloDatosFincas(body.Registro)
-                dispatch(cargaFincas(fincas));
-            }
-
-        } catch (error) {
-            console.log("error al retornar los datos de las fincas de la BD", error)
         }
     }
 }
@@ -58,32 +41,15 @@ const arregloUsuario = (usuario) => {
     }
 }
 
-const arregloDatosFincas = (fincas = []) => {
-    return fincas.map(
-        (e) => ({
-            ...e,
-            fechaInicio: moment(e.fechaInicio).toDate(),
-            fechaFin: moment(e.fechaFin).toDate(),
-        })
-    )
-}
-
 const cargaUsuarios = (usuarios) => {
     return {
         type: tipos.uiTablaUsuarios,
         payload: usuarios
     }
 }
-//retorna las fincas
-const cargaFincas = (fincas) => {
-    return {
-        type: tipos.uiRetornaFincas,
-        payload: fincas
-    }
-}
 
 export const cargarUsuariosxFinca = (finca) => {
-    return{
+    return {
         type: tipos.uiRetornaUsuariosFincas,
         payload: finca
     }
@@ -140,7 +106,6 @@ export const borrarUsuario = (usuario) => {
             const body = await resp.json();
 
             if (body.ok) {
-                // if (true) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -153,7 +118,6 @@ export const borrarUsuario = (usuario) => {
                 setTimeout(() => {
                     dispatch(noUsuarioSeleccionado());
                 }, 500);
-
             } else {
                 Swal.fire('Error', 'Error al borrar el usuario', 'error')
             }
@@ -167,5 +131,60 @@ export const borrarUsuario = (usuario) => {
 const usuarioBorrado = () => {
     return {
         type: tipos.uiBorrarUsuario
+    }
+}
+
+export const iniciaCargaPerfilesxUsuario = (usuario) => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchSinToken(`perfiles/${usuario}`, {}, 'POST');
+            const body = await resp.json();
+
+            if (body.ok) {
+                dispatch(cargarPerfilesUsuario(body.Registro))
+            } else {
+                Swal.fire("Error", "Error al cargar los perfiles del usuario", "error")
+            }
+        } catch (error) {
+            console.log("error al sacar los perfiles x usuario", error)
+        }
+
+    }
+}
+
+const cargarPerfilesUsuario = (perfiles) => {
+    return {
+        type: tipos.uiCargaPerfilesUsuario,
+        payload: perfiles
+    }
+}
+
+//guardar perfiles del usuario
+
+export const guardarPerfilesxUsuario = (valores, usuario) => {
+    return async (dispatch) => {
+        try {
+
+            const resp = await fetchConToken(`poneperfiles/${usuario}`, valores, 'POST');
+            const body = await resp.json();
+
+            if (body.ok) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: "Perfiles guardados correctamente",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                dispatch(accion_cerrarModal());
+            } else {
+                Swal.fire("Error", "Error al guardar los perfiles del usuario", "error")
+            }
+
+        } catch (error) {
+            console.log("error al guardar los perfiles del usuario", error)
+        }
+
     }
 }

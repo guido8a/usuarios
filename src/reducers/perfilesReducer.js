@@ -4,7 +4,10 @@ const estadoInicial = {
     todos: [],
     perfil: null,
     modulo: null,
-    permisos: []
+    permisos: [],
+    perfilSeleccionado: null,
+    modalOpen: false,
+    tipo: -1
 }
 
 export const perfilesReducer = (estado = estadoInicial, accion) => {
@@ -29,7 +32,41 @@ export const perfilesReducer = (estado = estadoInicial, accion) => {
             return{
                 ...estado,
                 permisos: [...accion.payload]
+            }
+        case tipos.uiNoPerfilSeleccionado:
+            return{
+                ...estado,
+                perfil: null
+            }
+        case tipos.uiNuevoPerfil:
+            return{
+                ...estado,
+                modalOpen: true
+            }        
+        case tipos.uiEditarPerfil:
+            return {
+                ...estado,
+                modalOpen: true,
+                tipo: 1,
+                perfilSeleccionado: estado.todos.filter(
+                    e => (e.id === accion.payload)
+                )
+            } 
+        case tipos.uiCerrarModalPerfil:
+            return{
+                ...estado,
+                modalOpen: false,
+                tipo: -1,
+                perfilSeleccionado: null
+            }  
+        case tipos.uiBorrarPerfil:
+            return{
+                ...estado,
+                perfil: null,
+                perfilSeleccionado: null,
+                tipo: -1
             }    
+            
 
         default:
             return estado;

@@ -22,7 +22,7 @@ const theme = createTheme(
     esES,
 );
 
-export const AsignarRutas = () => {
+export const Permisos = () => {
 
     const dispatch = useDispatch();
 

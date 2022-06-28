@@ -7,6 +7,7 @@ import { menuReducer } from "./menuReducer";
 import { uiReducer } from "./uiReducer";
 import { moduloReducer } from "./moduloReducer";
 import { perfilesReducer } from "./perfilesReducer";
+import { fincasReducer } from "./fincasReducer";
 
 
 export const rootReducer = combineReducers ({
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers ({
     menu: menuReducer,
     mdlo: moduloReducer,
     arbol: arbolReducer,
-    perfiles: perfilesReducer
+    perfiles: perfilesReducer,
+    fincas: fincasReducer
 })

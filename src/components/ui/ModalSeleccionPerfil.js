@@ -12,8 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { accion_cerrarModal } from '../../acciones/ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-import { RegistroScreen } from '../auth/RegistroScreen';
-
+import { TablaPerfilesxUsuario } from './TablaPerfilesxUsuario';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -53,11 +52,11 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export const ModalUsuario = (estado) => {
+export const ModalSeleccionPerfil = () => {
 
     const dispatch = useDispatch()
 
-    const { modalOpen, tipo} = useSelector(state => state.ui)
+    const { modalPerfilOpen} = useSelector(state => state.ui)
   
     const handleClose = () => {
         dispatch(accion_cerrarModal());
@@ -68,13 +67,13 @@ export const ModalUsuario = (estado) => {
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
-                open={modalOpen}
+                open={modalPerfilOpen}
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    {tipo === -1  ? 'Nuevo Usuario' : 'Editar usuario' } 
+                   Perfiles del usuario
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <RegistroScreen />
+                    <TablaPerfilesxUsuario />
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus

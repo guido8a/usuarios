@@ -16,15 +16,22 @@ export const tipos = {
     uiElementoArbol: '[UI] Elemento arbol seleccionado',
     uiRetornaPerfiles: '[UI] Retorna todos los perfiles',
     uiPerfilSeleccionado: '[UI] Perfil seleccionado',
+    uiNoPerfilSeleccionado: '[UI] Ningún perfil seleccionado',
     uiModuloSeleccionado: '[UI] Módulo seleccionado',
     uiRetornaPermisos: '[UI] Retorna Permisos',
+    uiGuardaPermisos: '[UI] Guarda Permisos',
+    uiEditarPerfil: '[UI] Editar Perfil',
+    uiNuevoPerfil: '[UI] Nuevo Perfil',
+    uiCerrarModalPerfil: '[UI] Cerrar modal perfil',
+    uiBorrarPerfil: '[UI] Borrar perfil',
+    uiCargaPerfilesUsuario: '[UI] Perfiles x usuario',
+    uiPerfilUsuario: '[UI] Perfil actual',
 
     //manejo de eventos
     eventoNuevoEvento: '[ev] NuevoEvento',
     eventoActivo: '[ev] Activo',
     enceraEventoActivo: '[ev] encera Activo',
     actualizaEvento: '[ev] actualiza',
-
     
     //Enventos que afectan a la BBDD
     eventoBBDDNuevoEvento: '[ev-db] NuevoEvento',
@@ -41,11 +48,15 @@ export const tipos = {
     menuCargar: '[menu] carga el menu',
     perfilCargar: '[menu] carga perfiles',
     menuLimpiar: '[menu] limpia menu',
-
     modulosCargar: '[modulo] carga modulos',
     modulosRutas: '[modulo] carga rutas',
     modulosRutaActiva: '[modulo] ruta activa',
     actualizaRuta: '[modulo] actualiza ruta activa',
     enceraRutaActiva: '[modulo] encera ruta activa',
+
+    //fincas
+    finRetornaFincas: '[FIN] Retorna Fincas',
+    finSeleccionarFinca: '[FIN] Finca seleccionada',
+    finNoseleccionarFinca: '[FIN] Ninguna finca seleccionada',
 
 }

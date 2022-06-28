@@ -15,14 +15,11 @@ import Paper from '@mui/material/Paper';
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
-import { noUsuarioSeleccionado, retornaUsuarios, seleccionaUsuario } from '../../acciones/datos';
-import { ModalUsuario } from './ModalUsuario';
 import { accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { ToolBarRegistro } from './ToolBarRegistro';
-import { ModalSeleccionPerfil } from './ModalSeleccionPerfil';
-
+import { retornaFincas } from '../../acciones/fincas';
+import { ToolBarFincas } from './ToolBarFincas';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -90,7 +87,7 @@ function GrupoDeBotones() {
   const dispatch = useDispatch();
 
   const handleIniciarRegistro = () => {
-    dispatch(accion_nuevoUsuario());
+    // dispatch(accion_nuevoUsuario());
   }
 
   return (
@@ -105,7 +102,7 @@ function GrupoDeBotones() {
       }}
     >
       <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
-        <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser} />}>  Registrar usuario</Button>
+        <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser} />}>  Nueva finca</Button>
       </ButtonGroup>
     </Box>
   );
@@ -123,15 +120,6 @@ function EnhancedTableHead(props) {
     <TableHead >
       <TableRow>
         <TableCell padding="checkbox">
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'seleccionar todo',
-            }}
-          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -162,28 +150,23 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  // onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
 
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
-
-export const TablaUsuarios = () => {
+export const TablaFincas = () => {
 
   const dispatch = useDispatch();
 
   //retorna los usuarios de la BD
   React.useEffect(() => {
-    dispatch(retornaUsuarios())
+    dispatch(retornaFincas());
   }, [dispatch])
 
 
-  // const { usuarios } = useSelector(state => state.tabla);
   const { idUsuario, usuarios } = useSelector(state => state.ui);
+  const { fincas} = useSelector(state => state.fincas);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -219,15 +202,12 @@ export const TablaUsuarios = () => {
       ids = '';
     }
 
-    // if (newSelected.length === 1) {
     if (selectedIndex === -1) {
-      // dispatch(seleccionaUsuario(ids[0]));
-      dispatch(seleccionaUsuario(ids));
+    //   dispatch(seleccionaUsuario(ids));
     }
 
-    // if (newSelected.length !== 1) {
     if (selectedIndex === 0) {
-      dispatch(noUsuarioSeleccionado());
+    //   dispatch(noUsuarioSeleccionado());
     }
 
     // console.log("new ", newSelected)
@@ -246,14 +226,10 @@ export const TablaUsuarios = () => {
     setPage(0);
   };
 
-  // const handleChangeDense = (event) => {
-  //   setDense(event.target.checked);
-  // };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usuarios.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - fincas.length) : 0;
 
   return (
     <>
@@ -261,30 +237,26 @@ export const TablaUsuarios = () => {
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
 
-          <ToolBarRegistro numSelected={0} idUsuarioSeleccionado={idUsuario} nombres={selected} />
+          <ToolBarFincas numSelected={0} idFinca={idUsuario} nombres={selected} />
 
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
-              // size={dense ? 'small' : 'medium'}
               size={'medium'}
             >
               <EnhancedTableHead
                 numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
-                // onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
-                // rowCount={rows.length}
-                rowCount={usuarios.length}
+                rowCount={fincas.length}
               />
               <TableBody>
                 {/* {stableSort(rows, getComparator(order, orderBy)) */}
-                {stableSort(usuarios, getComparator(order, orderBy))
+                {stableSort(fincas, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    // const isItemSelected = isSelected(row.name);
                     const isItemSelected = isSelected(row.nombre);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -326,7 +298,6 @@ export const TablaUsuarios = () => {
                 {emptyRows > 0 && (
                   <TableRow
                     style={{
-                      // height: (dense ? 33 : 53) * emptyRows,
                       height: 53 * emptyRows,
                     }}
                   >
@@ -339,23 +310,15 @@ export const TablaUsuarios = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10]}
             component="div"
-            // count={rows.length}
-            count={usuarios.length}
+            count={fincas.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
-        {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
       </Box>
 
-      <ModalUsuario />
-      <ModalSeleccionPerfil />
     </>
-
   );
 }
