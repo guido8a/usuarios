@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { iniciaChequeoToken } from '../acciones/auth';
 import { RutaPrivada } from "./RutaPrivada";
 import { RutasPublicas } from "./RutasPublicas";
-import { PerfilesScreen } from '../components/perfiles/Perfiles';
+import { PerfilesScreen } from '../components/rutas/Perfiles';
 import { Arbol } from '../components/ui/Arbol';
 import { Perfiles } from '../components/ui/Perfiles';
 import { Fincas } from '../components/fincas/Fincas';
