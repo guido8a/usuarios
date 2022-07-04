@@ -8,11 +8,11 @@ import { RutaPrivada } from "./RutaPrivada";
 import { RutasPublicas } from "./RutasPublicas";
 import { PerfilesScreen } from '../components/rutas/Perfiles';
 import { Arbol } from '../components/ui/Arbol';
-import { Perfiles } from '../components/ui/Perfiles';
 import { Fincas } from '../components/fincas/Fincas';
 import { Geografia } from '../components/geografia/Geografia';
 import { Permisos } from '../components/permisos/Permisos';
 import { Usuarios } from '../components/usuarios/Usuarios';
+import { Perfiles } from '../components/perfiles/Perfiles';
 
 
 export const AppRouter = () => {

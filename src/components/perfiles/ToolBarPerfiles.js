@@ -7,9 +7,9 @@ import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Chip, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { borrarUsuario } from '../../acciones/datos';
+// import { borrarUsuario } from '../../acciones/datos';
 import Swal from 'sweetalert2';
-import { accion_editarUsuario } from '../../acciones/ui';
+// import { accion_editarUsuario } from '../../acciones/ui';
 import { borrarPerfil, editarPerfil } from '../../acciones/perfiles';
 
 export const ToolBarPerfiles = (props) => {
