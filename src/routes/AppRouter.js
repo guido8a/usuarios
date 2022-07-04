@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { iniciaChequeoToken } from '../acciones/auth';
 import { RutaPrivada } from "./RutaPrivada";
 import { RutasPublicas } from "./RutasPublicas";
-import { Usuarios } from '../components/ui/Usuarios';
 import { PerfilesScreen } from '../components/perfiles/Perfiles';
 import { Arbol } from '../components/ui/Arbol';
-import { Permisos } from '../components/ui/Permisos';
 import { Perfiles } from '../components/ui/Perfiles';
 import { Fincas } from '../components/fincas/Fincas';
+import { Geografia } from '../components/geografia/Geografia';
+import { Permisos } from '../components/permisos/Permisos';
+import { Usuarios } from '../components/usuarios/Usuarios';
 
 
 export const AppRouter = () => {
@@ -80,14 +81,18 @@ export const AppRouter = () => {
             <Perfiles />
           </RutaPrivada>
         } />
-     <Route path="/fincas" element={
+
+        <Route path="/fincas" element={
           <RutaPrivada>
             <Fincas />
           </RutaPrivada>
         } />
 
-
-
+        {/* <Route path="/geografia" element={
+          <RutaPrivada>
+            <Geografia />
+          </RutaPrivada>
+        } /> */}
 
       </Routes>
     </BrowserRouter>

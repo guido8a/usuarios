@@ -5,19 +5,89 @@ import { tipos } from "../tipos/tipos"
 
 export const retornaFincas = () => {
 
-    return async (dispatch) => {       
+    return async (dispatch) => {
         try {
             const resp = await fetchConToken('finca');
             const body = await resp.json();
-    
-            if(body.ok){                  
-                  const fincas = arregloDatosFincas(body.Registro) 
-                  dispatch(cargarFincas(fincas)); 
-            }else{
-                 Swal.fire("Error", "Error al cargar las fincas", "error");   
-            }  
+
+            if (body.ok) {
+                const fincas = arregloDatosFincas(body.Registro)
+                dispatch(cargarFincas(fincas));
+            } else {
+                Swal.fire("Error", "Error al cargar las fincas", "error");
+            }
         } catch (error) {
-            console.log("error al retornar las fincas", error)
+            console.log("error al retornar las fincas de la BD", error)
+        }
+    }
+}
+
+export const guardarFinca = (valores, tipo) => {
+    return async (dispatch) => {
+        let url
+        let envio
+        let mensaje
+
+        if(tipo === -1){
+            url = 'finca'
+            envio = 'POST'
+            mensaje = 'Finca creada correctamente'
+        }else{
+            url = `finca/${valores?.id}`
+            envio = 'PUT'
+            mensaje = 'Finca actualizada correctamente'
+        }
+
+        try {
+            const resp = await fetchConToken(url, valores, envio);
+            const body = await resp.json(); 
+
+            if(body.ok){                
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: mensaje,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                dispatch(retornaFincas());
+                dispatch(cerrarModalFinca());
+            }else{
+                Swal.fire("Error", "Error al guardar la finca" ,"error")
+            }
+
+        } catch (error) {
+            console.log("error al guardar la finca", error)
+        }
+
+    }
+}
+
+export const borrarFinca = (finca) => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken(`finca/${finca}`, finca, 'DELETE');
+            const body = await resp.json();
+
+            if(body.ok){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: "Finca borrada correctamente",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                dispatch(retornaFincas());
+                dispatch(fincaBorrada());
+                setTimeout(() => {
+                    dispatch(noFincaSeleccionada());  
+                }, 500);                
+            }else{
+                Swal.fire("Error", "Error al borrar la finca", "error")
+            }
+
+        } catch (error) {
+            console.log("error al borrar la finca", error)
         }
     }
 }
@@ -37,4 +107,42 @@ const arregloDatosFincas = (fincas = []) => {
             fechaFin: moment(e.fechaFin).toDate(),
         })
     )
+}
+
+export const seleccionarFinca = (finca) => {
+    return {
+        type: tipos.finSeleccionarFinca,
+        payload: finca
+    }
+}
+
+export const noFincaSeleccionada = () => {
+    return {
+        type: tipos.finNoseleccionarFinca
+    }
+}
+
+export const nuevaFinca = () => {
+    return {
+        type: tipos.finNuevaFinca
+    }
+}
+
+export const cerrarModalFinca = () => {
+    return {
+        type: tipos.finCerrarModalFinca
+    }
+}
+
+export const editarFinca = (finca) => {
+    return {
+        type: tipos.finEditarFinca,
+        payload: finca
+    }
+}
+
+const fincaBorrada = () => {
+    return{
+        type: tipos.finBorrarFinca
+    }
 }

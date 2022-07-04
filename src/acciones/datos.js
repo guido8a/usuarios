@@ -48,13 +48,6 @@ const cargaUsuarios = (usuarios) => {
     }
 }
 
-export const cargarUsuariosxFinca = (finca) => {
-    return {
-        type: tipos.uiRetornaUsuariosFincas,
-        payload: finca
-    }
-}
-
 //seleccionar un usuario para su edicion o borrado
 export const seleccionaUsuario = (usuario) => {
     return {
@@ -98,7 +91,7 @@ const cargaUsuarioEspecifico = (usuario) => {
 //borrar usuario
 export const borrarUsuario = (usuario) => {
 
-    console.log("borrar: ", usuario)
+    // console.log("borrar: ", usuario)
 
     return async (dispatch) => {
         try {

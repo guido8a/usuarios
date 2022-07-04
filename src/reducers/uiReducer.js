@@ -7,8 +7,6 @@ const estadoInicial = {
     usuario: null,
     tipo: -1,
     usuarios: [],
-    fincas: [],
-    usuariosxfincas: [],
     perfiles: [],
     perfilesUsuario: []
 }
@@ -87,32 +85,12 @@ export const uiReducer = (estado = estadoInicial, accion) => {
                 usuario: null,
                 tipo: -1,
             }
-
-        case tipos.uiRetornaFincas:
-            return {
-                ...estado,
-                fincas: [...accion.payload]
-            }
-        case tipos.uiRetornaUsuariosFincas:
-            return {
-                ...estado,
-                usuariosxfincas: estado.usuarios.filter(
-                    e => (e.fincaid === accion.payload)
-                )
-            }
         case tipos.uiCargaPerfilesUsuario:
             return{
                 ...estado,
                 modalPerfilOpen: true,
                 perfilesUsuario : [...accion.payload]
             }   
-        // case tipos.uiPerfilUsuario:
-        //     return{
-        //         ...estado,
-        //         perfilActual: accion.payload
-        //     }    
-
-
         default:
             return estado;
     }

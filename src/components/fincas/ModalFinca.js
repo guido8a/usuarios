@@ -9,11 +9,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-import { accion_cerrarModal } from '../../acciones/ui';
+import { cerrarModalFinca } from '../../acciones/fincas';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-import { RegistroScreen } from '../auth/RegistroScreen';
-
+import { FincaForm } from './FincaForm';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -53,14 +52,14 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export const ModalUsuario = (estado) => {
+export const ModalFinca = (estado) => {
 
     const dispatch = useDispatch()
 
-    const { modalOpen, tipo} = useSelector(state => state.ui)
+    const { modalFincasOpen, tipo} = useSelector(state => state.fincas)
   
     const handleClose = () => {
-        dispatch(accion_cerrarModal());
+        dispatch(cerrarModalFinca());
     };
 
     return (
@@ -68,13 +67,13 @@ export const ModalUsuario = (estado) => {
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
-                open={modalOpen}
+                open={modalFincasOpen}
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    {tipo === -1  ? 'Nuevo Usuario' : 'Editar usuario' } 
+                    {tipo === -1  ? 'Nueva Finca' : 'Editar finca' } 
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <RegistroScreen />
+                    <FincaForm />
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus

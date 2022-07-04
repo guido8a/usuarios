@@ -12,14 +12,15 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 import Paper from '@mui/material/Paper';
-import { faUser } from '@fortawesome/free-regular-svg-icons'
+// import { faUser } from '@fortawesome/free-regular-svg-icons'
+import { faWarehouse } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
-import { accion_nuevoUsuario } from '../../acciones/ui';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { retornaFincas } from '../../acciones/fincas';
+import { noFincaSeleccionada, retornaFincas, seleccionarFinca, nuevaFinca } from '../../acciones/fincas';
 import { ToolBarFincas } from './ToolBarFincas';
+import {ModalFinca} from './ModalFinca'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -57,22 +58,22 @@ const headCells = [
     label: 'Nombre',
   },
   {
-    id: 'apellido',
+    id: 'ruc',
     numeric: true,
     disablePadding: false,
-    label: 'Apellido',
+    label: 'RUC',
   },
   {
-    id: 'cedula',
+    id: 'direccion',
     numeric: true,
     disablePadding: false,
-    label: 'Cédula',
+    label: 'Dirección',
   },
   {
-    id: 'cargo',
+    id: 'telefono',
     numeric: true,
     disablePadding: false,
-    label: 'Cargo',
+    label: 'Teléfono',
   },
   {
     id: 'mail',
@@ -86,8 +87,8 @@ function GrupoDeBotones() {
 
   const dispatch = useDispatch();
 
-  const handleIniciarRegistro = () => {
-    // dispatch(accion_nuevoUsuario());
+  const handleNuevaFinca = () => {
+    dispatch(nuevaFinca());
   }
 
   return (
@@ -102,14 +103,13 @@ function GrupoDeBotones() {
       }}
     >
       <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
-        <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser} />}>  Nueva finca</Button>
+        <Button key="one" onClick={handleNuevaFinca} startIcon={<FontAwesomeIcon icon={faWarehouse} />}>  Nueva finca</Button>
       </ButtonGroup>
     </Box>
   );
 }
 
 function EnhancedTableHead(props) {
-  // const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const { order, orderBy, onRequestSort } = props;
 
   const createSortHandler = (property) => (event) => {
@@ -159,21 +159,19 @@ export const TablaFincas = () => {
 
   const dispatch = useDispatch();
 
-  //retorna los usuarios de la BD
+  //retorna las fincas de la BD
   React.useEffect(() => {
     dispatch(retornaFincas());
   }, [dispatch])
 
 
-  const { idUsuario, usuarios } = useSelector(state => state.ui);
-  const { fincas} = useSelector(state => state.fincas);
+  const { fincas, idFinca} = useSelector(state => state.fincas);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [selectedID, setSelectedID] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // const [estado, setEstado] = React.useState(false);
@@ -187,9 +185,6 @@ export const TablaFincas = () => {
   const handleClick = (event, name, id) => {
 
     const selectedIndex = selected.indexOf(name);
-    // const selectedIndexID = selectedID.indexOf(id);
-    // console.log("-----", selectedIndex)
-    // console.log("-----", selectedIndexID) 
 
     let newSelected = '';
     let ids = '';
@@ -203,11 +198,11 @@ export const TablaFincas = () => {
     }
 
     if (selectedIndex === -1) {
-    //   dispatch(seleccionaUsuario(ids));
+      dispatch(seleccionarFinca(ids));
     }
 
     if (selectedIndex === 0) {
-    //   dispatch(noUsuarioSeleccionado());
+    dispatch(noFincaSeleccionada());
     }
 
     // console.log("new ", newSelected)
@@ -237,7 +232,7 @@ export const TablaFincas = () => {
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
 
-          <ToolBarFincas numSelected={0} idFinca={idUsuario} nombres={selected} />
+          <ToolBarFincas numSelected={0} idFinca={idFinca} nombres={selected} />
 
           <TableContainer>
             <Table
@@ -253,7 +248,6 @@ export const TablaFincas = () => {
                 rowCount={fincas.length}
               />
               <TableBody>
-                {/* {stableSort(rows, getComparator(order, orderBy)) */}
                 {stableSort(fincas, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
@@ -267,7 +261,6 @@ export const TablaFincas = () => {
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        // key={row.name}
                         key={row.id}
                         selected={isItemSelected}
                       >
@@ -288,9 +281,9 @@ export const TablaFincas = () => {
                         >
                           {row.nombre}
                         </TableCell>
-                        <TableCell align="right">{row.apellido}</TableCell>
-                        <TableCell align="right">{row.cedula}</TableCell>
-                        <TableCell align="right">{row.cargo}</TableCell>
+                        <TableCell align="right">{row.ruc}</TableCell>
+                        <TableCell align="right">{row.direccion}</TableCell>                        
+                        <TableCell align="right">{row.telefono}</TableCell>
                         <TableCell align="right">{row.mail}</TableCell>
                       </TableRow>
                     );
@@ -318,7 +311,7 @@ export const TablaFincas = () => {
           />
         </Paper>
       </Box>
-
+      <ModalFinca />
     </>
   );
 }

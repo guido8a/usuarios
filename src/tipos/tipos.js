@@ -58,5 +58,12 @@ export const tipos = {
     finRetornaFincas: '[FIN] Retorna Fincas',
     finSeleccionarFinca: '[FIN] Finca seleccionada',
     finNoseleccionarFinca: '[FIN] Ninguna finca seleccionada',
+    finNuevaFinca: '[FIN] Nueva Finca',
+    finCerrarModalFinca: '[FIN] Cerrar modal finca',
+    finEditarFinca: '[FIN] Editar Finca',
+    finBorrarFinca: '[FIN] Borrar Finca',
+
+    //geografia
+    geoRetornarProvincias: '[GEO] Retorna Provincias'
 
 }
