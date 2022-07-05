@@ -3,7 +3,8 @@ import { tipos } from "../tipos/tipos";
 const estadoInicial = {
     provincias: [],
     cantones: [],
-    parroquias: []
+    parroquias: [],
+    comunidades: []
 }
 
 export const geoReducer = (estado = estadoInicial, accion) => {
@@ -24,11 +25,12 @@ export const geoReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 parroquias: [...accion.payload]
             }
-        case tipos.geoLimpiezaParroquias:
-            return{
+        case tipos.geoRetornarComunidades:
+            return {
                 ...estado,
-                parroquias: []
-            }    
+                comunidades: [...accion.payload]
+            }
+
         default:
             return estado;
     }

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Navbar } from '../ui/Navbar';
-import { retornaCantones, retornaParroquias, retornaProvincias } from '../../acciones/geografia';
+import { retornaCantones, retornaComunidades, retornaParroquias, retornaProvincias } from '../../acciones/geografia';
 import { Canton } from './Canton';
 // import Filter1Icon from '@mui/icons-material/Filter1';
 import LocalParkingRoundedIcon from '@mui/icons-material/LocalParkingRounded';
@@ -98,6 +98,7 @@ export const Geografia = () => {
         dispatch(retornaProvincias());
         dispatch(retornaCantones());
         dispatch(retornaParroquias());
+        dispatch(retornaComunidades());
     }, [dispatch])
 
     const { provincias } = useSelector(state => state.geografia);

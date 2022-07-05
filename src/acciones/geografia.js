@@ -11,9 +11,9 @@ export const retornaProvincias = () => {
             const body = await resp.json();
 
             if (body.ok) {
-                  dispatch(cargarProvincias(body.Registro));  
+                dispatch(cargarProvincias(body.Registro));
             } else {
-                  Swal.fire("Error", "Error al cargar las provincias", "error");  
+                Swal.fire("Error", "Error al cargar las provincias", "error");
             }
 
         } catch (error) {
@@ -31,9 +31,9 @@ export const retornaCantones = (provincia) => {
             const body = await resp.json();
 
             if (body.ok) {
-                  dispatch(cargarCantones(body.Registro));  
+                dispatch(cargarCantones(body.Registro));
             } else {
-                  Swal.fire("Error", "Error al cargar los cantones", "error");  
+                Swal.fire("Error", "Error al cargar los cantones", "error");
             }
 
         } catch (error) {
@@ -51,13 +51,32 @@ export const retornaParroquias = (canton) => {
             const body = await resp.json();
 
             if (body.ok) {
-                  dispatch(cargarParroquias(body.Registro));  
+                dispatch(cargarParroquias(body.Registro));
             } else {
-                  Swal.fire("Error", "Error al cargar las parroquias", "error");  
+                Swal.fire("Error", "Error al cargar las parroquias", "error");
             }
 
         } catch (error) {
             console.log("error al retornar parroquias", error)
+        }
+    }
+}
+
+export const retornaComunidades = () => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await fetchConToken(`cmnd`);
+            const body = await resp.json();
+
+            if (body.ok) {
+                dispatch(cargarComunidades(body.Registro));
+            } else {
+                Swal.fire("Error", "Error al cargar las comunidades", "error");
+            }
+
+        } catch (error) {
+            console.log("error al retornar comunidades", error)
         }
     }
 }
@@ -71,21 +90,22 @@ const cargarProvincias = (provincias) => {
 }
 
 const cargarCantones = (cantones) => {
-    return{
+    return {
         type: tipos.geoRetornarCantones,
         payload: cantones
     }
 }
 
 const cargarParroquias = (parroquias) => {
-    return{
+    return {
         type: tipos.geoRetornarParroquias,
         payload: parroquias
     }
 }
 
-export const limpiarParroquias = () => {
-    return{
-        type: tipos.geoLimpiezaParroquias
+const cargarComunidades = (comunidades) => {
+    return {
+        type: tipos.geoRetornarComunidades,
+        payload: comunidades
     }
 }

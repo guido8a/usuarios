@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { seleccionaElementoArbol } from '../../acciones/arbol';
 import { limpiarParroquias, retornaParroquias } from '../../acciones/geografia';
 import Filter3Icon from '@mui/icons-material/Filter3';
+import { Comunidad } from './Comunidad';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -101,7 +102,7 @@ export const Parroquia = (canton) => {
 
     const { parroquias } = useSelector(state => state.geografia);
   
-    console.log("parroquias", parroquias)
+    // console.log("parroquias", parroquias)
 
     //context menu
     const [contextMenu, setContextMenu] = React.useState(null);
@@ -139,7 +140,9 @@ export const Parroquia = (canton) => {
                         bgColor="#fcefe3"
                         onContextMenu={handleContextMenu}
                         style={{ cursor: 'context-menu' }}
-                    ></StyledTreeItem> : null
+                    >
+                        <Comunidad parroquia={parroquia.id}/>
+                    </StyledTreeItem> : null
             ))}
 
             <Menu

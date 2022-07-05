@@ -67,6 +67,6 @@ export const tipos = {
     geoRetornarProvincias: '[GEO] Retorna Provincias',
     geoRetornarCantones: '[GEO] Retorna Cantones',
     geoRetornarParroquias: '[GEO] Retorna Parroquias',
-    geoLimpiezaParroquias: '[GEO] Limpieza Parroquias',
+    geoRetornarComunidades: '[GEO] Retorna Comunidades',
 
 }
