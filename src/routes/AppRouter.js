@@ -88,11 +88,11 @@ export const AppRouter = () => {
           </RutaPrivada>
         } />
 
-        {/* <Route path="/geografia" element={
+        <Route path="/geografia" element={
           <RutaPrivada>
             <Geografia />
           </RutaPrivada>
-        } /> */}
+        } />
 
       </Routes>
     </BrowserRouter>

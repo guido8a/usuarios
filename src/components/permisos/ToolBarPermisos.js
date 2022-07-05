@@ -33,7 +33,6 @@ export const ToolBarPermisos = (props) => {
         })
 
         // console.log("filtrado ", arregloFiltrado, "strings ", arregloStrings, "modulo ", modulo, "perfil ", perfil)
-          console.log("data", data)
         dispatch(inicioGuardadoPermisos(data, perfil, modulo));
 
         arregloStrings = ''

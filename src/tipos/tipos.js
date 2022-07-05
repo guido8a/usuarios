@@ -64,6 +64,9 @@ export const tipos = {
     finBorrarFinca: '[FIN] Borrar Finca',
 
     //geografia
-    geoRetornarProvincias: '[GEO] Retorna Provincias'
+    geoRetornarProvincias: '[GEO] Retorna Provincias',
+    geoRetornarCantones: '[GEO] Retorna Cantones',
+    geoRetornarParroquias: '[GEO] Retorna Parroquias',
+    geoLimpiezaParroquias: '[GEO] Limpieza Parroquias',
 
 }

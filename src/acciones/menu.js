@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { fetchConToken, fetchSinToken } from "../helpers/fetch";
 import { tipos } from "../tipos/tipos";
 
@@ -12,6 +13,8 @@ export const accion_cargaMenu = ( perfil ) => {
             if(body.ok) {
                 const menu = body.Registro
                 dispatch( poneMenu(menu) )
+            }else{
+                Swal.fire("Error", "Error al cargar el menu del usuario", "error");
             }
     
         } catch (error) {

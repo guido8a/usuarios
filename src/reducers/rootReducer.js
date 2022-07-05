@@ -8,6 +8,7 @@ import { uiReducer } from "./uiReducer";
 import { moduloReducer } from "./moduloReducer";
 import { perfilesReducer } from "./perfilesReducer";
 import { fincasReducer } from "./fincasReducer";
+import { geoReducer } from "./geoReducer";
 
 
 export const rootReducer = combineReducers ({
@@ -18,5 +19,6 @@ export const rootReducer = combineReducers ({
     mdlo: moduloReducer,
     arbol: arbolReducer,
     perfiles: perfilesReducer,
-    fincas: fincasReducer
+    fincas: fincasReducer,
+    geografia: geoReducer
 })

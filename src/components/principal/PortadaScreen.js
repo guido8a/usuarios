@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+// import React, { useState, useEffect } from 'react'
 import { Navbar } from '../ui/Navbar'
 import { momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
@@ -9,7 +9,7 @@ import { RutaModal } from './RutaModal'
 import '../../estilos.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { accion_abrirModal } from '../../acciones/ui'
-import { accion_eventoActivo, accion_lipiarActiva, iniciaCargaEventos } from '../../acciones/evento'
+// import { accion_eventoActivo, accion_lipiarActiva, iniciaCargaEventos } from '../../acciones/evento'
 import { AddNewFab } from '../ui/AddNewFab'
 import { BorraEventoFab } from '../ui/BorraEventoFab'
 import '../../estilos.css'
@@ -17,34 +17,34 @@ import '../../estilos.css'
 
 moment.locale('es')
 
-const localizer = momentLocalizer(moment)
+// const localizer = momentLocalizer(moment)
 
 export const PortadaScreen = () => {
 
   const dispatch = useDispatch();
 
   //leer los eventos desde el store
-  const { uid } = useSelector(state => state.auth);
+  // const { uid } = useSelector(state => state.auth);
   // console.log('Eventos:', eventos)
 
   //se llama a iniciaCargaEventos
-  useEffect(() => {
-    dispatch(iniciaCargaEventos())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(iniciaCargaEventos())
+  // }, [dispatch])
 
   //manejo de eventos de ratón sobre el calendario
   const onDobleClic = (e) => {
     dispatch(accion_abrirModal())
   }
   //clic
-  const onSeleccionaEvento = (e) => {
-    dispatch(accion_eventoActivo(e))
-  }
+  // const onSeleccionaEvento = (e) => {
+  //   dispatch(accion_eventoActivo(e))
+  // }
 
-  const handleSelectSlot = (e) => {
-    // console.log('select slot:', e)
-    dispatch(accion_lipiarActiva())
-  }
+  // const handleSelectSlot = (e) => {
+  //   // console.log('select slot:', e)
+  //   dispatch(accion_lipiarActiva())
+  // }
 
   return (
     <div>

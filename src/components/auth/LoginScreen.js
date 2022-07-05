@@ -3,14 +3,14 @@ import { useForma } from '../../hooks/usaForma';
 // import '../ui/ingreso.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { iniciaLogin, iniciaUsuario } from '../../acciones/auth';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -18,7 +18,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { AddNewFab } from '../ui/AddNewFab';
+// import { AddNewFab } from '../ui/AddNewFab';
 import { PerfilModal } from './PerfilModal';
 import { accion_abrirModal } from '../../acciones/ui';
 import { accion_cargaPerfil } from '../../acciones/menu';
@@ -40,7 +40,6 @@ export const LoginScreen = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    // const ok = dispatch(iniciaLogin(login, pass))
     const ok = dispatch(iniciaUsuario(login, pass))
     ok.then( (val) => {
       console.log('retorna:', val)

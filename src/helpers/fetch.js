@@ -30,7 +30,7 @@ export const fetchConToken = (endPoint, data, method = 'GET') => {
         return fetch(url, {
             method,
             headers: {
-                'token': token
+                'token': `Td ${token}`
             }
         })
     } else {
@@ -38,7 +38,7 @@ export const fetchConToken = (endPoint, data, method = 'GET') => {
         return fetch(url, {
             method,
             headers: {
-                'Content-type': 'application/json', 'token': token
+                'Content-type': 'application/json', 'token': `Td ${token}`
             },
             body: JSON.stringify(data)
         })
@@ -52,7 +52,7 @@ export const fetchPerfiles = (method = 'GET') => {
     return fetch(url, {
         method,
         headers: {
-            'token': token
+            'token': `Td ${token}`
         }
     })
 }
@@ -64,7 +64,7 @@ export const fetchPermisos = (perfil, modulo, method = 'GET') => {
     return fetch(url, {
         method,
         headers: {
-            'token': token
+            'token': `Td ${token}`
         }
     })
 

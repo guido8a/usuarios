@@ -14,7 +14,7 @@ export const iniciaUsuario = (login, pass) => {
 
         //se lee el body:
         const body = await resp.json();
-        // console.log('body', body.ok)
+        console.log('body', body)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
@@ -37,7 +37,7 @@ export const iniciaLogin = (id, login, perfil) => {
 
         //se lee el body:
         const body = await resp.json();
-        console.log('***body Login', body.ok)
+        console.log('***body Login', body)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
@@ -47,7 +47,7 @@ export const iniciaLogin = (id, login, perfil) => {
             dispatch(loginUsuario({ uid: body.uid, nombre: body.nombre, perfil: body.perfil }))
         } else {
             console.log(body.msg)
-            Swal.fire('Error', body.msg, 'error')
+            Swal.fire('Error', "Error al ingresar al sistema", 'error')
         }
     }
 }
@@ -112,28 +112,35 @@ export const iniciaRegistro = (registroValores, tipo) => {
 export const iniciaChequeoToken = () => {
     return async (dispatch) => {  //dispatch viene de thunk
         console.log('iniciaChequeoToken:')
-        const resp = await fetchConToken('token', {}, 'POST');
-        // const resp = await fetchSinToken( 'user', {}, 'GET' );
-        // console.log('>>>1', resp)
-        //se lee el body:
-        const body = await resp.json();
-        // console.log('body -->', body)
+        const token = localStorage.getItem('token') || ''
 
-        //se almacena el token en el localStore --nop es sensible
-        if (body.ok) {
-            // console.log('chequeo token body', body)
-            localStorage.setItem('token', body.token)
-            // localStorage.setItem('token-init-date', new Date().getTime())
-            // dispatch(loginUsuario({uid: body.uid, nombre: body.nombre }))
-            dispatch(loginUsuario({ uid: body.uid, nombre: body.nombre, perfil: body.perfil }))
-            dispatch(accion_cargaMenu(body.perfil))
+        if (token !== '') {
+            const resp = await fetchConToken('token', {}, 'POST');
+            // const resp = await fetchSinToken( 'user', {}, 'GET' );
+            // console.log('>>>1', resp)
+            //se lee el body:
+            const body = await resp.json();
+            console.log('body -->', body)
 
+            //se almacena el token en el localStore --nop es sensible
+            if (body.ok) {
+                // console.log('chequeo token body', body)
+                localStorage.setItem('token', body.token)
+                // localStorage.setItem('token-init-date', new Date().getTime())
+                // dispatch(loginUsuario({uid: body.uid, nombre: body.nombre }))
+                dispatch(loginUsuario({ uid: body.uid, nombre: body.nombre, perfil: body.perfil }))
+                dispatch(accion_cargaMenu(body.perfil))
+
+            } else {
+                dispatch(iniciaLogout())
+
+                if (body.uid) {
+                    Swal.fire('Error', "Error al verificar el token", 'error') //debe ir al login  
+                }
+                dispatch(finChequeo())
+            }
         } else {
             dispatch(iniciaLogout())
-
-            if (body.uid) {
-                Swal.fire('Error', body.msg, 'error') //debe ir al login  
-            }
             dispatch(finChequeo())
         }
     }
