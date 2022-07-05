@@ -122,7 +122,7 @@ export const Geografia = () => {
 
                         >
                             {provincias.map((provincia) => (
-                                <StyledTreeItem key={provincia.id} nodeId={"'" + provincia.id + "'"}
+                                <StyledTreeItem key={provincia.id} nodeId={"provincia_" + provincia.id}
                                     labelText={provincia.nombre} labelIcon={LocalParkingRoundedIcon}>
                                     <Canton provincia={provincia.id} />
                                 </StyledTreeItem>

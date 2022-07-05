@@ -118,7 +118,7 @@ export const Canton = (provincia) => {
                 canton.provinciaId === provincia.provincia ?
                     <StyledTreeItem
                         key={canton.id}
-                        nodeId={'"' + canton.id + '"'}
+                        nodeId={'canton_' + canton.id}
                         // nodeId={user.id}
                         id={canton.id}
                         labelText={canton.nombre}

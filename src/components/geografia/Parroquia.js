@@ -101,8 +101,9 @@ export const Parroquia = (canton) => {
     // console.log("a", a )
 
     const { parroquias } = useSelector(state => state.geografia);
+    const arregloParroquias = parroquias.filter(e => e.cantonId === canton.canton);
   
-    // console.log("parroquias", parroquias)
+    console.log("parroquias", arregloParroquias)
 
     //context menu
     const [contextMenu, setContextMenu] = React.useState(null);
@@ -125,12 +126,16 @@ export const Parroquia = (canton) => {
 
     return (
         <div>
-            {parroquias.map((parroquia) => (
-                parroquia.cantonId === canton.canton ?
+            {
+            
+            
+            arregloParroquias.map((parroquia) => (
+                // parroquia.cantonId === canton.canton ?
                 
-                    <StyledTreeItem
+                    (<StyledTreeItem
                         key={parroquia.id}
-                        nodeId={'"' + parroquia.id + '"'}
+                        // nodeId={'"' + parroquia.id + '"'}
+                        nodeId={'parroquia_' + parroquia.id}
                         // nodeId={user.id}
                         id={parroquia.id}
                         labelText={parroquia.nombre}
@@ -142,7 +147,7 @@ export const Parroquia = (canton) => {
                         style={{ cursor: 'context-menu' }}
                     >
                         <Comunidad parroquia={parroquia.id}/>
-                    </StyledTreeItem> : null
+                    </StyledTreeItem>) 
             ))}
 
             <Menu

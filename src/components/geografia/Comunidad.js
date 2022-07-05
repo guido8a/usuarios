@@ -112,10 +112,9 @@ export const Comunidad = (parroquia) => {
         <div>
             {comunidades.map((comunidades) => (
                 comunidades.parroquiaId === parroquia.parroquia ?
-                
-                    <StyledTreeItem
+                    (<StyledTreeItem
                         key={comunidades.id}
-                        nodeId={'"' + comunidades.id + '"'}
+                        nodeId={'comunidad_' + comunidades.id}
                         // nodeId={user.id}
                         id={comunidades.id}
                         labelText={comunidades.nombre}
@@ -125,7 +124,7 @@ export const Comunidad = (parroquia) => {
                         bgColor="#fcefe3"
                         onContextMenu={handleContextMenu}
                         style={{ cursor: 'context-menu' }}
-                    ></StyledTreeItem> : null
+                    ></StyledTreeItem>) : null
             ))}
 
             <Menu
