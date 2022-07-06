@@ -13,6 +13,7 @@ import { Geografia } from '../components/geografia/Geografia';
 import { Permisos } from '../components/permisos/Permisos';
 import { Usuarios } from '../components/usuarios/Usuarios';
 import { Perfiles } from '../components/perfiles/Perfiles';
+import { Navbar } from '../components/ui/Navbar';
 
 
 export const AppRouter = () => {
@@ -38,6 +39,7 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+
         {/* <Route path="/login" element={<LoginScreen />} /> */}
 
         <Route path="/login" element={
@@ -90,6 +92,7 @@ export const AppRouter = () => {
 
         <Route path="/geografia" element={
           <RutaPrivada>
+            <Navbar />
             <Geografia />
           </RutaPrivada>
         } />

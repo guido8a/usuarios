@@ -1,94 +1,64 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import SvgIcon from '@mui/material/SvgIcon';
+import { alpha, styled } from '@mui/material/styles';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
-import Typography from '@mui/material/Typography';
-import MailIcon from '@mui/icons-material/Mail';
-import { Card, CardContent } from '@mui/material';
-import { Container } from '@mui/system';
 import { useDispatch, useSelector } from 'react-redux';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { Navbar } from '../ui/Navbar';
 import { retornaCantones, retornaComunidades, retornaParroquias, retornaProvincias } from '../../acciones/geografia';
 import { Canton } from './Canton';
-// import Filter1Icon from '@mui/icons-material/Filter1';
+import { Alert, Card, CardContent } from '@mui/material';
+import { Container } from '@mui/system';
 import LocalParkingRoundedIcon from '@mui/icons-material/LocalParkingRounded';
+import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
+import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
+import MapRoundedIcon from '@mui/icons-material/MapRounded';
 
-const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    [`& .${treeItemClasses.content}`]: {
-        color: theme.palette.text.secondary,
-        borderTopRightRadius: theme.spacing(2),
-        borderBottomRightRadius: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-        fontWeight: theme.typography.fontWeightMedium,
-        '&.Mui-expanded': {
-            fontWeight: theme.typography.fontWeightRegular,
-        },
-        '&:hover': {
-            backgroundColor: theme.palette.action.hover,
-        },
-        '&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused': {
-            backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
-            color: 'var(--tree-view-color)',
-        },
-        [`& .${treeItemClasses.label}`]: {
-            fontWeight: 'inherit',
-            color: 'inherit',
-        },
-    },
-    [`& .${treeItemClasses.group}`]: {
-        marginLeft: 0,
-        [`& .${treeItemClasses.content}`]: {
-            paddingLeft: theme.spacing(2),
-        },
-    },
-}));
-
-function StyledTreeItem(props) {
-    const {
-        bgColor,
-        color,
-        labelIcon: LabelIcon,
-        labelInfo,
-        labelText,
-        ...other
-    } = props;
-
+function MinusSquare(props) {
     return (
-        <StyledTreeItemRoot
-            label={
-                <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
-                    <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
-                        {labelText}
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        {labelInfo}
-                    </Typography>
-                </Box>
-            }
-            style={{
-                '--tree-view-color': color,
-                '--tree-view-bg-color': bgColor,
-            }}
-            {...other}
-
-        />
+        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
+            {/* tslint:disable-next-line: max-line-length */}
+            <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 11.023h-11.826q-.375 0-.669.281t-.294.682v0q0 .401.294 .682t.669.281h11.826q.375 0 .669-.281t.294-.682v0q0-.401-.294-.682t-.669-.281z" />
+        </SvgIcon>
     );
 }
 
-StyledTreeItem.propTypes = {
-    bgColor: PropTypes.string,
-    color: PropTypes.string,
-    labelIcon: PropTypes.elementType.isRequired,
-    labelInfo: PropTypes.string,
-    labelText: PropTypes.string.isRequired,
-};
+function PlusSquare(props) {
+    return (
+        <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
+            {/* tslint:disable-next-line: max-line-length */}
+            <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 12.977h-4.923v4.896q0 .401-.281.682t-.682.281v0q-.375 0-.669-.281t-.294-.682v-4.896h-4.923q-.401 0-.682-.294t-.281-.669v0q0-.401.281-.682t.682-.281h4.923v-4.896q0-.401.294-.682t.669-.281v0q.401 0 .682.281t.281.682v4.896h4.923q.401 0 .682.281t.281.682v0q0 .375-.281.669t-.682.294z" />
+        </SvgIcon>
+    );
+}
 
+function CloseSquare(props) {
+    return (
+        <SvgIcon
+            className="close"
+            fontSize="inherit"
+            style={{ width: 14, height: 14 }}
+            {...props}
+        >
+            {/* tslint:disable-next-line: max-line-length */}
+            <path d="M17.485 17.512q-.281.281-.682.281t-.696-.268l-4.12-4.147-4.12 4.147q-.294.268-.696.268t-.682-.281-.281-.682.294-.669l4.12-4.147-4.12-4.147q-.294-.268-.294-.669t.281-.682.682-.281.696 .268l4.12 4.147 4.12-4.147q.294-.268.696-.268t.682.281 .281.669-.294.682l-4.12 4.147 4.12 4.147q.294.268 .294.669t-.281.682zM22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0z" />
+        </SvgIcon>
+    );
+}
+
+const StyledTreeItem = styled((props) => (
+    <TreeItem {...props} />
+))(({ theme }) => ({
+    [`& .${treeItemClasses.iconContainer}`]: {
+        '& .close': {
+            opacity: 0.3,
+        },
+    },
+    [`& .${treeItemClasses.group}`]: {
+        marginLeft: 15,
+        paddingLeft: 18,
+        borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
+    },
+}));
 
 export const Geografia = () => {
 
@@ -105,34 +75,32 @@ export const Geografia = () => {
 
     return (
         <div>
-            <Navbar />
-            <Container component="main" maxWidth="xs" sx={{ mt: 5 }}>
+
+            <Container component="main" sx={{ mt: 2, width: 500 }}>
+                <Alert severity="info">
+                    <MapRoundedIcon /> Cantón <MapsHomeWorkRoundedIcon /> Parroquia <GroupRoundedIcon /> Comunidad
+                </Alert>
                 <Card >
                     <CardContent >
-
-
                         <TreeView
-                            aria-label="gmail"
-                            // defaultExpanded={['3']}
-                            defaultCollapseIcon={< RemoveCircleOutlineIcon />}
-                            multiSelect={false}
-                            defaultExpandIcon={<AddBoxIcon />}
-                            defaultEndIcon={<div style={{ width: 24 }} />}
-                            sx={{ height: 500, flexGrow: 1, maxWidth: 600, overflowY: 'auto' }}
-
+                            aria-label="customized"
+                            defaultExpanded={['1']}
+                            defaultCollapseIcon={<MinusSquare />}
+                            defaultExpandIcon={<PlusSquare />}
+                            defaultEndIcon={<CloseSquare />}
+                            sx={{ height: 500, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
                         >
+
                             {provincias.map((provincia) => (
                                 <StyledTreeItem key={provincia.id} nodeId={"provincia_" + provincia.id}
-                                    labelText={provincia.nombre} labelIcon={LocalParkingRoundedIcon}>
+                                    label={provincia.nombre} >
                                     <Canton provincia={provincia.id} />
                                 </StyledTreeItem>
                             ))}
-
                         </TreeView>
-                    </CardContent >
-                </Card >
+                    </CardContent>
+                </Card>
             </Container>
-        </div >
+        </div>
     );
 }
-

@@ -4,13 +4,11 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import Typography from '@mui/material/Typography';
-import Person from '@mui/icons-material/Person';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { seleccionaElementoArbol } from '../../acciones/arbol';
-import { limpiarParroquias, retornaParroquias } from '../../acciones/geografia';
-import Filter3Icon from '@mui/icons-material/Filter3';
 import { Comunidad } from './Comunidad';
+import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -36,9 +34,9 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
         },
     },
     [`& .${treeItemClasses.group}`]: {
-        marginLeft: 0,
+        marginLeft: 15,
         [`& .${treeItemClasses.content}`]: {
-            paddingLeft: theme.spacing(2),
+            paddingLeft: theme.spacing(4),
         },
     },
 }));
@@ -96,15 +94,9 @@ export const Parroquia = (canton) => {
     //     }
     // }, [dispatch])
 
-    // const a = useMemo( () => retornaParroquias(canton.canton), [canton])
-
-    // console.log("a", a )
-
     const { parroquias } = useSelector(state => state.geografia);
     const arregloParroquias = parroquias.filter(e => e.cantonId === canton.canton);
   
-    console.log("parroquias", arregloParroquias)
-
     //context menu
     const [contextMenu, setContextMenu] = React.useState(null);
 
@@ -129,17 +121,14 @@ export const Parroquia = (canton) => {
             {
             
             
-            arregloParroquias.map((parroquia) => (
-                // parroquia.cantonId === canton.canton ?
-                
+            arregloParroquias.map((parroquia) => (               
                     (<StyledTreeItem
                         key={parroquia.id}
                         // nodeId={'"' + parroquia.id + '"'}
                         nodeId={'parroquia_' + parroquia.id}
-                        // nodeId={user.id}
                         id={parroquia.id}
                         labelText={parroquia.nombre}
-                        labelIcon={Filter3Icon}
+                        labelIcon={MapsHomeWorkRoundedIcon}
                         // labelInfo={user.cedula}
                         color="#e3742f"
                         bgColor="#fcefe3"

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { seleccionaElementoArbol } from '../../acciones/arbol';
-import Filter4Icon from '@mui/icons-material/Filter4';
+import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -85,10 +85,9 @@ export const Comunidad = (parroquia) => {
 
     // const dispatch = useDispatch();
 
- 
     const { comunidades } = useSelector(state => state.geografia);
+    const arregloComunidades = comunidades.filter(e => e.parroquiaId === parroquia.parroquia);
   
-
     //context menu
     const [contextMenu, setContextMenu] = React.useState(null);
 
@@ -110,21 +109,19 @@ export const Comunidad = (parroquia) => {
 
     return (
         <div>
-            {comunidades.map((comunidades) => (
-                comunidades.parroquiaId === parroquia.parroquia ?
+            {arregloComunidades.map((comunidades) => (
                     (<StyledTreeItem
                         key={comunidades.id}
                         nodeId={'comunidad_' + comunidades.id}
-                        // nodeId={user.id}
                         id={comunidades.id}
                         labelText={comunidades.nombre}
-                        labelIcon={Filter4Icon}
+                        labelIcon={GroupRoundedIcon}
                         // labelInfo={user.cedula}
                         color="#e3742f"
                         bgColor="#fcefe3"
                         onContextMenu={handleContextMenu}
                         style={{ cursor: 'context-menu' }}
-                    ></StyledTreeItem>) : null
+                    ></StyledTreeItem>)
             ))}
 
             <Menu

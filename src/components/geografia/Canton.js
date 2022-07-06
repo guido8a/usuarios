@@ -7,9 +7,8 @@ import Typography from '@mui/material/Typography';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { seleccionaElementoArbol } from '../../acciones/arbol';
-import { retornaCantones } from '../../acciones/geografia';
 import { Parroquia } from './Parroquia';
-import Filter2Icon from '@mui/icons-material/Filter2';
+import MapRoundedIcon from '@mui/icons-material/MapRounded';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -37,10 +36,11 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     [`& .${treeItemClasses.group}`]: {
         marginLeft: 0,
         [`& .${treeItemClasses.content}`]: {
-            paddingLeft: theme.spacing(2),
+            paddingLeft: theme.spacing(4),
         },
     },
 }));
+
 
 function StyledTreeItem(props) {
 
@@ -58,10 +58,10 @@ function StyledTreeItem(props) {
     } = props;
 
     const handleDelete = () => {
-        dispatch(seleccionaElementoArbol(id));     
+        dispatch(seleccionaElementoArbol(id));
     }
 
-        return (
+    return (
         <StyledTreeItemRoot
             label={
                 <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
@@ -91,7 +91,8 @@ export const Canton = (provincia) => {
     //     dispatch(retornaCantones(provincia.provincia));
     // }, [dispatch])
 
-    const { cantones} = useSelector(state => state.geografia);
+    const { cantones } = useSelector(state => state.geografia);
+    const arregloCantones = cantones.filter(e => e.provinciaId === provincia.provincia)
 
     //context menu
     const [contextMenu, setContextMenu] = React.useState(null);
@@ -114,23 +115,21 @@ export const Canton = (provincia) => {
 
     return (
         <div>
-            {cantones.map((canton) => (
-                canton.provinciaId === provincia.provincia ?
-                    <StyledTreeItem
-                        key={canton.id}
-                        nodeId={'canton_' + canton.id}
-                        // nodeId={user.id}
-                        id={canton.id}
-                        labelText={canton.nombre}
-                        labelIcon={Filter2Icon}
-                        // labelInfo={user.cedula}
-                        color="#e3742f"
-                        bgColor="#fcefe3"
-                        onContextMenu={handleContextMenu}
-                        style={{ cursor: 'context-menu' }}
-                    >
-                        <Parroquia canton={canton.id} />
-                    </StyledTreeItem> : null
+            {arregloCantones.map((canton) => (
+                <StyledTreeItem
+                    key={canton.id}
+                    nodeId={'canton_' + canton.id}
+                    id={canton.id}
+                    labelText={canton.nombre}
+                    labelIcon={MapRoundedIcon}
+                    // labelInfo={user.cedula}
+                    color="#e3742f"
+                    bgColor="#fcefe3"
+                    onContextMenu={handleContextMenu}
+                    style={{ cursor: 'context-menu' }}
+                >
+                    <Parroquia canton={canton.id} />
+                </StyledTreeItem>
             ))}
 
             <Menu
