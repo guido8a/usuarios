@@ -10,7 +10,7 @@ import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import TreeView from '@mui/lab/TreeView';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { seleccionaElementoArbol } from '../../acciones/arbol';
+// import { seleccionaElementoArbol } from '../../acciones/arbol';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -62,7 +62,7 @@ function StyledTreeItem(props) {
     // const handleDelete = () => onDelete(labelInfo);
     const handleDelete = () => {
         // console.log('seleccionado ', id)
-        dispatch(seleccionaElementoArbol(id));     
+        // dispatch(seleccionaElementoArbol(id));     
     }
 
         return (

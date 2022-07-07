@@ -8,10 +8,10 @@ import { retornaCantones, retornaComunidades, retornaParroquias, retornaProvinci
 import { Canton } from './Canton';
 import { Alert, Card, CardContent } from '@mui/material';
 import { Container } from '@mui/system';
-import LocalParkingRoundedIcon from '@mui/icons-material/LocalParkingRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import MapRoundedIcon from '@mui/icons-material/MapRounded';
+import {ModalGeografia} from './ModalGeografia'
 
 function MinusSquare(props) {
     return (
@@ -100,6 +100,7 @@ export const Geografia = () => {
                         </TreeView>
                     </CardContent>
                 </Card>
+                <ModalGeografia />
             </Container>
         </div>
     );

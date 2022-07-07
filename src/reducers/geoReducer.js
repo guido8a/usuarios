@@ -1,15 +1,26 @@
 import { tipos } from "../tipos/tipos";
 
 const estadoInicial = {
+    seleccionado: null,
+    elemento: null,
+    modalOpen: false,
+    tipo: -1,
+    tipoGeografia: null,
     provincias: [],
     cantones: [],
     parroquias: [],
-    comunidades: []
+    comunidades: [],
 }
 
 export const geoReducer = (estado = estadoInicial, accion) => {
 
     switch (accion.type) {
+        case tipos.geoElementoSeleccionado:
+            return {
+                ...estado,
+                seleccionado: accion.payload.id,
+                tipoGeografia: accion.payload.tipoGeografia
+            }
         case tipos.geoRetornarProvincias:
             return {
                 ...estado,
@@ -30,7 +41,26 @@ export const geoReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 comunidades: [...accion.payload]
             }
-
+        case tipos.geoAbrirModal:
+            return {
+                ...estado,
+                modalOpen: true
+            }
+        case tipos.geoCerrarModal:
+            return {
+                ...estado,
+                modalOpen: false,
+                tipo: -1
+            }
+        case tipos.geoEditarCanton:
+            return {
+                ...estado,
+                modalOpen: true,
+                tipo: 1,
+                elemento: estado.cantones.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
         default:
             return estado;
     }

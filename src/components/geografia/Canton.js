@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -6,9 +6,11 @@ import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import Typography from '@mui/material/Typography';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { seleccionaElementoArbol } from '../../acciones/arbol';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DvrIcon from '@mui/icons-material/Dvr';
 import { Parroquia } from './Parroquia';
 import MapRoundedIcon from '@mui/icons-material/MapRounded';
+import { abrirModalGeo, editarCanton, seleccionarElemento } from '../../acciones/geografia';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -30,7 +32,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
         },
         [`& .${treeItemClasses.label}`]: {
             fontWeight: 'inherit',
-            color: 'inherit',
+            color: '#19787d',
         },
     },
     [`& .${treeItemClasses.group}`]: {
@@ -57,21 +59,22 @@ function StyledTreeItem(props) {
         ...other
     } = props;
 
-    const handleDelete = () => {
-        dispatch(seleccionaElementoArbol(id));
+    const handleSeleccionar = () => {
+        dispatch(seleccionarElemento({ id: id, tipoGeografia: 2 }));
     }
 
     return (
         <StyledTreeItemRoot
+            onClick={handleSeleccionar}
             label={
                 <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
                     <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }} onClick={handleDelete}>
+                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
                         {labelText}
                     </Typography>
-                    <Typography variant="caption" color="inherit" onClick={handleDelete}>
+                    {/* <Typography variant="caption" color="inherit" onClick={handleDelete}>
                         {labelInfo}
-                    </Typography>
+                    </Typography> */}
                 </Box>
             }
             style={{
@@ -83,15 +86,13 @@ function StyledTreeItem(props) {
     );
 }
 
+
+
 export const Canton = (provincia) => {
 
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(retornaCantones(provincia.provincia));
-    // }, [dispatch])
-
-    const { cantones } = useSelector(state => state.geografia);
+    const { cantones, seleccionado } = useSelector(state => state.geografia);
     const arregloCantones = cantones.filter(e => e.provinciaId === provincia.provincia)
 
     //context menu
@@ -113,9 +114,13 @@ export const Canton = (provincia) => {
         setContextMenu(null);
     };
 
+    const handleEditar = () => {
+        dispatch(editarCanton(seleccionado));
+    }
+
     return (
         <div>
-            {arregloCantones.map((canton) => (
+            {arregloCantones.map((canton, index) => (
                 <StyledTreeItem
                     key={canton.id}
                     nodeId={'canton_' + canton.id}
@@ -123,8 +128,8 @@ export const Canton = (provincia) => {
                     labelText={canton.nombre}
                     labelIcon={MapRoundedIcon}
                     // labelInfo={user.cedula}
-                    color="#e3742f"
-                    bgColor="#fcefe3"
+                    color="#777799"
+                    bgColor="#777799"
                     onContextMenu={handleContextMenu}
                     style={{ cursor: 'context-menu' }}
                 >
@@ -144,19 +149,19 @@ export const Canton = (provincia) => {
             >
                 <MenuItem onClick={handleClose}>
                     <ListItemIcon>
-                        <EditIcon fontSize="small" />
+                        <DvrIcon fontSize="small" color="primary" />
                     </ListItemIcon>
                     <Typography variant="inherit"> Ver
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>   <ListItemIcon>
-                    <EditIcon fontSize="small" />
+                <MenuItem onClick={handleEditar}>   <ListItemIcon>
+                    <EditIcon fontSize="small" color="success"/>
                 </ListItemIcon>
                     <Typography variant="inherit"> Editar
                     </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>   <ListItemIcon>
-                    <EditIcon fontSize="small" />
+                    <DeleteIcon fontSize="small" sx={{color: 'red'}} />
                 </ListItemIcon>
                     <Typography variant="inherit"> Borrar
                     </Typography>

@@ -6,9 +6,9 @@ import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import Typography from '@mui/material/Typography';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { seleccionaElementoArbol } from '../../acciones/arbol';
 import { Comunidad } from './Comunidad';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
+import { seleccionarElemento } from '../../acciones/geografia';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -30,7 +30,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
         },
         [`& .${treeItemClasses.label}`]: {
             fontWeight: 'inherit',
-            color: 'inherit',
+            color: ' #191e7d ',
         },
     },
     [`& .${treeItemClasses.group}`]: {
@@ -56,8 +56,8 @@ function StyledTreeItem(props) {
         ...other
     } = props;
 
-    const handleDelete = () => {
-        dispatch(seleccionaElementoArbol(id));     
+    const handleSeleccionar = () => {
+        dispatch(seleccionarElemento(id));
     }
 
         return (
@@ -65,12 +65,12 @@ function StyledTreeItem(props) {
             label={
                 <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
                     <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }} onClick={handleDelete}>
+                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }} onClick={handleSeleccionar}>
                         {labelText}
                     </Typography>
-                    <Typography variant="caption" color="inherit" onClick={handleDelete}>
+                    {/* <Typography variant="caption" color="inherit" onClick={handleDelete}>
                         {labelInfo}
-                    </Typography>
+                    </Typography> */}
                 </Box>
             }
             style={{
@@ -132,7 +132,7 @@ export const Parroquia = (canton) => {
                         // labelInfo={user.cedula}
                         color="#e3742f"
                         bgColor="#fcefe3"
-                        onContextMenu={handleContextMenu}
+                        // onContextMenu={handleContextMenu}
                         style={{ cursor: 'context-menu' }}
                     >
                         <Comunidad parroquia={parroquia.id}/>

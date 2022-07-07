@@ -109,3 +109,29 @@ const cargarComunidades = (comunidades) => {
         payload: comunidades
     }
 }
+
+export const seleccionarElemento = (id) => {
+    return {
+        type: tipos.geoElementoSeleccionado,
+        payload: id
+    }
+}
+
+export const abrirModalGeo = () => {
+    return {
+        type: tipos.geoAbrirModal
+    }
+}
+
+export const cerrarModalGeo = () => {
+    return {
+        type: tipos.geoCerrarModal
+    }
+}
+
+export const editarCanton = (id) => {
+    return {
+        type: tipos.geoEditarCanton,
+        payload: id
+    }
+}

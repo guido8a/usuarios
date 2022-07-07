@@ -13,7 +13,6 @@ export const tipos = {
     uiBorrarUsuario: '[UI] Usuario borrado',
     uiRetornaFincas: '[UI] Retorna Fincas',
     uiRetornaUsuariosFincas: '[UI] Retorna Usuarios x Fincas',
-    uiElementoArbol: '[UI] Elemento arbol seleccionado',
     uiRetornaPerfiles: '[UI] Retorna todos los perfiles',
     uiPerfilSeleccionado: '[UI] Perfil seleccionado',
     uiNoPerfilSeleccionado: '[UI] Ningún perfil seleccionado',
@@ -68,5 +67,9 @@ export const tipos = {
     geoRetornarCantones: '[GEO] Retorna Cantones',
     geoRetornarParroquias: '[GEO] Retorna Parroquias',
     geoRetornarComunidades: '[GEO] Retorna Comunidades',
+    geoElementoSeleccionado: '[GEO] Elemento arbol seleccionado',
+    geoAbrirModal: '[GEO] Abrir modal',
+    geoCerrarModal: '[GEO] Cerrar modal',
+    geoEditarCanton: '[GEO] Editar Cantón'
 
 }
