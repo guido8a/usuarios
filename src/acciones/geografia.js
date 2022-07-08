@@ -81,6 +81,45 @@ export const retornaComunidades = () => {
     }
 }
 
+export const guardaCanton = (valores, tipo) => {
+    return async (dispatch) => {
+        let url
+        let mensaje
+        let envio
+
+        if (tipo === -1) {
+            url = 'cntn'
+            envio = 'POST'
+            mensaje = 'Cantón guardado correctamente'
+        } else {
+            url = `cntn/${valores.id}`
+            envio = 'PUT'
+            mensaje = 'Cantón actualizado correctamente'
+        }
+
+        const resp = await fetchConToken(url, valores, envio);
+        const body = await resp.json();
+
+        if (body.ok) {
+            dispatch(cerrarModalGeo());
+            dispatch(retornaCantones());
+            dispatch(retornaParroquias());
+            dispatch(retornaComunidades());
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: mensaje,
+                showConfirmButton: false,
+                timer: 2000
+            })
+        } else {
+            dispatch(cerrarModalGeo());
+            Swal.fire('Error', "Error al guardar el cantón", 'error')
+        }
+    }
+}
+
 
 const cargarProvincias = (provincias) => {
     return {
@@ -133,5 +172,11 @@ export const editarCanton = (id) => {
     return {
         type: tipos.geoEditarCanton,
         payload: id
+    }
+}
+
+export const nuevoCanton = () => {
+    return{
+        type: tipos.geoNuevoCanton
     }
 }

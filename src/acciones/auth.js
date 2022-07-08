@@ -103,7 +103,7 @@ export const iniciaRegistro = (registroValores, tipo) => {
                 timer: 2000
             })
         } else {
-            Swal.fire('Error', "Error al crear el usuario", 'error')
+            Swal.fire('Error', "Error al guardar el usuario", 'error')
         }
     }
 }

@@ -4,14 +4,14 @@ import { alpha, styled } from '@mui/material/styles';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { retornaCantones, retornaComunidades, retornaParroquias, retornaProvincias } from '../../acciones/geografia';
+import { nuevoCanton, retornaCantones, retornaComunidades, retornaParroquias, retornaProvincias, seleccionarElemento } from '../../acciones/geografia';
 import { Canton } from './Canton';
-import { Alert, Card, CardContent } from '@mui/material';
+import { Alert, Card, CardContent, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import MapRoundedIcon from '@mui/icons-material/MapRounded';
-import {ModalGeografia} from './ModalGeografia'
+import { ModalGeografia } from './ModalGeografia'
 
 function MinusSquare(props) {
     return (
@@ -71,7 +71,35 @@ export const Geografia = () => {
         dispatch(retornaComunidades());
     }, [dispatch])
 
-    const { provincias } = useSelector(state => state.geografia);
+    const handleSeleccionar = (event,id) => {
+        dispatch(seleccionarElemento({ id: id, tipoGeografia: 1 }));
+    }
+
+    const { provincias, tipoGeografia } = useSelector(state => state.geografia);
+
+
+    //context menu
+    const [contextMenu, setContextMenu] = React.useState(null);
+
+    const handleContextMenuProvincia = (event) => {
+        event.preventDefault();
+        setContextMenu(
+            contextMenu === null
+                ? {
+                    mouseX: event.clientX + 2,
+                    mouseY: event.clientY - 6,
+                }
+                : null,
+        );
+    };
+
+    const handleClose = () => {
+        setContextMenu(null);
+    };
+
+    const handleNuevoCanton = () => {
+        dispatch(nuevoCanton());
+    }
 
     return (
         <div>
@@ -92,16 +120,43 @@ export const Geografia = () => {
                         >
 
                             {provincias.map((provincia) => (
-                                <StyledTreeItem key={provincia.id} nodeId={"provincia_" + provincia.id}
-                                    label={provincia.nombre} >
+                                <StyledTreeItem
+                                    key={provincia.id}
+                                    nodeId={"provincia_" + provincia.id}
+                                    label={provincia.nombre}
+                                    onClick={handleSeleccionar}
+                                    onClick={(event) => handleSeleccionar(event, provincia.id)}
+                                    onContextMenu={tipoGeografia === 1 ? handleContextMenuProvincia : handleClose}
+                                >
                                     <Canton provincia={provincia.id} />
                                 </StyledTreeItem>
                             ))}
+
+                            <Menu
+                                open={contextMenu !== null}
+                                onClose={handleClose}
+                                anchorReference="anchorPosition"
+                                anchorPosition={
+                                    contextMenu !== null
+                                        ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                                        : undefined
+                                }
+                            >
+                                <MenuItem onClick={handleNuevoCanton}>
+                                    <ListItemIcon>
+                                        <MapRoundedIcon fontSize="small" color="primary" />
+                                    </ListItemIcon>
+                                    <Typography variant="inherit"> Agregar cantón
+                                    </Typography>
+                                </MenuItem>
+                            </Menu>
                         </TreeView>
                     </CardContent>
                 </Card>
                 <ModalGeografia />
             </Container>
+
+
         </div>
     );
 }

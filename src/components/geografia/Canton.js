@@ -92,16 +92,16 @@ export const Canton = (provincia) => {
 
     const dispatch = useDispatch();
 
-    const { cantones, seleccionado } = useSelector(state => state.geografia);
+    const { cantones, seleccionado, tipoGeografia } = useSelector(state => state.geografia);
     const arregloCantones = cantones.filter(e => e.provinciaId === provincia.provincia)
 
     //context menu
-    const [contextMenu, setContextMenu] = React.useState(null);
+    const [contextMenuCanton, setContextMenuCanton] = React.useState(null);
 
-    const handleContextMenu = (event) => {
+    const handleContextMenuCanton = (event) => {
         event.preventDefault();
-        setContextMenu(
-            contextMenu === null
+        setContextMenuCanton(
+            contextMenuCanton === null
                 ? {
                     mouseX: event.clientX + 2,
                     mouseY: event.clientY - 6,
@@ -110,12 +110,16 @@ export const Canton = (provincia) => {
         );
     };
 
-    const handleClose = () => {
-        setContextMenu(null);
+    const handleCloseCanton = () => {
+        setContextMenuCanton(null);
     };
 
     const handleEditar = () => {
         dispatch(editarCanton(seleccionado));
+    }
+
+    const handleBorrar = () => {
+        
     }
 
     return (
@@ -130,7 +134,7 @@ export const Canton = (provincia) => {
                     // labelInfo={user.cedula}
                     color="#777799"
                     bgColor="#777799"
-                    onContextMenu={handleContextMenu}
+                    onContextMenu={tipoGeografia === 2 ? handleContextMenuCanton : handleCloseCanton}
                     style={{ cursor: 'context-menu' }}
                 >
                     <Parroquia canton={canton.id} />
@@ -138,16 +142,16 @@ export const Canton = (provincia) => {
             ))}
 
             <Menu
-                open={contextMenu !== null}
-                onClose={handleClose}
+                open={contextMenuCanton !== null}
+                onClose={handleCloseCanton}
                 anchorReference="anchorPosition"
                 anchorPosition={
-                    contextMenu !== null
-                        ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                    contextMenuCanton !== null
+                        ? { top: contextMenuCanton.mouseY, left: contextMenuCanton.mouseX }
                         : undefined
                 }
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleCloseCanton}>
                     <ListItemIcon>
                         <DvrIcon fontSize="small" color="primary" />
                     </ListItemIcon>
@@ -160,7 +164,7 @@ export const Canton = (provincia) => {
                     <Typography variant="inherit"> Editar
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>   <ListItemIcon>
+                <MenuItem onClick={handleCloseCanton}>   <ListItemIcon>
                     <DeleteIcon fontSize="small" sx={{color: 'red'}} />
                 </ListItemIcon>
                     <Typography variant="inherit"> Borrar

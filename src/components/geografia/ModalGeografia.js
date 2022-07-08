@@ -73,7 +73,7 @@ export const ModalGeografia = () => {
                     {tipo === -1  ? 'Nuevo' : 'Editar' } 
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    {tipoGeografia === 2 ? <CantonForm /> : null}                    
+                    {(tipoGeografia === 1 || tipoGeografia === 2) ? <CantonForm /> : null}                    
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus

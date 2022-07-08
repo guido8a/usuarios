@@ -70,6 +70,8 @@ export const tipos = {
     geoElementoSeleccionado: '[GEO] Elemento arbol seleccionado',
     geoAbrirModal: '[GEO] Abrir modal',
     geoCerrarModal: '[GEO] Cerrar modal',
-    geoEditarCanton: '[GEO] Editar Cantón'
+    geoEditarCanton: '[GEO] Editar Cantón',
+    geoNuevoCanton: '[GEO] Nuevo Cantón',
+    geoBorrarCanton: '[GEO] Borrar Cantón'
 
 }

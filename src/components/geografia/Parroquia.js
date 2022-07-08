@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -84,7 +84,7 @@ function StyledTreeItem(props) {
 
 export const Parroquia = (canton) => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     // useEffect(() => {
     //     dispatch(retornaParroquias(canton.canton));
@@ -100,17 +100,17 @@ export const Parroquia = (canton) => {
     //context menu
     const [contextMenu, setContextMenu] = React.useState(null);
 
-    const handleContextMenu = (event) => {
-        event.preventDefault();
-        setContextMenu(
-            contextMenu === null
-                ? {
-                    mouseX: event.clientX + 2,
-                    mouseY: event.clientY - 6,
-                }
-                : null,
-        );
-    };
+    // const handleContextMenu = (event) => {
+    //     event.preventDefault();
+    //     setContextMenu(
+    //         contextMenu === null
+    //             ? {
+    //                 mouseX: event.clientX + 2,
+    //                 mouseY: event.clientY - 6,
+    //             }
+    //             : null,
+    //     );
+    // };
 
     const handleClose = () => {
         setContextMenu(null);

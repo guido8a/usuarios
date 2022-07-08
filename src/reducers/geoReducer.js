@@ -19,6 +19,7 @@ export const geoReducer = (estado = estadoInicial, accion) => {
             return {
                 ...estado,
                 seleccionado: accion.payload.id,
+                elemento: null,
                 tipoGeografia: accion.payload.tipoGeografia
             }
         case tipos.geoRetornarProvincias:
@@ -60,6 +61,18 @@ export const geoReducer = (estado = estadoInicial, accion) => {
                 elemento: estado.cantones.filter(
                     e => (e.id === accion.payload)
                 )
+            }
+        case tipos.geoNuevoCanton:
+            return {
+                ...estado,
+                modalOpen: true
+            }
+        case tipos.geoBorrarCanton:
+            return {
+                ...estado,
+                seleccionado: null,
+                tipoGeografia: null,
+                elemento: null
             }
         default:
             return estado;

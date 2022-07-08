@@ -12,8 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux'
-import { validacionPerfil } from "../../helpers/validacionPerfil";
-import { inicioGuardarPerfil } from "../../acciones/perfiles";
+import { validacionCanton } from "../../helpers/validacionCanton";
+import { guardaCanton } from "../../acciones/geografia";
 
 const form = props => {
 
@@ -53,23 +53,6 @@ const form = props => {
                     onBlur={handleBlur}
                     helperText={touched.nombre ? errors.nombre : ""}
                     error={touched.nombre && Boolean(errors.nombre)}
-                    inputProps={{ style: { textTransform: 'capitalize' } }}
-                    autoComplete="off"
-                    margin="dense"
-                    variant="outlined"
-                    fullWidth
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="longitud"
-                    label="Longitud"
-                    value={values.longitud}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.longitud ? errors.longitud : ""}
-                    error={touched.longitud && Boolean(errors.longitud)}
                     inputProps={{ style: { textTransform: 'uppercase' } }}
                     autoComplete="off"
                     margin="dense"
@@ -78,7 +61,40 @@ const form = props => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="numero"
+                    label="Número"
+                    value={values.numero}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.numero ? errors.numero : ""}
+                    error={touched.numero && Boolean(errors.numero)}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="logitud"
+                    label="Longitud"
+                    value={values.logitud}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.logitud ? errors.logitud : ""}
+                    error={touched.logitud && Boolean(errors.logitud)}
+                    autoComplete="off"
+                    margin="dense"
+                    variant="outlined"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     id="latitud"
                     label="Latitud"
@@ -87,12 +103,10 @@ const form = props => {
                     onBlur={handleBlur}
                     helperText={touched.latitud ? errors.latitud : ""}
                     error={touched.latitud && Boolean(errors.latitud)}
-                    inputProps={{ style: { textTransform: 'uppercase' } }}
                     autoComplete="off"
                     margin="dense"
                     variant="outlined"
                     fullWidth
-                    required
                   />
                 </Grid>
               </Grid>
@@ -116,15 +130,18 @@ const Canton = withFormik({
 
   mapPropsToValues: (props) => ({
     id: props.initialValues ? props.initialValues[0]?.id : null,
+    provinciaId: props.initialValues ? props.initialValues[0]?.provinciaId : (props.tipoGeografia === 1 ? props.seleccionado : null),
+    numero: props.initialValues ? props.initialValues[0]?.numero : "0",
     nombre: props.initialValues ? props.initialValues[0]?.nombre : "",
-    longitud: props.initialValues ? props.initialValues[0]?.logitud : "",
-    latitud: props.initialValues ? props.initialValues[0]?.latitud : "",
+    logitud: props.initialValues ? props.initialValues[0]?.logitud : 0,
+    latitud: props.initialValues ? props.initialValues[0]?.latitud : 0,
   }),
  
-  validationSchema: validacionPerfil,
+  validationSchema: validacionCanton,
 
   handleSubmit: (values, { props, setSubmitting }) => {
-    props.registroDePerfil(values, props.tipo);
+    values.nombre = values.nombre.toUpperCase();
+    props.registroDeCanton(values, props.tipo);
     setSubmitting(false);
   }
 })(form);
@@ -135,13 +152,14 @@ const mapStateToProps = (
 ) => ({
   initialValues: state.geografia.elemento,
   tipo: state.geografia.tipo,
-  tipoGeografia: state.geografia.tipoGeografia
+  tipoGeografia: state.geografia.tipoGeografia,
+  seleccionado: state.geografia.seleccionado
 })
 
 //función para usar un dispatch mediante props
 const mapDispatchToProps = (dispatch) => ({
-  registroDePerfil: (values, tipo) => {
-    // dispatch(inicioGuardarPerfil(values, tipo))
+  registroDeCanton: (values, tipo) => {
+    dispatch(guardaCanton(values, tipo))
   }
 })
 
