@@ -37,7 +37,7 @@ export const iniciaLogin = (id, login, perfil) => {
 
         //se lee el body:
         const body = await resp.json();
-        console.log('***body Login', body)
+        // console.log('***body Login', body)
 
         //se almacena el token en el localStore --nop es sensible
         if (body.ok) {
@@ -55,7 +55,7 @@ export const iniciaLogin = (id, login, perfil) => {
 //registro
 export const iniciaRegistro = (registroValores, tipo) => {
 
-    console.log("valores inicia registro ", registroValores, tipo)
+    // console.log("valores inicia registro ", registroValores, tipo)
 
     const md5 = require('md5')
 
@@ -113,36 +113,44 @@ export const iniciaChequeoToken = () => {
     return async (dispatch) => {  //dispatch viene de thunk
         console.log('iniciaChequeoToken:')
         const token = localStorage.getItem('token') || ''
+        // console.log("token", token)
 
-        if (token !== '') {
-            const resp = await fetchConToken('token', {}, 'POST');
-            // const resp = await fetchSinToken( 'user', {}, 'GET' );
-            // console.log('>>>1', resp)
-            //se lee el body:
-            const body = await resp.json();
-            console.log('body -->', body)
-
-            //se almacena el token en el localStore --nop es sensible
-            if (body.ok) {
-                // console.log('chequeo token body', body)
-                localStorage.setItem('token', body.token)
-                // localStorage.setItem('token-init-date', new Date().getTime())
-                // dispatch(loginUsuario({uid: body.uid, nombre: body.nombre }))
-                dispatch(loginUsuario({ uid: body.uid, nombre: body.nombre, perfil: body.perfil }))
-                dispatch(accion_cargaMenu(body.perfil))
-
-            } else {
-                dispatch(iniciaLogout())
-
-                if (body.uid) {
-                    Swal.fire('Error', "Error al verificar el token", 'error') //debe ir al login  
-                }
-                dispatch(finChequeo())
-            }
-        } else {
+        if(token === 'undefined'){
             dispatch(iniciaLogout())
             dispatch(finChequeo())
+        }else{
+            if (token !== '') {
+                const resp = await fetchConToken('token', {}, 'POST');
+                // const resp = await fetchSinToken( 'user', {}, 'GET' );
+                // console.log('>>>1', resp)
+                //se lee el body:
+                const body = await resp.json();
+                // console.log('body -->', body)
+    
+                //se almacena el token en el localStore --nop es sensible
+                if (body.ok) {
+                    // console.log('chequeo token body', body)
+                    localStorage.setItem('token', body.token)
+                    // localStorage.setItem('token-init-date', new Date().getTime())
+                    // dispatch(loginUsuario({uid: body.uid, nombre: body.nombre }))
+                    dispatch(loginUsuario({ uid: body.uid, nombre: body.nombre, perfil: body.perfil }))
+                    dispatch(accion_cargaMenu(body.perfil))
+    
+                } else {
+                    dispatch(iniciaLogout())
+    
+                    if (body.uid) {
+                        Swal.fire('Error', "Error al verificar el token", 'error') //debe ir al login  
+                    }
+                    dispatch(finChequeo())
+                }
+            } else {
+                dispatch(iniciaLogout())
+                dispatch(finChequeo())
+            }
         }
+
+      
     }
 }
 

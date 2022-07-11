@@ -120,6 +120,33 @@ export const guardaCanton = (valores, tipo) => {
     }
 }
 
+// const baseUrl = process.env.REACT_APP_API_URL;
+
+// export const clickclick = () => {
+//     return async (dispatch) => {
+
+//         const resp = await ft();
+//         const body = await resp.json();
+
+//         if(body.ok){
+//             Swal.fire("OK", "Todo bien", "success")
+//         }else{
+//             Swal.fire("ERROR", "Todo mal", "error")
+//         }
+       
+//     }
+
+// }
+
+// const ft = (method = 'GET') => {
+
+//     const url = `${baseUrl}/login/saludo`
+
+//     return fetch(url, {
+//         method,       
+//     })
+// }
+
 
 const cargarProvincias = (provincias) => {
     return {
@@ -176,7 +203,7 @@ export const editarCanton = (id) => {
 }
 
 export const nuevoCanton = () => {
-    return{
+    return {
         type: tipos.geoNuevoCanton
     }
 }

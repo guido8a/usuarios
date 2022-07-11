@@ -14,6 +14,8 @@ import { Permisos } from '../components/permisos/Permisos';
 import { Usuarios } from '../components/usuarios/Usuarios';
 import { Perfiles } from '../components/perfiles/Perfiles';
 import { Navbar } from '../components/ui/Navbar';
+// import { clickclick} from '../acciones/geografia';
+
 
 
 export const AppRouter = () => {
@@ -21,6 +23,7 @@ export const AppRouter = () => {
 
   useEffect(() => {
     dispatch(iniciaChequeoToken())
+    // dispatch(clickclick());
   }, [dispatch])
 
 

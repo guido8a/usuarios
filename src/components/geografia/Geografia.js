@@ -12,6 +12,8 @@ import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
 import MapRoundedIcon from '@mui/icons-material/MapRounded';
 import { ModalGeografia } from './ModalGeografia'
+import Button from '@mui/material/Button';
+
 
 function MinusSquare(props) {
     return (
@@ -101,8 +103,11 @@ export const Geografia = () => {
         dispatch(nuevoCanton());
     }
 
+
     return (
         <div>
+
+
 
             <Container component="main" sx={{ mt: 2, width: 500 }}>
                 <Alert severity="info">
