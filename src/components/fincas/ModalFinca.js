@@ -71,7 +71,7 @@ export const ModalFinca = (estado) => {
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={modalFincasOpen}
-                maxWidth='sm'
+                maxWidth={tipo === 0 ? 'xs' : 'sm'}
                 fullWidth
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>

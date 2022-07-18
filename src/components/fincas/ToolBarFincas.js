@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Chip, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { borrarFinca, editarFinca, verFinca } from '../../acciones/fincas';
+import { borrarFinca, editarFinca} from '../../acciones/fincas';
 
 export const ToolBarFincas = (props) => {
 
@@ -34,11 +34,11 @@ export const ToolBarFincas = (props) => {
     }
 
     const handleEditar = () => {
-        dispatch(editarFinca(idFinca));
+        dispatch(editarFinca(idFinca, 1));
     }
 
     const handleVerFinca = () => {
-        dispatch(verFinca(idFinca));
+        dispatch(editarFinca(idFinca, 0));
     }
 
     const [sel, setSel] = React.useState();

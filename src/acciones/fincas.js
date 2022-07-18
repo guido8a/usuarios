@@ -22,7 +22,7 @@ export const retornaFincas = () => {
     }
 }
 
-export const editarFinca = (finca) => {
+export const editarFinca = (finca, tipo) => {
 
     return async (dispatch) => {
 
@@ -30,12 +30,17 @@ export const editarFinca = (finca) => {
         const body = await resp.json();
 
         if (body.ok) {
-            dispatch(cargarFinca(body.Registro));
+            if (tipo === 0) {
+                dispatch(visualizandoFinca(body.Registro));
+            } else {
+                dispatch(cargarFinca(body.Registro));
+            }
         } else {
             Swal.fire("Error", "Error al cargar la finca", "error");
         }
     }
 }
+
 
 export const guardarFinca = (valores, tipo) => {
     return async (dispatch) => {
@@ -169,7 +174,7 @@ export const seleccionarComunidad = (comunidad) => {
     }
 }
 
-export const verFinca = (finca) => {
+export const visualizandoFinca = (finca) => {
     return {
         type: tipos.finVerFinca,
         payload: finca

@@ -56,9 +56,7 @@ export const fincasReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 modalFincasOpen: true,
                 tipo: 0,
-                finca: estado.fincas.filter(
-                    e => (e.id === accion.payload)
-                )
+                finca: accion.payload
             }
         default:
             return estado;
