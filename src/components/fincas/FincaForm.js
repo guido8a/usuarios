@@ -140,7 +140,7 @@ const form = props => {
                     multiline
                     minRows={2}
                     maxRows={3}
-                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    // inputProps={{ style: { textTransform: 'lowercase' } }}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.direccion}
@@ -159,7 +159,7 @@ const form = props => {
                     multiline
                     minRows={2}
                     maxRows={3}
-                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    // inputProps={{ style: { textTransform: 'lowercase' } }}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.referencia}
@@ -178,7 +178,7 @@ const form = props => {
                     multiline
                     minRows={2}
                     maxRows={3}
-                    inputProps={{ style: { textTransform: 'lowercase' } }}
+                    // inputProps={{ style: { textTransform: 'lowercase' } }}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.observaciones}
@@ -240,7 +240,6 @@ const Finca = withFormik({
     direccion: props.initialValues ? props.initialValues?.direccion : "",
     referencia: props.initialValues ? props.initialValues?.referencia : "",
     observaciones: props.initialValues ? props.initialValues?.observaciones : "",
-    // comunidadid: props.initialValues ? props.initialValues?.comunidadid : null,
     comunidadid: props.initialValues ? props.comunidad : null,
     organizacionid: props.initialValues ? props.initialValues?.organizacionid : 9999,
     institucionid: props.initialValues ? props.initialValues?.institucionid : 9999,
@@ -261,7 +260,7 @@ const mapStateToProps = (
 ) => ({
   initialValues: state.fincas.finca,
   tipo: state.fincas.tipo,
-  comunidad: state.fincas.comunidadSeleccionada
+  comunidad: state.geografia.comunidadSeleccionada
 })
 
 //función para usar un dispatch mediante props
