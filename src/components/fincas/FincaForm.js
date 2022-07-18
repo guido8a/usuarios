@@ -228,7 +228,7 @@ const Finca = withFormik({
 
   enableReinitialize: true,
 
-  mapPropsToValues: (props) => ({    
+  mapPropsToValues: (props) => ({
     id: props.initialValues ? props.initialValues?.id : null,
     mail: props.initialValues ? props.initialValues?.mail : "",
     nombre: props.initialValues ? props.initialValues?.nombre : "",
@@ -240,7 +240,7 @@ const Finca = withFormik({
     direccion: props.initialValues ? props.initialValues?.direccion : "",
     referencia: props.initialValues ? props.initialValues?.referencia : "",
     observaciones: props.initialValues ? props.initialValues?.observaciones : "",
-    comunidadid: props.initialValues ? props.comunidad : null,
+    comunidadid: props.comunidad ? props.comunidad : 1,
     organizacionid: props.initialValues ? props.initialValues?.organizacionid : 9999,
     institucionid: props.initialValues ? props.initialValues?.institucionid : 9999,
   }),

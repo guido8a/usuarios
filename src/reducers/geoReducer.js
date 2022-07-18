@@ -13,7 +13,11 @@ const estadoInicial = {
     cantonesxProvincia: [],
     parroquiasxCanton: [],
     comunidadesxParroquia: [],
-    comunidadSeleccionada: null
+    comunidadSeleccionada: null,
+    provincia: null,
+    canton: null,
+    parroquia: null,
+    comunidad: null
 }
 
 export const geoReducer = (estado = estadoInicial, accion) => {
@@ -183,6 +187,34 @@ export const geoReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 comunidadSeleccionada: accion.payload
             }
+        case tipos.geoCargarProvincia:
+            return {
+                ...estado,
+                provincia: estado.provincias.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoCargarCanton:
+            return {
+                ...estado,
+                canton: estado.cantones.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoCargarParroquia:
+            return{
+                ...estado,
+                parroquia: estado.parroquias.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoCargarComunidad:
+            return{
+                ...estado,
+                comunidad: estado.comunidades.filter(
+                    e => (e.id === accion.payload)
+                )
+            }        
         default:
             return estado;
     }

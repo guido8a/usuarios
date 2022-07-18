@@ -87,6 +87,10 @@ export const tipos = {
     geoRetornaParroquiasxCanton: '[GEO] Retorna Parroquias x Cantón',
     geoRetornaComunidadesxParroquia: '[GEO] Retorna Comunidades x Parroquia',
     geoSeleccionaComunidad: '[GEO] Selecciona comunidad',
+    geoCargarProvincia: '[GEO] Cargar Provincia',
+    geoCargarCanton: '[GEO] Cargar Cantón',
+    geoCargarParroquia: '[GEO] Cargar Parroquia',
+    geoCargarComunidad: '[GEO] Cargar Comunidad',
     
 
 }

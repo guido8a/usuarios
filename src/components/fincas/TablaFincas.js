@@ -21,6 +21,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { noFincaSeleccionada, retornaFincas, seleccionarFinca, nuevaFinca } from '../../acciones/fincas';
 import { ToolBarFincas } from './ToolBarFincas';
 import {ModalFinca} from './ModalFinca'
+import { retornaCantones, retornaComunidades, retornaParroquias, retornaProvincias } from '../../acciones/geografia';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -162,6 +163,10 @@ export const TablaFincas = () => {
   //retorna las fincas de la BD
   React.useEffect(() => {
     dispatch(retornaFincas());
+    dispatch(retornaProvincias());
+    dispatch(retornaParroquias());
+    dispatch(retornaCantones());
+    dispatch(retornaComunidades());
   }, [dispatch])
 
 

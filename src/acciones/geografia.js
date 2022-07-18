@@ -298,9 +298,9 @@ export const retornaParroquiasxCanton = (canton) => {
         const resp = await fetchConToken(`parroquia/${canton}`);
         const body = await resp.json();
 
-        if(body.ok){
+        if (body.ok) {
             dispatch(cargarParroquiasxCanton(body.Registro));
-        }else{
+        } else {
             Swal.fire("Error", "Error al cargar las parroquias x canton", "error")
         }
     }
@@ -310,10 +310,10 @@ export const retornaComunidadesxParroquia = (parroquia) => {
     return async (dispatch) => {
         const resp = await fetchConToken(`comunidad/${parroquia}`);
         const body = await resp.json();
-        
-        if(body.ok){
+
+        if (body.ok) {
             dispatch(cargarComunidadesxParroquia(body.Registro));
-        }else{
+        } else {
             Swal.fire("Error", "Error al cargar las comunidades x parroquia", "error")
         }
     }
@@ -490,8 +490,36 @@ const cargarParroquiasxCanton = (parroquias) => {
 }
 
 const cargarComunidadesxParroquia = (comunidades) => {
-    return{
+    return {
         type: tipos.geoRetornaComunidadesxParroquia,
         payload: comunidades
+    }
+}
+
+export const cargarProvinciaFinca = (provincia) => {
+    return {
+        type: tipos.geoCargarProvincia,
+        payload: provincia
+    }
+}
+
+export const cargarCantonFinca = (canton) => {
+    return {
+        type: tipos.geoCargarCanton,
+        payload: canton
+    }
+}
+
+export const cargarParroquiaFinca = (parroquia) => {
+    return {
+        type: tipos.geoCargarParroquia,
+        payload: parroquia
+    }
+}
+
+export const cargarComunidadFinca = (comunidad) => {
+    return {
+        type: tipos.geoCargarComunidad,
+        payload: comunidad
     }
 }

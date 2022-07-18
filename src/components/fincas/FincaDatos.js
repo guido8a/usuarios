@@ -5,18 +5,121 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import PersonIcon from '@mui/icons-material/Person';
+import PhoneIcon from '@mui/icons-material/Phone';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import BadgeIcon from '@mui/icons-material/Badge';
+import ChatIcon from '@mui/icons-material/Chat';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
+import { cargarProvinciaFinca, cargarCantonFinca, cargarParroquiaFinca, cargarComunidadFinca } from '../../acciones/geografia';
 
 export const FincaDatos = () => {
 
+    const dispatch = useDispatch();
+
     const { finca } = useSelector(state => state.fincas)
+
+    React.useEffect(() => {
+        dispatch(cargarProvinciaFinca(finca.provid));
+        dispatch(cargarCantonFinca(finca.cntnid));
+        dispatch(cargarParroquiaFinca(finca.parrid));
+        dispatch(cargarComunidadFinca(finca.comunidadid));
+    }, [])
+
+    const { provincia, canton, parroquia, comunidad } = useSelector(state => state.geografia)
+
 
     return (
         <div>
 
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+
+                <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                    <AddLocationAltIcon fontSize="small" color="warning" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Provincia"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {provincia[0].nombre}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+                    <ListItemAvatar>
+                        <AddLocationAltIcon fontSize="small" color="warning" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Cantón"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {canton[0].nombre}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+                </ListItem>
+
+                <Divider variant="inset" component="li" />
+
+                <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                    <AddLocationAltIcon fontSize="small" color="warning" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Parroquia"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {parroquia[0].nombre}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+                    <ListItemAvatar>
+                        <AddLocationAltIcon fontSize="small" color="warning" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Comunidad"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {comunidad[0].nombre}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+                </ListItem>
+
+                <Divider variant="inset" component="li" />
+
+
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                         <PersonIcon fontSize="small" color="success" />
@@ -37,7 +140,7 @@ export const FincaDatos = () => {
                         }
                     />
                     <ListItemAvatar>
-                        <AddLocationAltIcon fontSize="small" color="warning" />
+                        <BadgeIcon fontSize="small" color="success" />
                     </ListItemAvatar>
                     <ListItemText
                         primary="Ruc"
@@ -58,30 +161,11 @@ export const FincaDatos = () => {
 
                 <Divider variant="inset" component="li" />
                 <ListItem alignItems="flex-start" >
-                    <ListItemAvatar>
-                        <AddLocationAltIcon fontSize="small" color="warning" />
+                <ListItemAvatar>
+                        <PhoneIcon fontSize="small" color="info" />
                     </ListItemAvatar>
                     <ListItemText
-                        primary="Ruc"
-                        secondary={
-                            <React.Fragment>
-                                <Typography
-                                    sx={{ display: 'inline', fontWeight: 'bold' }}
-                                    component="span"
-                                    variant="body2"
-                                    color="text.primary"
-                                >
-                                    {finca.email || 'N/A'}
-                                </Typography>
-                            </React.Fragment>
-                        }
-                    />
-
-                    <ListItemAvatar>
-                        <AddLocationAltIcon fontSize="small" color="warning" />
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary="Ruc"
+                        primary="Teléfono"
                         secondary={
                             <React.Fragment>
                                 <Typography
@@ -95,13 +179,32 @@ export const FincaDatos = () => {
                             </React.Fragment>
                         }
                     />
+                    <ListItemAvatar>
+                        <AlternateEmailIcon fontSize="small" color="info" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Email"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {finca.email || 'N/A'}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+               
 
                 </ListItem>
 
                 <Divider variant="inset" component="li" />
                 <ListItem alignItems="flex-start" >
                     <ListItemAvatar>
-                        <AddLocationAltIcon fontSize="small" color="warning" />
+                        <ImportContactsIcon fontSize="small" color="info" />
                     </ListItemAvatar>
                     <ListItemText
                         primary="Dirección"
@@ -120,7 +223,7 @@ export const FincaDatos = () => {
                     />
 
                     <ListItemAvatar>
-                        <AddLocationAltIcon fontSize="small" color="warning" />
+                        <ImportContactsIcon fontSize="small" color="info" />
                     </ListItemAvatar>
                     <ListItemText
                         primary="Referencia"
@@ -143,7 +246,7 @@ export const FincaDatos = () => {
                 <Divider variant="inset" component="li" />
                 <ListItem alignItems="flex-start" >
                     <ListItemAvatar>
-                        <AddLocationAltIcon fontSize="small" color="warning" />
+                        <ChatIcon fontSize="small" color="info" />
                     </ListItemAvatar>
                     <ListItemText
                         primary="Obervaciones"
@@ -165,7 +268,7 @@ export const FincaDatos = () => {
                 <Divider variant="inset" component="li" />
                 <ListItem alignItems="flex-start" >
                     <ListItemAvatar>
-                        <AddLocationAltIcon fontSize="small" color="warning" />
+                        <BeenhereIcon fontSize="small" color="info" />
                     </ListItemAvatar>
                     <ListItemText
                         primary="Estado"
@@ -177,7 +280,7 @@ export const FincaDatos = () => {
                                     variant="body2"
                                     color="text.primary"
                                 >
-                                   Se encuentra legalizado: {finca.legalizado === 'S' ? 'SI' : 'NO'}
+                                    Se encuentra legalizado: {finca.legalizado === 'S' ? 'SI' : 'NO'}
                                 </Typography>
                             </React.Fragment>
                         }
