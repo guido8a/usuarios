@@ -15,6 +15,10 @@ import { faSave } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux'
 import { validacionFinca } from "../../helpers/validacionFinca";
 import { guardarFinca } from "../../acciones/fincas";
+import { ProvinciaSelect } from "./ProvinciaSelect"
+import { CantonSelect } from "./CantonSelect";
+import { ParroquiaSelect } from "./ParroquiaSelect";
+import { ComunidadSelect } from "./ComunidadSelect";
 
 const tiposLegalizado = [{ value: 'S', label: "Si" }, { value: 'N', label: 'No' },]
 
@@ -32,10 +36,12 @@ const form = props => {
     tipo
   } = props;
 
+
+
   return (
     <div >
       <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
@@ -47,7 +53,19 @@ const form = props => {
           >
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
+                  <ProvinciaSelect />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <CantonSelect />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <ParroquiaSelect />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <ComunidadSelect />
+                </Grid>
+                <Grid item xs={12} sm={7}>
                   <TextField
                     id="nombre"
                     label="Nombre"
@@ -64,7 +82,7 @@ const form = props => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={5}>
                   <TextField
                     id="ruc"
                     label="RUC"
@@ -80,7 +98,7 @@ const form = props => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={7}>
                   <TextField
                     id="mail"
                     label="Email"
@@ -96,10 +114,11 @@ const form = props => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12}>
+
+                <Grid item xs={12} sm={5}>
                   <TextField
                     id="telefono"
-                    label="telefono"
+                    label="Teléfono"
                     value={values.telefono}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -112,6 +131,7 @@ const form = props => {
                     fullWidth
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={7}>
                   <TextField
                     id="direccion"
@@ -150,7 +170,7 @@ const form = props => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={7}>
                   <TextField
                     id="observaciones"
                     label="Observaciones"
@@ -169,7 +189,7 @@ const form = props => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} sm={7}>
+                <Grid item xs={12} sm={3}>
                   <TextField
                     id="legalizado"
                     select
@@ -177,10 +197,10 @@ const form = props => {
                     label="Legalizado"
                     value={values.legalizado}
                     onChange={handleChange}
-                    helperText="Seleccione el estado de la finca"
+                    helperText="Estado de la finca"
                     margin="dense"
                     variant="outlined"
-                    fullWidth
+                    sx={{ width: 200 }}
                   >
                     {tiposLegalizado.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -192,7 +212,7 @@ const form = props => {
               </Grid>
 
               <Button type="submit" color='success' fullWidth variant="contained"
-                sx={{ mt: 1}} startIcon={<FontAwesomeIcon icon={faSave} />}
+                sx={{ mt: 1 }} startIcon={<FontAwesomeIcon icon={faSave} />}
               >
                 {tipo === -1 ? 'Guardar' : 'Actualizar'}
               </Button>
@@ -208,26 +228,28 @@ const Finca = withFormik({
 
   enableReinitialize: true,
 
-  mapPropsToValues: (props) => ({
-    id: props.initialValues ? props.initialValues[0]?.id : null,
-    mail: props.initialValues ? props.initialValues[0]?.mail : "",
-    nombre: props.initialValues ? props.initialValues[0]?.nombre : "",
-    telefono: props.initialValues ? props.initialValues[0]?.telefono : "",
-    ruc: props.initialValues ? props.initialValues[0]?.ruc : "",
-    fechaInicio: props.initialValues ? props.initialValues[0]?.fechaInicio : moment().minutes(0).seconds(0).toDate(),
-    fechaFin: props.initialValues ? props.initialValues[0]?.fechaFin : moment().minutes(0).seconds(0).toDate(),
-    legalizado: props.initialValues ? props.initialValues[0]?.legalizado : "S",
-    direccion: props.initialValues ? props.initialValues[0]?.direccion : "",
-    referencia: props.initialValues ? props.initialValues[0]?.referencia : "",
-    observaciones: props.initialValues ? props.initialValues[0]?.observaciones : "",
-    comunidadid: props.initialValues ? props.initialValues[0]?.comunidadid : 1,
-    organizacionid: props.initialValues ? props.initialValues[0]?.organizacionid : 9999,
-    institucionid: props.initialValues ? props.initialValues[0]?.institucionid : 9999
+  mapPropsToValues: (props) => ({    
+    id: props.initialValues ? props.initialValues?.id : null,
+    mail: props.initialValues ? props.initialValues?.mail : "",
+    nombre: props.initialValues ? props.initialValues?.nombre : "",
+    telefono: props.initialValues ? props.initialValues?.telefono : "",
+    ruc: props.initialValues ? props.initialValues?.ruc : "",
+    fechaInicio: props.initialValues ? props.initialValues?.fechaInicio : moment().minutes(0).seconds(0).toDate(),
+    fechaFin: props.initialValues ? props.initialValues?.fechaFin : moment().minutes(0).seconds(0).toDate(),
+    legalizado: props.initialValues ? props.initialValues?.legalizado : "S",
+    direccion: props.initialValues ? props.initialValues?.direccion : "",
+    referencia: props.initialValues ? props.initialValues?.referencia : "",
+    observaciones: props.initialValues ? props.initialValues?.observaciones : "",
+    // comunidadid: props.initialValues ? props.initialValues?.comunidadid : null,
+    comunidadid: props.initialValues ? props.comunidad : null,
+    organizacionid: props.initialValues ? props.initialValues?.organizacionid : 9999,
+    institucionid: props.initialValues ? props.initialValues?.institucionid : 9999,
   }),
 
   validationSchema: validacionFinca,
 
   handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("values-> ", values)
     props.registroDeFinca(values, props.tipo);
     setSubmitting(false);
   }
@@ -238,7 +260,8 @@ const mapStateToProps = (
   state
 ) => ({
   initialValues: state.fincas.finca,
-  tipo: state.fincas.tipo
+  tipo: state.fincas.tipo,
+  comunidad: state.fincas.comunidadSeleccionada
 })
 
 //función para usar un dispatch mediante props

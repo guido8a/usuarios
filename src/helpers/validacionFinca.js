@@ -18,5 +18,7 @@ export const validacionFinca = Yup.object().shape({
     .min(5, 'La refencia debe tener al menos 5 caracteres'),
   telefono: Yup.string()
     // .matches('^[0-9]*$', "Ingrese solo números")
-    .min(10, 'El teléfono debe tener al menos 10 caracteres')
+    .min(10, 'El teléfono debe tener al menos 10 caracteres'),
+  comunidadid: Yup.string()
+    .required('Comunidad es obligatorio'),
 });

@@ -13,6 +13,8 @@ import { cerrarModalFinca } from '../../acciones/fincas';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { FincaForm } from './FincaForm';
+import { FincaDatos } from './FincaDatos';
+import { cerrarModalGeo } from '../../acciones/geografia';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -60,6 +62,7 @@ export const ModalFinca = (estado) => {
   
     const handleClose = () => {
         dispatch(cerrarModalFinca());
+        dispatch(cerrarModalGeo());
     };
 
     return (
@@ -68,12 +71,14 @@ export const ModalFinca = (estado) => {
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={modalFincasOpen}
+                maxWidth='sm'
+                fullWidth
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    {tipo === -1  ? 'Nueva Finca' : 'Editar finca' } 
+                    {tipo === -1  ? 'Nueva Finca' : ( tipo === 0 ? 'Visualizar Datos' : 'Editar finca') } 
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <FincaForm />
+                    {tipo === 0 ? <FincaDatos /> : <FincaForm />}                    
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus

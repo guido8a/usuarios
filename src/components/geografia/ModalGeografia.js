@@ -13,6 +13,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { CantonForm } from './CantonForm';
 import { cerrarModalGeo } from '../../acciones/geografia';
+import { CantonDatos } from './CantonDatos';
+import { ParroquiaDatos } from './ParroquiaDatos';
+import { ComunidadDatos } from './ComunidadDatos';
+import { ParroquiaForm } from './ParroquiaForm';
+import { ComunidadForm } from './ComunidadForm';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -56,8 +61,8 @@ export const ModalGeografia = () => {
 
     const dispatch = useDispatch()
 
-    const { modalOpen, tipo, tipoGeografia} = useSelector(state => state.geografia)
-  
+    const { modalOpen, tipo, tipoGeografia } = useSelector(state => state.geografia)
+
     const handleClose = () => {
         dispatch(cerrarModalGeo());
     };
@@ -70,10 +75,40 @@ export const ModalGeografia = () => {
                 open={modalOpen}
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    {tipo === -1  ? 'Nuevo' : 'Editar' } 
+                    {tipo === -1 ? 'Nuevo' : (tipo === 1 ? 'Editar' : 'Datos')}
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    {(tipoGeografia === 1 || tipoGeografia === 2) ? <CantonForm /> : null}                    
+
+                    {
+                        tipo === 0 && tipoGeografia === 2
+                            ? (<CantonDatos />)
+                            : ((tipo === 0 && tipoGeografia === 3)
+                                ? (<ParroquiaDatos />)
+                                : ((tipo === 0 && tipoGeografia === 4)
+                                    ? (<ComunidadDatos />)
+                                    : ((tipo === -1 && tipoGeografia === 1)
+                                        ? (<CantonForm />)
+                                        : ((tipo === -1 && tipoGeografia === 2))
+                                            ? (<ParroquiaForm />)
+                                            : ((tipo === -1 && tipoGeografia === 3)
+                                                ? (<ComunidadForm />)
+                                                : ((tipo === 1 && tipoGeografia === 2)
+                                                    ? (<CantonForm />)
+                                                    : ((tipo === 1 && tipoGeografia === 3)
+                                                        ? (<ParroquiaForm />)
+                                                        : ((tipo === 1 && tipoGeografia === 4)
+                                                            ? (<ComunidadForm />)
+                                                            : null
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                    )
+                                )
+                            )
+
+                        // tipo === 0 ? (<CantonDatos />) : ((tipoGeografia === 1 || tipoGeografia === 2) ? <CantonForm /> : null)                    
+                    }
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus

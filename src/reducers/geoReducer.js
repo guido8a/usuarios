@@ -10,6 +10,10 @@ const estadoInicial = {
     cantones: [],
     parroquias: [],
     comunidades: [],
+    cantonesxProvincia: [],
+    parroquiasxCanton: [],
+    comunidadesxParroquia: [],
+    comunidadSeleccionada: null
 }
 
 export const geoReducer = (estado = estadoInicial, accion) => {
@@ -51,7 +55,11 @@ export const geoReducer = (estado = estadoInicial, accion) => {
             return {
                 ...estado,
                 modalOpen: false,
-                tipo: -1
+                elemento: null,
+                tipo: -1,
+                cantonesxProvincia: [],
+                parroquiasxCanton: [],
+                comunidadesxParroquia: []
             }
         case tipos.geoEditarCanton:
             return {
@@ -72,7 +80,108 @@ export const geoReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 seleccionado: null,
                 tipoGeografia: null,
-                elemento: null
+                elemento: null,
+                cantones: estado.cantones.filter(
+                    e => (e.id !== accion.payload)
+                )
+            }
+        case tipos.geoVerCanton:
+            return {
+                ...estado,
+                modalOpen: true,
+                tipo: 0,
+                elemento: estado.cantones.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoEditarParroquia:
+            return {
+                ...estado,
+                tipo: 1,
+                modalOpen: true,
+                elemento: estado.parroquias.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoNuevaParroquia:
+            return {
+                ...estado,
+                modalOpen: true
+            }
+        case tipos.geoVerParroquia:
+            return {
+                ...estado,
+                tipo: 0,
+                modalOpen: true,
+                elemento: estado.parroquias.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoBorrarParroquia:
+            return {
+                ...estado,
+                seleccionado: null,
+                tipoGeografia: null,
+                elemento: null,
+                parroquias: estado.parroquias.filter(
+                    e => (e.id !== accion.payload)
+                )
+            }
+        case tipos.geoEditarComunidad:
+            return {
+                ...estado,
+                modalOpen: true,
+                tipo: 1,
+                elemento: estado.comunidades.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoNuevaComunidad:
+            return {
+                ...estado,
+                modalOpen: true
+            }
+        case tipos.geoVerComunidad:
+            return {
+                ...estado,
+                modalOpen: true,
+                tipo: 0,
+                elemento: estado.comunidades.filter(
+                    e => (e.id === accion.payload)
+                )
+            }
+        case tipos.geoBorrarComunidad:
+            return {
+                ...estado,
+                seleccionado: null,
+                tipoGeografia: null,
+                elemento: null,
+                comunidades: estado.comunidades.filter(
+                    e => (e.id !== accion.payload)
+                )
+            }
+        case tipos.geoCantonesxProvincia:
+            return {
+                ...estado,
+                cantonesxProvincia: [...accion.payload],
+                parroquiasxCanton: [],
+                comunidadesxParroquia: []
+            }
+        case tipos.geoRetornaParroquiasxCanton:
+            return {
+                ...estado,
+                parroquiasxCanton: [...accion.payload],
+                comunidadesxParroquia: []
+            }
+        case tipos.geoRetornaComunidadesxParroquia:
+            return {
+                ...estado,
+                comunidadesxParroquia: [...accion.payload]
+            }
+        case tipos.geoSeleccionaComunidad:
+            return {
+                ...estado,
+                comunidadSeleccionada: accion.payload
             }
         default:
             return estado;

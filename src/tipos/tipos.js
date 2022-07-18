@@ -61,6 +61,7 @@ export const tipos = {
     finCerrarModalFinca: '[FIN] Cerrar modal finca',
     finEditarFinca: '[FIN] Editar Finca',
     finBorrarFinca: '[FIN] Borrar Finca',
+    finVerFinca: '[FIN] Ver Finca',
 
     //geografia
     geoRetornarProvincias: '[GEO] Retorna Provincias',
@@ -72,6 +73,20 @@ export const tipos = {
     geoCerrarModal: '[GEO] Cerrar modal',
     geoEditarCanton: '[GEO] Editar Cantón',
     geoNuevoCanton: '[GEO] Nuevo Cantón',
-    geoBorrarCanton: '[GEO] Borrar Cantón'
+    geoBorrarCanton: '[GEO] Borrar Cantón',
+    geoVerCanton: '[GEO] Ver Cantón',
+    geoEditarParroquia: '[GEO] Editar Parroquia',
+    geoNuevaParroquia: '[GEO] Nueva Parroquia',
+    geoVerParroquia: '[GEO] Ver Parroquia',
+    geoBorrarParroquia: '[GEO] Borrar Parroquia',
+    geoEditarComunidad: '[GEO] Editar Comunidad',
+    geoNuevaComunidad: '[GEO] Nueva Comunidad',
+    geoVerComunidad: '[GEO] Ver Comunidad',
+    geoBorrarComunidad: '[GEO] Borrar Comunidad',
+    geoCantonesxProvincia: '[GEO] Retorna Cantones x Provincia',
+    geoRetornaParroquiasxCanton: '[GEO] Retorna Parroquias x Cantón',
+    geoRetornaComunidadesxParroquia: '[GEO] Retorna Comunidades x Parroquia',
+    geoSeleccionaComunidad: '[GEO] Selecciona comunidad',
+    
 
 }

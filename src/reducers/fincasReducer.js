@@ -5,7 +5,7 @@ const estadoInicial = {
     idFinca: null,
     finca: null,
     modalFincasOpen: false,
-    tipo: -1
+    tipo: -1,
 }
 
 export const fincasReducer = (estado = estadoInicial, accion) => {
@@ -43,16 +43,23 @@ export const fincasReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 modalFincasOpen: true,
                 tipo: 1,
+                finca: accion.payload
+            }
+        case tipos.finBorrarFinca:
+            return {
+                ...estado,
+                idFinca: null,
+                finca: null
+            }
+        case tipos.finVerFinca:
+            return {
+                ...estado,
+                modalFincasOpen: true,
+                tipo: 0,
                 finca: estado.fincas.filter(
                     e => (e.id === accion.payload)
                 )
             }
-        case tipos.finBorrarFinca:
-            return{
-                ...estado,
-                idFinca: null,
-                finca: null
-            }    
         default:
             return estado;
     }

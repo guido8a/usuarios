@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -7,7 +7,10 @@ import Typography from '@mui/material/Typography';
 import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
-import { seleccionarElemento } from '../../acciones/geografia';
+import { borrarComunidad, editarComunidad, seleccionarElemento, verComunidad } from '../../acciones/geografia';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DvrIcon from '@mui/icons-material/Dvr';
+import Swal from 'sweetalert2';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -56,10 +59,10 @@ function StyledTreeItem(props) {
     } = props;
 
     const handleSeleccionar = () => {
-        dispatch(seleccionarElemento(id));
+        dispatch(seleccionarElemento({ id: id, tipoGeografia: 4 }));
     }
 
-        return (
+    return (
         <StyledTreeItemRoot
             label={
                 <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
@@ -83,18 +86,18 @@ function StyledTreeItem(props) {
 
 export const Comunidad = (parroquia) => {
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    const { comunidades } = useSelector(state => state.geografia);
+    const { comunidades, tipoGeografia, seleccionado } = useSelector(state => state.geografia);
     const arregloComunidades = comunidades.filter(e => e.parroquiaId === parroquia.parroquia);
-  
-    //context menu
-    const [contextMenu, setContextMenu] = React.useState(null);
 
-    const handleContextMenu = (event) => {
+    //context menu
+    const [contextMenuCom, setContextMenuCom] = React.useState(null);
+
+    const handleContextMenuCom = (event) => {
         event.preventDefault();
-        setContextMenu(
-            contextMenu === null
+        setContextMenuCom(
+            contextMenuCom === null
                 ? {
                     mouseX: event.clientX + 2,
                     mouseY: event.clientY - 6,
@@ -103,52 +106,75 @@ export const Comunidad = (parroquia) => {
         );
     };
 
-    const handleClose = () => {
-        setContextMenu(null);
+    const handleCloseCom = () => {
+        setContextMenuCom(null);
     };
+
+    const handleEditarCom = () => {
+        dispatch(editarComunidad(seleccionado));
+    }
+
+    const handleBorrarCom = () => {
+        Swal.fire({
+            title: "Está seguro de borrar esta comunidad?",
+            showCancelButton: true,
+            confirmButtonText: 'Borrar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#d33',
+            icon: 'question'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(borrarComunidad(seleccionado));
+            }
+        })
+    }
+
+    const handleVerCom = () => {
+        dispatch(verComunidad(seleccionado));
+    }
 
     return (
         <div>
             {arregloComunidades.map((comunidades) => (
-                    (<StyledTreeItem
-                        key={comunidades.id}
-                        nodeId={'comunidad_' + comunidades.id}
-                        id={comunidades.id}
-                        labelText={comunidades.nombre}
-                        labelIcon={GroupRoundedIcon}
-                        // labelInfo={user.cedula}
-                        color="#e3742f"
-                        bgColor="#fcefe3"
-                        // onContextMenu={handleContextMenu}
-                        style={{ cursor: 'context-menu' }}
-                    ></StyledTreeItem>)
+                (<StyledTreeItem
+                    key={comunidades.id}
+                    nodeId={'comunidad_' + comunidades.id}
+                    id={comunidades.id}
+                    labelText={comunidades.nombre}
+                    labelIcon={GroupRoundedIcon}
+                    // labelInfo={user.cedula}
+                    color="#e3742f"
+                    bgColor="#fcefe3"
+                    onContextMenu={tipoGeografia === 4 ? handleContextMenuCom : handleCloseCom}
+                    style={{ cursor: 'context-menu' }}
+                ></StyledTreeItem>)
             ))}
 
             <Menu
-                open={contextMenu !== null}
-                onClose={handleClose}
+                open={contextMenuCom !== null}
+                onClose={handleCloseCom}
                 anchorReference="anchorPosition"
                 anchorPosition={
-                    contextMenu !== null
-                        ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                    contextMenuCom !== null
+                        ? { top: contextMenuCom.mouseY, left: contextMenuCom.mouseX }
                         : undefined
                 }
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleVerCom}>
                     <ListItemIcon>
-                        <EditIcon fontSize="small" />
+                        <DvrIcon fontSize="small" color="primary" />
                     </ListItemIcon>
                     <Typography variant="inherit"> Ver
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>   <ListItemIcon>
-                    <EditIcon fontSize="small" />
+                <MenuItem onClick={handleEditarCom}>   <ListItemIcon>
+                    <EditIcon fontSize="small" color="success" />
                 </ListItemIcon>
                     <Typography variant="inherit"> Editar
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>   <ListItemIcon>
-                    <EditIcon fontSize="small" />
+                <MenuItem onClick={handleBorrarCom}>   <ListItemIcon>
+                    <DeleteIcon fontSize="small" sx={{ color: 'red' }} />
                 </ListItemIcon>
                     <Typography variant="inherit"> Borrar
                     </Typography>

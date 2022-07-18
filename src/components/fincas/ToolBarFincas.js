@@ -3,12 +3,12 @@ import { alpha } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { faEdit, faTrashCan, faAddressBook } from '@fortawesome/free-regular-svg-icons'
+import { faEdit, faTrashCan, faAddressCard } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Chip, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { borrarFinca, editarFinca } from '../../acciones/fincas';
+import { borrarFinca, editarFinca, verFinca } from '../../acciones/fincas';
 
 export const ToolBarFincas = (props) => {
 
@@ -35,6 +35,10 @@ export const ToolBarFincas = (props) => {
 
     const handleEditar = () => {
         dispatch(editarFinca(idFinca));
+    }
+
+    const handleVerFinca = () => {
+        dispatch(verFinca(idFinca));
     }
 
     const [sel, setSel] = React.useState();
@@ -78,9 +82,9 @@ export const ToolBarFincas = (props) => {
             )}
             {sel ? (
                 <Grid item xs={1} sm={2}>
-                    {/* <IconButton title='Perfiles' color='warning' onClick={handlePerfiles}>
-                        <FontAwesomeIcon icon={faAddressBook} />
-                    </IconButton> */}
+                    <IconButton title='Visualizar Datos' color='info' onClick={handleVerFinca}>
+                        <FontAwesomeIcon icon={faAddressCard} />
+                    </IconButton>
                     <IconButton title='Editar' color='success' onClick={handleEditar}>
                         <FontAwesomeIcon icon={faEdit} />
                     </IconButton>

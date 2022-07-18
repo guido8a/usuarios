@@ -4,13 +4,15 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import Typography from '@mui/material/Typography';
-import { ListItemIcon, Menu, MenuItem } from '@mui/material';
+import { Divider, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DvrIcon from '@mui/icons-material/Dvr';
 import { Parroquia } from './Parroquia';
 import MapRoundedIcon from '@mui/icons-material/MapRounded';
-import { abrirModalGeo, editarCanton, seleccionarElemento } from '../../acciones/geografia';
+import { borrarCanton, editarCanton, nuevaParroquia, seleccionarElemento, verCanton } from '../../acciones/geografia';
+import Swal from 'sweetalert2';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -118,8 +120,27 @@ export const Canton = (provincia) => {
         dispatch(editarCanton(seleccionado));
     }
 
+    const handleVer = () => {
+        dispatch(verCanton(seleccionado));
+    }
+
+    const handleNuevaParroquia = () => {
+        dispatch(nuevaParroquia());
+    }
+
     const handleBorrar = () => {
-        
+        Swal.fire({
+            title: "Está seguro de borrar este Cantón",
+            showCancelButton: true,
+            confirmButtonText: 'Borrar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#d33',
+            icon: 'question'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(borrarCanton(seleccionado));
+            }
+        })
     }
 
     return (
@@ -151,7 +172,7 @@ export const Canton = (provincia) => {
                         : undefined
                 }
             >
-                <MenuItem onClick={handleCloseCanton}>
+                <MenuItem onClick={handleVer}>
                     <ListItemIcon>
                         <DvrIcon fontSize="small" color="primary" />
                     </ListItemIcon>
@@ -159,15 +180,22 @@ export const Canton = (provincia) => {
                     </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleEditar}>   <ListItemIcon>
-                    <EditIcon fontSize="small" color="success"/>
+                    <EditIcon fontSize="small" color="success" />
                 </ListItemIcon>
                     <Typography variant="inherit"> Editar
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseCanton}>   <ListItemIcon>
-                    <DeleteIcon fontSize="small" sx={{color: 'red'}} />
+                <MenuItem onClick={handleBorrar}>   <ListItemIcon>
+                    <DeleteIcon fontSize="small" sx={{ color: 'red' }} />
                 </ListItemIcon>
                     <Typography variant="inherit"> Borrar
+                    </Typography>
+                </MenuItem>
+                <Divider variant="inset" component="li" />
+                <MenuItem onClick={handleNuevaParroquia}>   <ListItemIcon>
+                    <AddBoxIcon fontSize="small" sx={{ color: 'yellowgreen' }} />
+                </ListItemIcon>
+                    <Typography variant="inherit"> Agregar parroquia
                     </Typography>
                 </MenuItem>
             </Menu>

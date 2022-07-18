@@ -107,8 +107,6 @@ export const Geografia = () => {
     return (
         <div>
 
-
-
             <Container component="main" sx={{ mt: 2, width: 500 }}>
                 <Alert severity="info">
                     <MapRoundedIcon /> Cantón <MapsHomeWorkRoundedIcon /> Parroquia <GroupRoundedIcon /> Comunidad

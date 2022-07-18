@@ -4,11 +4,16 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import Typography from '@mui/material/Typography';
-import { ListItemIcon, Menu, MenuItem } from '@mui/material';
+import { Divider, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Comunidad } from './Comunidad';
 import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded';
-import { seleccionarElemento } from '../../acciones/geografia';
+import { borrarParroquia, editarParroquia, nuevaComunidad, seleccionarElemento, verParroquia } from '../../acciones/geografia';
+import DvrIcon from '@mui/icons-material/Dvr';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import Swal from 'sweetalert2';
+
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -57,10 +62,10 @@ function StyledTreeItem(props) {
     } = props;
 
     const handleSeleccionar = () => {
-        dispatch(seleccionarElemento(id));
+        dispatch(seleccionarElemento({ id: id, tipoGeografia: 3 }));
     }
 
-        return (
+    return (
         <StyledTreeItemRoot
             label={
                 <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
@@ -68,9 +73,6 @@ function StyledTreeItem(props) {
                     <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }} onClick={handleSeleccionar}>
                         {labelText}
                     </Typography>
-                    {/* <Typography variant="caption" color="inherit" onClick={handleDelete}>
-                        {labelInfo}
-                    </Typography> */}
                 </Box>
             }
             style={{
@@ -84,47 +86,72 @@ function StyledTreeItem(props) {
 
 export const Parroquia = (canton) => {
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     // useEffect(() => {
     //     dispatch(retornaParroquias(canton.canton));
-        
+
     //     return () => {
     //         dispatch(limpiarParroquias());   
     //     }
     // }, [dispatch])
 
-    const { parroquias } = useSelector(state => state.geografia);
+    const { parroquias, tipoGeografia, seleccionado } = useSelector(state => state.geografia);
     const arregloParroquias = parroquias.filter(e => e.cantonId === canton.canton);
-  
+
     //context menu
-    const [contextMenu, setContextMenu] = React.useState(null);
+    const [contextMenuParr, setContextMenuParr] = React.useState(null);
 
-    // const handleContextMenu = (event) => {
-    //     event.preventDefault();
-    //     setContextMenu(
-    //         contextMenu === null
-    //             ? {
-    //                 mouseX: event.clientX + 2,
-    //                 mouseY: event.clientY - 6,
-    //             }
-    //             : null,
-    //     );
-    // };
-
-    const handleClose = () => {
-        setContextMenu(null);
+    const handleContextMenuParroquia = (event) => {
+        event.preventDefault();
+        setContextMenuParr(
+            contextMenuParr === null
+                ? {
+                    mouseX: event.clientX + 2,
+                    mouseY: event.clientY - 6,
+                }
+                : null,
+        );
     };
+
+    const handleCloseParr = () => {
+        setContextMenuParr(null);
+    };
+
+    const handleVerParr = () => {
+        dispatch(verParroquia(seleccionado));
+    }
+
+    const handleEditarParr = () => {
+        dispatch(editarParroquia(seleccionado));
+    }
+
+    const handleBorrarParr = () => {
+
+        Swal.fire({
+            title: "Está seguro de borrar esta parroquia?",
+            showCancelButton: true,
+            confirmButtonText: 'Borrar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#d33',
+            icon: 'question'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(borrarParroquia(seleccionado))
+            }
+        })
+    }
+
+    const handleNuevaComunidad = () => {
+        dispatch(nuevaComunidad());
+    }
 
     return (
         <div>
             {
-            
-            
-            arregloParroquias.map((parroquia) => (               
+                arregloParroquias.map((parroquia) => (
                     (<StyledTreeItem
                         key={parroquia.id}
-                        // nodeId={'"' + parroquia.id + '"'}
                         nodeId={'parroquia_' + parroquia.id}
                         id={parroquia.id}
                         labelText={parroquia.nombre}
@@ -132,40 +159,47 @@ export const Parroquia = (canton) => {
                         // labelInfo={user.cedula}
                         color="#e3742f"
                         bgColor="#fcefe3"
-                        // onContextMenu={handleContextMenu}
+                        onContextMenu={tipoGeografia === 3 ? handleContextMenuParroquia : handleCloseParr}
                         style={{ cursor: 'context-menu' }}
                     >
-                        <Comunidad parroquia={parroquia.id}/>
-                    </StyledTreeItem>) 
-            ))}
+                        <Comunidad parroquia={parroquia.id} />
+                    </StyledTreeItem>)
+                ))}
 
             <Menu
-                open={contextMenu !== null}
-                onClose={handleClose}
+                open={contextMenuParr !== null}
+                onClose={handleCloseParr}
                 anchorReference="anchorPosition"
                 anchorPosition={
-                    contextMenu !== null
-                        ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                    contextMenuParr !== null
+                        ? { top: contextMenuParr.mouseY, left: contextMenuParr.mouseX }
                         : undefined
                 }
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleVerParr}>
                     <ListItemIcon>
-                        <EditIcon fontSize="small" />
+                        <DvrIcon fontSize="small" color="primary" />
                     </ListItemIcon>
                     <Typography variant="inherit"> Ver
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>   <ListItemIcon>
-                    <EditIcon fontSize="small" />
+                <MenuItem onClick={handleEditarParr}>   <ListItemIcon>
+                    <EditIcon fontSize="small" color="success" />
                 </ListItemIcon>
                     <Typography variant="inherit"> Editar
                     </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>   <ListItemIcon>
-                    <EditIcon fontSize="small" />
+                <MenuItem onClick={handleBorrarParr}>   <ListItemIcon>
+                    <DeleteIcon fontSize="small" sx={{ color: 'red' }} />
                 </ListItemIcon>
                     <Typography variant="inherit"> Borrar
+                    </Typography>
+                </MenuItem>
+                <Divider variant="inset" component="li" />
+                <MenuItem onClick={handleNuevaComunidad}>   <ListItemIcon>
+                    <AddBoxIcon fontSize="small" sx={{ color: 'yellowgreen' }} />
+                </ListItemIcon>
+                    <Typography variant="inherit"> Agregar comunidad
                     </Typography>
                 </MenuItem>
             </Menu>
