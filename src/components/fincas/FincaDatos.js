@@ -14,20 +14,20 @@ import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import BadgeIcon from '@mui/icons-material/Badge';
 import ChatIcon from '@mui/icons-material/Chat';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
-import { cargarProvinciaFinca, cargarCantonFinca, cargarParroquiaFinca, cargarComunidadFinca } from '../../acciones/geografia';
+// import { cargarProvinciaFinca, cargarCantonFinca, cargarParroquiaFinca, cargarComunidadFinca } from '../../acciones/geografia';
 
 export const FincaDatos = () => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const { finca } = useSelector(state => state.fincas)
 
-    React.useEffect(() => {
-        dispatch(cargarProvinciaFinca(finca.provid));
-        dispatch(cargarCantonFinca(finca.cntnid));
-        dispatch(cargarParroquiaFinca(finca.parrid));
-        dispatch(cargarComunidadFinca(finca.comunidadid));
-    }, [])
+    // React.useEffect(() => {
+    //     dispatch(cargarProvinciaFinca(finca.provid));
+    //     dispatch(cargarCantonFinca(finca.cntnid));
+    //     dispatch(cargarParroquiaFinca(finca.parrid));
+    //     dispatch(cargarComunidadFinca(finca.comunidadid));
+    // }, [dispatch])
 
     const { provincia, canton, parroquia, comunidad } = useSelector(state => state.geografia)
 
@@ -51,7 +51,7 @@ export const FincaDatos = () => {
                                     variant="body2"
                                     color="text.primary"
                                 >
-                                    {provincia[0].nombre}
+                                    {provincia[0].nombre || 'N/A'}
                                 </Typography>
                             </React.Fragment>
                         }
@@ -69,7 +69,7 @@ export const FincaDatos = () => {
                                     variant="body2"
                                     color="text.primary"
                                 >
-                                    {canton[0].nombre}
+                                    {canton[0].nombre || 'N/A'}
                                 </Typography>
                             </React.Fragment>
                         }
@@ -92,7 +92,7 @@ export const FincaDatos = () => {
                                     variant="body2"
                                     color="text.primary"
                                 >
-                                    {parroquia[0].nombre}
+                                    {parroquia[0].nombre || 'N/A'}
                                 </Typography>
                             </React.Fragment>
                         }
@@ -110,7 +110,7 @@ export const FincaDatos = () => {
                                     variant="body2"
                                     color="text.primary"
                                 >
-                                    {comunidad[0].nombre}
+                                    {comunidad[0].nombre || 'N/A'}
                                 </Typography>
                             </React.Fragment>
                         }
@@ -134,7 +134,7 @@ export const FincaDatos = () => {
                                     variant="body2"
                                     color="text.primary"
                                 >
-                                    {finca.nombre}
+                                    {finca.nombre || 'N/A'}
                                 </Typography>
                             </React.Fragment>
                         }
@@ -152,7 +152,7 @@ export const FincaDatos = () => {
                                     variant="body2"
                                     color="text.primary"
                                 >
-                                    {finca.ruc}
+                                    {finca.ruc || 'N/A'}
                                 </Typography>
                             </React.Fragment>
                         }

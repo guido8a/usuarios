@@ -33,8 +33,22 @@ export const editarFinca = (finca, tipo) => {
             if (tipo === 0) {
                 dispatch(visualizandoFinca(body.Registro));
             } else {
-                dispatch(cargarFinca(body.Registro));
+                dispatch(editandoFinca(body.Registro));
             }
+        } else {
+            Swal.fire("Error", "Error al cargar la finca", "error");
+        }
+    }
+}
+
+export const cargarFinca = (finca) => {
+    return async (dispatch) => {
+
+        const resp = await fetchConToken(`fnca/${finca}`);
+        const body = await resp.json();
+
+        if (body.ok) {
+            dispatch(cargandoFinca(body.Registro));
         } else {
             Swal.fire("Error", "Error al cargar la finca", "error");
         }
@@ -154,7 +168,7 @@ export const cerrarModalFinca = () => {
     }
 }
 
-const cargarFinca = (finca) => {
+export const editandoFinca = (finca) => {
     return {
         type: tipos.finEditarFinca,
         payload: finca
@@ -177,6 +191,13 @@ export const seleccionarComunidad = (comunidad) => {
 export const visualizandoFinca = (finca) => {
     return {
         type: tipos.finVerFinca,
+        payload: finca
+    }
+}
+
+export const cargandoFinca = (finca) => {
+    return{
+        type: tipos.finCargarFinca,
         payload: finca
     }
 }

@@ -8,11 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Chip, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { borrarFinca, editarFinca} from '../../acciones/fincas';
+import { borrarFinca, visualizandoFinca, editandoFinca, editarFinca} from '../../acciones/fincas';
+import { cargarCantonFinca, cargarComunidadFinca, cargarParroquiaFinca, cargarProvinciaFinca } from '../../acciones/geografia';
 
 export const ToolBarFincas = (props) => {
 
     const { numSelected, idFinca, nombres } = props;
+   
 
     const dispatch = useDispatch();
 
@@ -37,16 +39,21 @@ export const ToolBarFincas = (props) => {
         dispatch(editarFinca(idFinca, 1));
     }
 
-    const handleVerFinca = () => {
-        dispatch(editarFinca(idFinca, 0));
-    }
-
     const [sel, setSel] = React.useState();
 
     React.useEffect(() => {
         setSel(idFinca)
     }, [handleBorrar, idFinca])
 
+    const { finca } = useSelector(state => state.fincas)
+   
+    const handleVerFinca = () => {
+        dispatch(editarFinca(idFinca, 0));
+        dispatch(cargarProvinciaFinca(finca.provid));
+        dispatch(cargarCantonFinca(finca.cntnid));
+        dispatch(cargarParroquiaFinca(finca.parrid));
+        dispatch(cargarComunidadFinca(finca.comunidadid));       
+    }
     return (
         <Toolbar
             sx={{

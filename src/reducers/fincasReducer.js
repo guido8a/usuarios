@@ -24,19 +24,21 @@ export const fincasReducer = (estado = estadoInicial, accion) => {
         case tipos.finNoseleccionarFinca:
             return {
                 ...estado,
-                idFinca: null
+                idFinca: null,
+                finca: null
             }
         case tipos.finNuevaFinca:
             return {
                 ...estado,
-                modalFincasOpen: true
+                modalFincasOpen: true,
+                tipo: -1
             }
         case tipos.finCerrarModalFinca:
             return {
                 ...estado,
                 modalFincasOpen: false,
-                tipo: -1,
-                finca: null
+                // tipo: -1,
+                // finca: null
             }
         case tipos.finEditarFinca:
             return {
@@ -56,6 +58,11 @@ export const fincasReducer = (estado = estadoInicial, accion) => {
                 ...estado,
                 modalFincasOpen: true,
                 tipo: 0,
+                finca: accion.payload
+            }
+        case tipos.finCargarFinca:
+            return {
+                ...estado,
                 finca: accion.payload
             }
         default:

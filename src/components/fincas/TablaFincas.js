@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { noFincaSeleccionada, retornaFincas, seleccionarFinca, nuevaFinca } from '../../acciones/fincas';
+import { noFincaSeleccionada, retornaFincas, seleccionarFinca, nuevaFinca, cargarFinca } from '../../acciones/fincas';
 import { ToolBarFincas } from './ToolBarFincas';
 import {ModalFinca} from './ModalFinca'
 import { retornaCantones, retornaComunidades, retornaParroquias, retornaProvincias } from '../../acciones/geografia';
@@ -204,6 +204,7 @@ export const TablaFincas = () => {
 
     if (selectedIndex === -1) {
       dispatch(seleccionarFinca(ids));
+      dispatch(cargarFinca(ids));
     }
 
     if (selectedIndex === 0) {
