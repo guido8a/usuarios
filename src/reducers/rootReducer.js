@@ -8,6 +8,7 @@ import { moduloReducer } from "./moduloReducer";
 import { perfilesReducer } from "./perfilesReducer";
 import { fincasReducer } from "./fincasReducer";
 import { geoReducer } from "./geoReducer";
+import { orgReducer } from "./orgReducer";
 
 
 export const rootReducer = combineReducers ({
@@ -18,5 +19,6 @@ export const rootReducer = combineReducers ({
     mdlo: moduloReducer,
     perfiles: perfilesReducer,
     fincas: fincasReducer,
-    geografia: geoReducer
+    geografia: geoReducer,
+    organizacion: orgReducer
 })

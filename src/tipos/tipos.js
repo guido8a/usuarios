@@ -92,6 +92,16 @@ export const tipos = {
     geoCargarCanton: '[GEO] Cargar Cantón',
     geoCargarParroquia: '[GEO] Cargar Parroquia',
     geoCargarComunidad: '[GEO] Cargar Comunidad',
+
+    //organizacion
+
+    orgRetornaOrganizaciones: '[ORG] Retorna Organizaciones',
+    orgSeleccionaOrganizacion: '[ORG] Selecciona Organización',
+    orgNoSeleccionarOrganizacion: '[ORG] Ninguna organización seleccionada ',
+    orgEditarOrganizacion: '[ORG] Editar organización',
+    orgNuevaOrganizacion: '[ORG] Nueva organización',
+    orgCerrarModalOrganizacion: '[ORG] Cerral modal organización',
+    orgBorrarOrganizacion: '[ORG] Borrar organización'
     
 
 }

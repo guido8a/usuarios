@@ -14,6 +14,7 @@ import { Permisos } from '../components/permisos/Permisos';
 import { Usuarios } from '../components/usuarios/Usuarios';
 import { Perfiles } from '../components/perfiles/Perfiles';
 import { Navbar } from '../components/ui/Navbar';
+import { Organizacion } from '../components/organizaciones/Organizacion';
 // import { clickclick} from '../acciones/geografia';
 
 
@@ -89,6 +90,7 @@ export const AppRouter = () => {
 
         <Route path="/fincas" element={
           <RutaPrivada>
+            <Navbar />
             <Fincas />
           </RutaPrivada>
         } />
@@ -97,6 +99,13 @@ export const AppRouter = () => {
           <RutaPrivada>
             <Navbar />
             <Geografia />
+          </RutaPrivada>
+        } />
+
+        <Route path="/organizaciones" element={
+          <RutaPrivada>
+            <Navbar />
+            <Organizacion />
           </RutaPrivada>
         } />
 
