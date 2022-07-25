@@ -9,6 +9,7 @@ import { perfilesReducer } from "./perfilesReducer";
 import { fincasReducer } from "./fincasReducer";
 import { geoReducer } from "./geoReducer";
 import { orgReducer } from "./orgReducer";
+import { insReducer } from "./insReducer";
 
 
 export const rootReducer = combineReducers ({
@@ -20,5 +21,6 @@ export const rootReducer = combineReducers ({
     perfiles: perfilesReducer,
     fincas: fincasReducer,
     geografia: geoReducer,
-    organizacion: orgReducer
+    organizacion: orgReducer,
+    institucion: insReducer,
 })

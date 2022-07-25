@@ -89,6 +89,8 @@ function GrupoDeBotones() {
 
   const dispatch = useDispatch();
 
+  const {idUsuario} = useSelector(state => state.ui)
+
   const handleIniciarRegistro = () => {
     dispatch(accion_nuevoUsuario());
   }
@@ -105,7 +107,7 @@ function GrupoDeBotones() {
       }}
     >
       <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
-        <Button key="one" onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser} />}>  Registrar usuario</Button>
+        <Button key="one"  onClick={handleIniciarRegistro} startIcon={<FontAwesomeIcon icon={faUser} />}>  Registrar usuario</Button>
       </ButtonGroup>
     </Box>
   );
@@ -250,7 +252,8 @@ export const TablaUsuarios = () => {
   //   setDense(event.target.checked);
   // };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => id === idUsuario;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - usuarios.length) : 0;
@@ -284,8 +287,8 @@ export const TablaUsuarios = () => {
                 {stableSort(usuarios, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    // const isItemSelected = isSelected(row.name);
-                    const isItemSelected = isSelected(row.nombre);
+                    // const isItemSelected = isSelected(row.nombre);
+                    const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (

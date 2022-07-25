@@ -101,7 +101,18 @@ export const tipos = {
     orgEditarOrganizacion: '[ORG] Editar organización',
     orgNuevaOrganizacion: '[ORG] Nueva organización',
     orgCerrarModalOrganizacion: '[ORG] Cerral modal organización',
-    orgBorrarOrganizacion: '[ORG] Borrar organización'
+    orgBorrarOrganizacion: '[ORG] Borrar organización',
+
+    //institucion
+
+    insRetornaInstituciones: '[INS] Retorna Instituciones',
+    insSeleccionaInstitucion: '[INS] Selecciona Institución',
+    insNoSeleccionaInstitucion: '[INS] Ninguna Institución seleccionada',
+    insEditarInstitucion: '[INS] Editar Institución',
+    insNuevaInstitucion: '[INS] Nueva Institución',
+    insCerraModalInstitucion: '[INS] Cerrar modal Institución',
+    insBorrarInstitucion: '[INS] Borrar Institución',
+    
     
 
 }

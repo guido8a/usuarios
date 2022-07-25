@@ -300,7 +300,8 @@ const Registro = withFormik({
     activo: props.initialValues ? props.initialValues[0]?.activo : 1,
     sexo: props.initialValues ? props.initialValues[0]?.sexo : "M",
     direccion: props.initialValues ? props.initialValues[0]?.direccion : "",
-    referencia: props.initialValues ? props.initialValues[0]?.referencia : ""
+    referencia: props.initialValues ? props.initialValues[0]?.referencia : "",
+    fincaid: props.initialValues ? props.initialValues[0]?.fincaid : -1
   }),
 
   // mapPropsToValues: ({
@@ -314,8 +315,7 @@ const Registro = withFormik({
   validationSchema: validationSchema,
 
   handleSubmit: (values, { props, setSubmitting }) => {
-    // props.dispatch(iniciaRegistro(values));
-
+    console.log("usuario ", values)
     props.registroDeUsuario(values, props.tipo);
     setSubmitting(false);
   }

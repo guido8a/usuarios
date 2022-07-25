@@ -40,7 +40,7 @@ export const ToolBarPerfiles = (props) => {
     }
 
     const handleEditar = () => {
-        console.log("editando...", perfilSeleccionado)
+        // console.log("editando...", perfilSeleccionado)
         dispatch(editarPerfil(perfilSeleccionado));
     }
 

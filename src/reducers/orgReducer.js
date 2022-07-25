@@ -4,7 +4,7 @@ const estadoInicial = {
     organizaciones: [],
     organizacion: null,
     modalOrgOpen: false,
-    seleccionado: false,
+    seleccionado: null,
     tipo: -1
 }
 
@@ -19,27 +19,29 @@ export const orgReducer = (estado = estadoInicial, accion) => {
         case tipos.orgSeleccionaOrganizacion:
             return {
                 ...estado,
-                seleccionado: true,
-                organizacion: estado.organizaciones.filter(
-                    e => (e.id === accion.payload)
-                )
+                seleccionado: accion.payload,
+
             }
         case tipos.orgNoSeleccionarOrganizacion:
             return {
                 ...estado,
                 organizacion: null,
-                seleccionado: false
+                seleccionado: null
             }
         case tipos.orgEditarOrganizacion:
             return {
                 ...estado,
                 modalOrgOpen: true,
-                tipo: 1
+                tipo: 1,
+                organizacion: estado.organizaciones.filter(
+                    e => (e.id === accion.payload)
+                )
             }
         case tipos.orgCerrarModalOrganizacion:
             return {
                 ...estado,
-                modalOrgOpen: false
+                modalOrgOpen: false,
+                organizacion: null
             }
         case tipos.orgNuevaOrganizacion:
             return {
@@ -48,11 +50,12 @@ export const orgReducer = (estado = estadoInicial, accion) => {
                 tipo: -1
             }
         case tipos.orgBorrarOrganizacion:
-            return{
+            return {
                 ...estado,
-                organizacion: null,
-                seleccionado: false
-            }    
+                organizaciones: estado.organizaciones.filter(
+                    e => (e.id !== accion.payload)
+                )
+            }
 
         default:
             return estado;

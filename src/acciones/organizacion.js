@@ -46,7 +46,6 @@ export const guardarOrganizacion = (valores, tipo) => {
                 })
 
                 dispatch(cerrarModalOrganizacion());
-                // dispatch(noSeleccionaOrganizacion());
                 dispatch(retornaOrganizaciones());
             } else {
                 Swal.fire("Error al guardar la organización")
@@ -55,8 +54,6 @@ export const guardarOrganizacion = (valores, tipo) => {
         } catch (error) {
             console.log("Error al guardar la organizacion", error)
         }
-
-
     }
 }
 
@@ -77,7 +74,7 @@ export const borrarOrganizacion = (organizacion) => {
                 })
                 dispatch(borrandoOrganizacion());
                 dispatch(noSeleccionaOrganizacion());
-                dispatch(retornaOrganizaciones());
+                // dispatch(retornaOrganizaciones());
             }else{
                    Swal.fire("Error","Error al borrar la organización","error") 
             }
@@ -108,9 +105,10 @@ export const noSeleccionaOrganizacion = () => {
     }
 }
 
-export const editarOrganizacion = () => {
+export const editarOrganizacion = (organizacion) => {
     return {
-        type: tipos.orgEditarOrganizacion
+        type: tipos.orgEditarOrganizacion,
+        payload: organizacion 
     }
 }
 

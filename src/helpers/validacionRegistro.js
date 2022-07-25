@@ -24,7 +24,7 @@
       .required('El nombre de usuario es obligatorio'),
     password: Yup.string()
       .min(5, 'La contraseña debe tener al menos 5 caracteres')
-      .required('El constraseña de usuario es obligatoria'),
+      .required('El contraseña de usuario es obligatoria'),
     direccion: Yup.string()
       .min(5, 'La dirección debe tener al menos 5 caracteres'),
     referencia: Yup.string()

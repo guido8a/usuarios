@@ -15,6 +15,7 @@ import { Usuarios } from '../components/usuarios/Usuarios';
 import { Perfiles } from '../components/perfiles/Perfiles';
 import { Navbar } from '../components/ui/Navbar';
 import { Organizacion } from '../components/organizaciones/Organizacion';
+import { Institucion } from '../components/instituciones/Institucion';
 // import { clickclick} from '../acciones/geografia';
 
 
@@ -106,6 +107,13 @@ export const AppRouter = () => {
           <RutaPrivada>
             <Navbar />
             <Organizacion />
+          </RutaPrivada>
+        } />
+
+        <Route path="/instituciones" element={
+          <RutaPrivada>
+            <Navbar />
+            <Institucion />
           </RutaPrivada>
         } />
 

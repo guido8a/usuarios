@@ -75,8 +75,6 @@ export const inicioGuardarPerfil = (valores, tipo) => {
         const body = await resp.json();
 
         if (body.ok) {
-            dispatch(iniciaCargaPerfiles());
-            dispatch(cerrarModalPerfil());
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -84,6 +82,9 @@ export const inicioGuardarPerfil = (valores, tipo) => {
                 showConfirmButton: false,
                 timer: 2000
             })
+
+            dispatch(iniciaCargaPerfiles());
+            dispatch(cerrarModalPerfil());
         } else {
             Swal.fire('Error', "Error al guardar el perfil", 'error');
         }

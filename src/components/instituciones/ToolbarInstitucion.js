@@ -3,22 +3,22 @@ import { alpha } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { faEdit, faTrashCan} from '@fortawesome/free-regular-svg-icons'
+import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Chip, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { borrarOrganizacion, editarOrganizacion } from '../../acciones/organizacion';
+import { borrarInstitucion, editarInstitucion } from '../../acciones/institucion';
 
-export const ToolBarOrganizacion = (props) => {
+export const ToolBarInstitucion = (props) => {
 
     const { numSelected, nombres } = props;
 
-    const {seleccionado} = useSelector(state => state.organizacion)  
-   
+    const { seleccionado } = useSelector(state => state.institucion)
+
     const dispatch = useDispatch();
 
-    let titulo = `Desea borrar la organizacion: ${nombres}?`
+    let titulo = `Desea borrar la institución: ${nombres}?`
 
     const handleBorrar = () => {
         Swal.fire({
@@ -30,13 +30,13 @@ export const ToolBarOrganizacion = (props) => {
             icon: 'question'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(borrarOrganizacion(seleccionado));
+                dispatch(borrarInstitucion(seleccionado));
             }
         })
     }
 
     const handleEditar = () => {
-        dispatch(editarOrganizacion(seleccionado));
+        dispatch(editarInstitucion(seleccionado));
     }
 
     const [sel, setSel] = React.useState();
@@ -44,7 +44,7 @@ export const ToolBarOrganizacion = (props) => {
     React.useEffect(() => {
         setSel(seleccionado)
     }, [handleBorrar, handleEditar])
-   
+
     return (
         <Toolbar
             sx={{
@@ -75,7 +75,7 @@ export const ToolBarOrganizacion = (props) => {
                     component="div"
                     align='center'
                 >
-                    Lista de Organizaciones
+                    Lista de Instituciones
                 </Typography>
             )}
             {sel ? (

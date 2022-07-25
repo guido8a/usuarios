@@ -152,7 +152,7 @@ export const TablaPerfiles = () => {
     dispatch(iniciaCargaPerfiles());
   }, [dispatch])
 
-  const { todos, perfil} = useSelector(state => state.perfiles);
+  const { todos, perfil, nombre} = useSelector(state => state.perfiles);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -170,9 +170,6 @@ export const TablaPerfiles = () => {
   const handleClick = (event, name, id) => {
 
     const selectedIndex = selected.indexOf(name);
-    // const selectedIndexID = selectedID.indexOf(id);
-    // console.log("-----", selectedIndex)
-    // console.log("-----", selectedIndexID) 
 
     let newSelected = '';
     let ids = '';
@@ -209,7 +206,8 @@ export const TablaPerfiles = () => {
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => id === selectedID;
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - todos.length) : 0;
 
@@ -238,7 +236,7 @@ export const TablaPerfiles = () => {
                 {stableSort(todos, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.nombre);
+                    const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (

@@ -87,6 +87,8 @@ const headCells = [
 function GrupoDeBotones() {
 
   const dispatch = useDispatch();
+  
+  const {idFinca} = useSelector(state => state.fincas)
 
   const handleNuevaFinca = () => {
     dispatch(nuevaFinca());
@@ -104,7 +106,7 @@ function GrupoDeBotones() {
       }}
     >
       <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
-        <Button key="one" onClick={handleNuevaFinca} startIcon={<FontAwesomeIcon icon={faWarehouse} />}>  Nueva finca</Button>
+        <Button key="one" disabled={idFinca ? true : false} onClick={handleNuevaFinca} startIcon={<FontAwesomeIcon icon={faWarehouse} />}>  Nueva finca</Button>
       </ButtonGroup>
     </Box>
   );
@@ -211,9 +213,6 @@ export const TablaFincas = () => {
     dispatch(noFincaSeleccionada());
     }
 
-    // console.log("new ", newSelected)
-    // console.log("new ", ids)
-
     setSelected(newSelected)
     setSelectedID(ids)
   };
@@ -228,7 +227,8 @@ export const TablaFincas = () => {
   };
 
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => id === selectedID
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - fincas.length) : 0;
 
@@ -257,7 +257,8 @@ export const TablaFincas = () => {
                 {stableSort(fincas, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.nombre);
+                    // const isItemSelected = isSelected(row.nombre);
+                    const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (

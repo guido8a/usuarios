@@ -64,8 +64,6 @@ function GrupoDeBotones() {
   const { seleccionado } = useSelector(state => state.organizacion);
 
   const handleNuevaOrganizacion = () => {    
-    // dispatch(noSeleccionaOrganizacion());     
-    // dispatch(retornaOrganizaciones());     
     dispatch(nuevaOrganizacion());    
   }
 
@@ -82,7 +80,7 @@ function GrupoDeBotones() {
     >
       {/* {!seleccionado &&  */}
       <ButtonGroup variant="contained" color="success" aria-label="outlined primary button group">
-        <Button key="one" disabled={seleccionado} onClick={handleNuevaOrganizacion} startIcon={<FontAwesomeIcon icon={faWarehouse} />}>  Nueva organización</Button>
+        <Button key="one" onClick={handleNuevaOrganizacion} startIcon={<FontAwesomeIcon icon={faWarehouse} />}>  Nueva organización</Button>
       </ButtonGroup>
       {/* } */}
     </Box>
@@ -139,7 +137,7 @@ export const TablaOrganizacion = () => {
 
   const dispatch = useDispatch();
 
-  const { organizaciones, organizacion, seleccionado} = useSelector(state => state.organizacion);
+  const { organizaciones, seleccionado} = useSelector(state => state.organizacion);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -157,12 +155,10 @@ export const TablaOrganizacion = () => {
     //retorna las organizaciones de la BD
     React.useEffect(() => {
       dispatch(retornaOrganizaciones());
-    }, [dispatch, selectedID])
+    }, [dispatch])
   
 
   const handleClick = (event, name, id) => {
-
-    // console.log("name", name)
 
     const selectedIndex = selected.indexOf(name);
 
@@ -184,9 +180,6 @@ export const TablaOrganizacion = () => {
     if (selectedIndex === 0) {
         dispatch(noSeleccionaOrganizacion());
     }
-
-    // console.log("first", newSelected)
-    // console.log("first", ids)
 
     setSelected(newSelected)
     setSelectedID(ids)
