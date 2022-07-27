@@ -31,7 +31,7 @@ export const ProvinciaSelect = () => {
 
     return (
         <div>
-            <FormControl sx={{ width: 250 }}>
+            <FormControl sx={{ width: 200 }}>
                 <InputLabel id="provid-label">Provincia</InputLabel>
                  <Select
                     labelId="provid-label"

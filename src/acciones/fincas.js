@@ -2,6 +2,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { fetchConToken } from "../helpers/fetch"
 import { tipos } from "../tipos/tipos"
+import "../acciones/swalestilo.css"
 
 export const retornaFincas = () => {
 
@@ -87,7 +88,17 @@ export const guardarFinca = (valores, tipo) => {
                 dispatch(retornaFincas());
                 dispatch(cerrarModalFinca());
             } else {
-                Swal.fire("Error", "Error al guardar la finca", "error")
+                // Swal.fire("Error", "Error al guardar la finca", "error")
+                Swal.fire({
+                    position: "center",
+                    icon: 'error',
+                    title: "Error",
+                    html: "Error al guardar la finca",
+                    showConfirmButton: true,
+                    customClass: {
+                        container: 'my-swal'
+                    }
+                })
             }
 
         } catch (error) {
@@ -109,7 +120,7 @@ export const borrarFinca = (finca) => {
                     icon: 'success',
                     title: "Finca borrada correctamente",
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 2000,
                 })
                 dispatch(retornaFincas());
                 dispatch(fincaBorrada());
@@ -122,6 +133,24 @@ export const borrarFinca = (finca) => {
 
         } catch (error) {
             console.log("error al borrar la finca", error)
+        }
+    }
+}
+
+export const retornaTiposOcupacion = () => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken('tpoc');
+            const body = await resp.json();
+
+            if (body.ok) {
+                dispatch(cargarTiposOcupacion(body.Registro));
+            } else {
+                Swal.fire("Error", "Error al retornar los tipos de ocupacion", "error");
+            }
+
+        } catch (error) {
+            console.log("Error al retornar los tipos de ocupacion de la BD ", error)
         }
     }
 }
@@ -139,6 +168,7 @@ const arregloDatosFincas = (fincas = []) => {
             ...e,
             fechaInicio: moment(e.fechaInicio).toDate(),
             fechaFin: moment(e.fechaFin).toDate(),
+            fecha: moment(e.fecha).toDate(),
         })
     )
 }
@@ -196,11 +226,15 @@ export const visualizandoFinca = (finca) => {
 }
 
 export const cargandoFinca = (finca) => {
-    return{
+    return {
         type: tipos.finCargarFinca,
         payload: finca
     }
 }
 
-
-
+const cargarTiposOcupacion = (ocupacion) => {
+    return {
+        type: tipos.finRetornaTiposOcupacion,
+        payload: ocupacion
+    }
+}

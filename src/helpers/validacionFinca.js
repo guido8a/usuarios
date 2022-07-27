@@ -21,4 +21,13 @@ export const validacionFinca = Yup.object().shape({
     .min(10, 'El teléfono debe tener al menos 10 caracteres'),
   comunidadid: Yup.string()
     .required('Comunidad es obligatorio'),
+  longitud: Yup.string()
+    .matches('^-?[0-9]*\.?[0-9]*$', "Ingrese una expresión correcta"),
+    // .matches('^[\-|0-9\.]+$', "Ingrese una expresión correcta"),
+  latitud: Yup.string()
+    .matches('^-?[0-9]*\.?[0-9]*$', "Ingrese una expresión correcta"),
+  altura: Yup.string()
+    .matches('^[0-9]*$', "Ingrese solo números"),
+  area: Yup.string()
+    .matches('^[0-9]*$', "Ingrese solo números")
 });

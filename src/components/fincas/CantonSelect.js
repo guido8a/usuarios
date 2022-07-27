@@ -27,7 +27,7 @@ export const CantonSelect = () => {
 
     return (
         <div>
-            <FormControl sx={{ width: 250 }}>
+            <FormControl sx={{ width: 200 }}>
                 <InputLabel id="cntnid-label">Cantón</InputLabel>
 
                 <Select

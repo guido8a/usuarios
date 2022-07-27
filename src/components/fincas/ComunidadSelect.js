@@ -13,15 +13,14 @@ export const ComunidadSelect = () => {
 
     const dispatch = useDispatch();
 
-    const { comunidadesxParroquia, parroquiasxCanton } = useSelector(state => state.geografia);
+    const { comunidadesxParroquia } = useSelector(state => state.geografia);
     const { finca } = useSelector(state => state.fincas);
 
     const [age4, setAge4] = React.useState('');
 
-    React.useEffect(() => {
-        setAge4(finca ? finca.comunidadid : '');
+    React.useEffect(() => {        
         dispatch(seleccionarComunidad(finca ? finca.comunidadid : null));
-        // }, [finca, parroquiasxCanton])
+        setAge4(finca ? finca.comunidadid : '');
     }, [])
 
     const handleChangeComunidad = (event) => {
@@ -31,7 +30,7 @@ export const ComunidadSelect = () => {
 
     return (
         <div>
-            <FormControl sx={{ width: 250 }}>
+            <FormControl sx={{ width: 200 }}>
                 <InputLabel id="comunidadid-label">Comunidad</InputLabel>
                 <Select
                     labelId="comunidadid-label"

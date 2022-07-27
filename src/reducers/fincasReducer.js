@@ -6,6 +6,7 @@ const estadoInicial = {
     finca: null,
     modalFincasOpen: false,
     tipo: -1,
+    tiposOcupacion: []
 }
 
 export const fincasReducer = (estado = estadoInicial, accion) => {
@@ -64,6 +65,11 @@ export const fincasReducer = (estado = estadoInicial, accion) => {
             return {
                 ...estado,
                 finca: accion.payload
+            }
+        case tipos.finRetornaTiposOcupacion:
+            return {
+                ...estado,
+                tiposOcupacion: [...accion.payload]
             }
         default:
             return estado;
