@@ -113,6 +113,15 @@ export const tipos = {
     insNuevaInstitucion: '[INS] Nueva Institución',
     insCerraModalInstitucion: '[INS] Cerrar modal Institución',
     insBorrarInstitucion: '[INS] Borrar Institución',
+
+    //chats
+
+    chtRetornaChats: '[CHT] Retorna Chats',
+    chtNuevoChat: '[CHT] Nuevo Chat',
+    chtCerrarModalChat: '[CHT] Cerrar modal chat',
+    chtRetornaUsuarios: '[CHT] Retorna usuarios',
+    chtSeleccionarRoom: '[CHT] Selecciona room',
+    chtRetornaChatsxRoom: '[CHT] Retorn chats x room',
     
     
 

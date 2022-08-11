@@ -83,6 +83,12 @@ const headCells = [
     disablePadding: false,
     label: 'Email',
   },
+  {
+    id: 'estado',
+    numeric: true,
+    disablePadding: false,
+    label: 'Estado',
+  },
 ];
 
 function GrupoDeBotones() {
@@ -323,6 +329,7 @@ export const TablaUsuarios = () => {
                         <TableCell align="right">{row.cedula}</TableCell>
                         <TableCell align="right">{row.cargo}</TableCell>
                         <TableCell align="right">{row.mail}</TableCell>
+                        <TableCell align="right">{row.activo === 1 ? 'Activo' : 'No activo'}</TableCell>
                       </TableRow>
                     );
                   })}

@@ -16,6 +16,7 @@ import { Perfiles } from '../components/perfiles/Perfiles';
 import { Navbar } from '../components/ui/Navbar';
 import { Organizacion } from '../components/organizaciones/Organizacion';
 import { Institucion } from '../components/instituciones/Institucion';
+import { Chat } from '../components/chat/Chat';
 // import { clickclick} from '../acciones/geografia';
 
 
@@ -114,6 +115,13 @@ export const AppRouter = () => {
           <RutaPrivada>
             <Navbar />
             <Institucion />
+          </RutaPrivada>
+        } />
+
+        <Route path="/chat" element={
+          <RutaPrivada>
+            <Navbar />
+            <Chat />
           </RutaPrivada>
         } />
 

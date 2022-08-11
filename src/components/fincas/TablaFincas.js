@@ -82,6 +82,18 @@ const headCells = [
     disablePadding: false,
     label: 'Email',
   },
+  {
+    id: 'area',
+    numeric: true,
+    disablePadding: false,
+    label: 'Área',
+  },
+  {
+    id: 'altura',
+    numeric: true,
+    disablePadding: false,
+    label: 'Altura',
+  },
 ];
 
 function GrupoDeBotones() {
@@ -292,6 +304,8 @@ export const TablaFincas = () => {
                         <TableCell align="right">{row.direccion}</TableCell>                        
                         <TableCell align="right">{row.telefono}</TableCell>
                         <TableCell align="right">{row.mail}</TableCell>
+                        <TableCell align="right">{row.area === 0 ? '' : row.area}</TableCell>
+                        <TableCell align="right">{row.altura === 0 ? '' : row.altura}</TableCell>
                       </TableRow>
                     );
                   })}

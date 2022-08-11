@@ -102,9 +102,9 @@ export const ToolBarRegistro = (props) => {
                     <IconButton title='Editar' color='success' onClick={handleEditar}>
                         <FontAwesomeIcon icon={faEdit} />
                     </IconButton>
-                    <IconButton title='Borrar' color='error' onClick={handleBorrar}>
+                    {/* <IconButton title='Borrar' color='error' onClick={handleBorrar}>
                         <FontAwesomeIcon icon={faTrashCan} />
-                    </IconButton>
+                    </IconButton> */}
                 </Grid>
             ) : ''
             }

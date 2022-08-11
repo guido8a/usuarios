@@ -26,7 +26,7 @@ export const iniciaCargaPermisos = (perfil) => {
         if (body.ok) {
             dispatch(cargarPermisos(body.Registro))
         } else {
-            Swal.fire("Error", "Seleccione un perfil", "error")
+            Swal.fire("Error", "Seleccione perfil y módulo!", "error")
         }
     }
 }

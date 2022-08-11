@@ -315,7 +315,7 @@ const Registro = withFormik({
   validationSchema: validationSchema,
 
   handleSubmit: (values, { props, setSubmitting }) => {
-    console.log("usuario ", values)
+    // console.log("usuario ", values)
     props.registroDeUsuario(values, props.tipo);
     setSubmitting(false);
   }

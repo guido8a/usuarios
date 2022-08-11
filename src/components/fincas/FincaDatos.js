@@ -14,7 +14,9 @@ import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import BadgeIcon from '@mui/icons-material/Badge';
 import ChatIcon from '@mui/icons-material/Chat';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
-// import { cargarProvinciaFinca, cargarCantonFinca, cargarParroquiaFinca, cargarComunidadFinca } from '../../acciones/geografia';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 
 export const FincaDatos = () => {
 
@@ -242,6 +244,90 @@ export const FincaDatos = () => {
                     />
 
                 </ListItem>
+
+                <Divider variant="inset" component="li" />
+                <ListItem alignItems="flex-start" >
+                    <ListItemAvatar>
+                        <MyLocationIcon fontSize="small" color="info" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Latitud"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {finca.latitud || 'N/A'}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+
+                    <ListItemAvatar>
+                        <MyLocationIcon fontSize="small" color="info" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Longitud"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {finca.longitud || 'N/A'}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+                </ListItem>
+
+                <Divider variant="inset" component="li" />
+                <ListItem alignItems="flex-start" >
+                    <ListItemAvatar>
+                        <FormatColorTextIcon fontSize="small" color="info" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Área"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {finca.area || 'N/A'}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+
+                    <ListItemAvatar>
+                        <ArrowUpwardIcon fontSize="small" color="info" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Altura"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline', fontWeight: 'bold' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                >
+                                    {finca.altura || 'N/A'}
+                                </Typography>
+                            </React.Fragment>
+                        }
+                    />
+                </ListItem>
+
+                
 
                 <Divider variant="inset" component="li" />
                 <ListItem alignItems="flex-start" >
