@@ -128,7 +128,7 @@ export const Geografia = () => {
                                     nodeId={"provincia_" + provincia.id}
                                     label={provincia.nombre}
                                     onClick={handleSeleccionar}
-                                    onClick={(event) => handleSeleccionar(event, provincia.id)}
+                                    // onClick={(event) => handleSeleccionar(event, provincia.id)}
                                     onContextMenu={tipoGeografia === 1 ? handleContextMenuProvincia : handleClose}
                                 >
                                     <Canton provincia={provincia.id} />
