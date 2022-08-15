@@ -22,7 +22,7 @@ export const ChatForm = (id) => {
 
   const { chatRooms, room, chats } = useSelector(state => state.chat)
 
-    
+
   chats.map((chat) => (
       chatCtl.addMessage({
       type: 'text',
@@ -30,6 +30,8 @@ export const ChatForm = (id) => {
       self: false,
     })
   ))
+   
+
  
     // const name = await chatCtl.setActionRequest({ type: 'text', always: true });
     const name = chatCtl.setActionRequest({ type: 'text', always: true, sendButtonText: 'Enviar' });
