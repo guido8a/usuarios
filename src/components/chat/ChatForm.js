@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { retornaChatsxRoom } from '../../acciones/chats';
 
 
+
 export const ChatForm = (id) => {
 
   const dispatch = useDispatch();
@@ -22,14 +23,24 @@ export const ChatForm = (id) => {
 
   const { chatRooms, room, chats } = useSelector(state => state.chat)
 
-    
-  chats.map((chat) => (
-      chatCtl.addMessage({
+
+  //antes
+  // chats.map((chat) => (
+  //     chatCtl.addMessage({
+  //     type: 'text',
+  //     content: `${chat.texto || 'Buenos días'}`,
+  //     self: false,
+  //   })
+  // ))
+
+  React.useMemo(() => {
+    chats.map((chat) => (
+    chatCtl.addMessage({
       type: 'text',
-      content: `${chat.texto || 'Buenos días'}`,
+      content: `${chat.texto}`,
       self: false,
-    })
-  ))
+    })))
+  }, [chats]);
  
     // const name = await chatCtl.setActionRequest({ type: 'text', always: true });
     const name = chatCtl.setActionRequest({ type: 'text', always: true, sendButtonText: 'Enviar' });
