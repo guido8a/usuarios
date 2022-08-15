@@ -340,7 +340,7 @@ export const retornaComunidadesxParroquia = (parroquia) => {
 // const ft = (method = 'GET') => {
 
 //     const url = `${baseUrl}/login/saludo`
-
+//     console.log("accesa al servidor de tedein", url )
 //     return fetch(url, {
 //         method,       
 //     })
