@@ -121,7 +121,8 @@ export const tipos = {
     chtCerrarModalChat: '[CHT] Cerrar modal chat',
     chtRetornaUsuarios: '[CHT] Retorna usuarios',
     chtSeleccionarRoom: '[CHT] Selecciona room',
-    chtRetornaChatsxRoom: '[CHT] Retorn chats x room',
+    chtRetornaChatsxRoom: '[CHT] Retorna chats x room',
+    chtLimpiaChats: '[CHT] Limpia chats'
     
     
 

@@ -4,7 +4,8 @@ const estadoInicial = {
     chatRooms: [],
     modalChatOpen: false,
     usuarios: [],
-    room: null
+    room: null,
+    chats: []
 }
 
 export const chatReducer = (estado = estadoInicial, accion) => {
@@ -32,6 +33,16 @@ export const chatReducer = (estado = estadoInicial, accion) => {
                     e => (e.id === accion.payload)
                 )
             }
+        case tipos.chtRetornaChatsxRoom:
+            return{
+                ...estado,
+                chats: [...accion.payload]
+            }
+        case tipos.chtLimpiaChats:
+            return{
+                ...estado,
+                chats: []
+            }        
         default:
             return estado;
     }

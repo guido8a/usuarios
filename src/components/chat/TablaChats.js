@@ -86,7 +86,7 @@ export const TablaChats = (props) => {
       >
         <Toolbar />
         {
-          room ? <ChatForm /> : <Alert severity="info">Seleccione un chat</Alert>
+          room ? <ChatForm id={room} /> : <Alert severity="info">Seleccione un chat</Alert>
          }
         </Box>
       <ModalChat />

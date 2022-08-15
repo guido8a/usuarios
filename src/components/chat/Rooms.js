@@ -12,7 +12,7 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useSelector, useDispatch } from 'react-redux';
-import { nuevoChat, seleccionaRoom } from '../../acciones/chats';
+import { limpiarChats, nuevoChat, retornaChatsxRoom, seleccionaRoom } from '../../acciones/chats';
 
 const FireNav = styled(List)({
   '& .MuiListItemButton-root': {
@@ -40,7 +40,9 @@ export const Rooms = () => {
   }
 
   const handleClick = (event, id) => {
+    dispatch(limpiarChats());
     dispatch(seleccionaRoom(id));
+    dispatch(retornaChatsxRoom(id));
   }
 
   return (

@@ -21,6 +21,24 @@ export const retornaChatRooms = () => {
     }
 }
 
+export const retornaChatsxRoom = (room) => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken(`chats/${room}`);
+            const body = await resp.json();
+
+            if (body.ok) {
+                dispatch(cargaChatsxRoom(body.Registro));
+            } else {
+                Swal.fire("Error", "Error al cargar los chats", "error");
+            }
+
+        } catch (error) {
+            console.log("error al retonar los chats", error)
+        }
+    }
+}
+
 export const guardarRooms = (valores) => {
     return async (dispatch) => {
 
@@ -116,5 +134,18 @@ export const seleccionaRoom = (id) => {
     return {
         type: tipos.chtSeleccionarRoom,
         payload: id
+    }
+}
+
+export const cargaChatsxRoom = (chats) => {
+    return {
+        type: tipos.chtRetornaChatsxRoom,
+        payload: chats
+    }
+}
+
+export const limpiarChats = () => {
+    return{
+        type: tipos.chtLimpiaChats
     }
 }
