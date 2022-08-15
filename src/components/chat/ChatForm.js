@@ -24,6 +24,7 @@ export const ChatForm = (id) => {
   const { chatRooms, room, chats } = useSelector(state => state.chat)
 
 
+  chatCtl.clearMessages();
   // chats.map((chat) => (
       // chatCtl.addMessage({
   //antes
